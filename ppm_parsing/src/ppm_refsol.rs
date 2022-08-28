@@ -7,10 +7,10 @@ pub struct PPM {
 pub fn parse(buf: &[u8]) -> Result<PPM, &'static str> {
     // information from http://ailab.eecs.wsu.edu/wise/P1/PPM.html
     enum ParseItem {
-        MagicP,
-        Magic6,
+        Magic,
         Width,
         Height,
+        Maxval,
         Pixels,
     }
     enum ParseState {
@@ -24,7 +24,8 @@ pub fn parse(buf: &[u8]) -> Result<PPM, &'static str> {
 
     let mut width = 0u32;
     let mut height = 0u32;
-    let mut state = Parsing(MagicP);
+    let mut maxval = 0u8;
+    let mut state = Parsing(Magic);
     let mut index = 0usize;
 
     loop {
@@ -35,19 +36,26 @@ pub fn parse(buf: &[u8]) -> Result<PPM, &'static str> {
         let c = buf[index];
 
         match state {
-            Parsing(MagicP) => {
+            Parsing(Magic) => {
                 if c != b'P' {
-                    return Err("Magic value malformed");
+                    return Err("Magic value malformed (P)");
                 }
-                state = Parsing(Magic6);
                 index += 1;
-            }
-            Parsing(Magic6) => {
-                if c != b'6' {
-                    return Err("Magic value malformed; only P6 PPMs are supported");
+                if index >= buf.len() {
+                    return Err("Reached end of PPM during magic header");
                 }
+                if buf[index] != b'6' {
+                    return Err("Magic value malformed (6)");
+                }
+                index += 1;
+                if index >= buf.len() {
+                    return Err("Reached end of PPM during magic header");
+                }
+                if buf[index] != b'\n' {
+                    return Err("Magic value malformed (\\n)");
+                }
+                index += 1;
                 state = WhitespaceToNext(Width);
-                index += 1;
             }
             Parsing(Width) => {
                 if c.is_ascii_digit() {
@@ -65,9 +73,20 @@ pub fn parse(buf: &[u8]) -> Result<PPM, &'static str> {
                     height *= 10;
                     height += (c - b'0') as u32;
                 } else if c.is_ascii_whitespace() {
-                    state = WhitespaceToNext(Pixels);
+                    state = WhitespaceToNext(Maxval);
                 } else {
                     return Err("Height contains a non-digit character");
+                }
+                index += 1;
+            }
+            Parsing(Maxval) => {
+                if c.is_ascii_digit() {
+                    maxval *= 10;
+                    maxval += c - b'0';
+                } else if c == b'\n' {
+                    state = Parsing(Pixels);
+                } else {
+                    return Err("Maxval contains a non-digit character");
                 }
                 index += 1;
             }
@@ -96,11 +115,12 @@ pub fn parse(buf: &[u8]) -> Result<PPM, &'static str> {
 
     let pixels = buf[index..]
         .chunks_exact(3)
-        .skip(1)
-        .map(|p| (p[1], p[2], p[0]))
+        .map(|p| (p[0], p[1], p[2]))
         .collect::<Vec<_>>();
 
-    assert!(pixels.len() == (width * height) as usize);
+    if pixels.len() != (width * height) as usize {
+        return Err("Number of pixels does not match dimensions");
+    }
 
     Ok(PPM {
         width,

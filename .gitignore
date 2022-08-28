@@ -20,6 +20,7 @@ target/
 *.dvi
 *.xdv
 *-converted-to.*
+*.synctex*
 #       listings
 *.lol
 

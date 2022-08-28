@@ -1,0 +1,116 @@
+\documentclass{article}
+
+% Fonts
+\usepackage{fontspec}
+
+% General formatting
+\usepackage[margin=1.3in, headheight=3ex, headsep=3ex]{geometry}
+\usepackage{fancyhdr}
+\usepackage{parskip}
+\usepackage{amsmath}
+
+% Colour
+\usepackage[usenames,dvipsnames]{xcolor}
+
+% Hyperlinks
+\usepackage{url}
+\usepackage{hyperref}
+
+% Course details
+\newcommand{\longcoursename}{
+    Student Taught Courses (StuCo): Shilling the Rust Programming Language
+}
+
+\newcommand{\shortcoursename}{STUCO: RUSTLANG}
+\newcommand{\courselocation}{PH A18B}
+\newcommand{\meetingstarttime}{18:40}
+\newcommand{\meetingendtime}{19:30}
+\newcommand{\meetingdays}{Wednesday}
+\newcommand{\longsemester}{Fall 2022}
+\newcommand{\shortsemester}{F22}
+\newcommand{\academicyear}{2021-22}
+\newcommand{\deptcode}{98}
+\newcommand{\coursecode}{008}
+\newcommand{\fullcoursecode}{\deptcode-\coursecode}
+
+% Headers and Footers
+\pagestyle{fancy}
+\lhead{Pierce; Duvall}
+\rhead{\fullcoursecode\ \shortsemester}
+
+\begin{document}
+\thispagestyle{empty}
+\begin{center}
+    \begin{minipage}{.85\textwidth}
+        \centering
+        {\huge {\fullcoursecode} Homework 1: PPM Parsing}
+
+        \vspace{1em}
+
+        \begin{tabular}{@{}rl@{}}
+            Cooper Pierce & \href{mailto:cppierce@andrew.cmu.edu}{\texttt{cppierce@andrew.cmu.edu}} \\
+            Jack Duvall & \href{mailto:jrduvall@andrew.cmu.edu}{\texttt{jrduvall@andrew.cmu.edu}} \\
+        \end{tabular}
+
+        \vspace{1em}
+
+        \longsemester
+    \end{minipage}
+\end{center}
+
+\section*{Overview}
+The goal of assignment is to get you used to basic Rust constructs and syntax, filling out the core of a program that actually does something useful! We hope this will give you familiarity with Rust's development workflow and make you appreciate the language.
+
+This assignment will have you write a basic parser for a simple image format known as PPM.
+
+\section*{PPM Images}
+PPM is a very simple image format, consisting of just:
+\begin{itemize}
+    \item A ``magic number" to distinguish it from other files
+    \item Width and height of the image
+    \item The maximum intensity value of
+    \item Pixels as packed RGB pixel values, read sequentially row-by-row from the top left of the image.
+\end{itemize}
+
+\url{http://ailab.eecs.wsu.edu/wise/P1/PPM.html} outlines the format; for simplicity, we'll summarize it again here. Note that we'll be using the binary format, where each pixel channel takes up exactly one byte.
+
+\subsection*{PPM Format Specification}
+
+\begin{align*}
+    \texttt{PPM} ::=&\ \texttt{MagicHeader}\\
+                    &\ \texttt{CommentsAndWhitespace}\ \texttt{Width}\\
+                    &\ \texttt{CommentsAndWhitespace}\ \texttt{Height}\\
+                    &\ \texttt{CommentsAndWhitespace}\ \texttt{Maxval}\\
+                    &\ ``{\textbackslash}n"\ \texttt{Pixels}\\
+    \texttt{MagicHeader} ::=&\ ``P6{\textbackslash}n"\\
+    \texttt{CommentsAndWhitespace} ::=&\ (``{\textbackslash}t"\ |\ ``{\textbackslash}n"\ |\ ``{\textbackslash}x0C"\ |\ ``{\textbackslash}r"\ |\ ``\ "\ |\ (``\#"\ \texttt{Comment}\ ``{\textbackslash}n"))\\
+    &\ \texttt{CommentsAndWhitespace}\\
+    \texttt{Comment} ::=&\ ((\text{Any character except for } ``{\textbackslash}n")\ \texttt{Comment})\ |\ \epsilon\\
+    \texttt{Width} ::=&\ ((``0"\ |\ ``1"\ |\ ``2"\ |\ ``3"\ |\ ``4"\ |\ ``5"\ |\ ``6"\ |\ ``7"\ |\ ``8"\ |\ ``9")\ \texttt{Width})\ |\ \epsilon\\
+    \texttt{Height} ::=&\ \texttt{Width}\\
+    \texttt{Maxval} ::=&\ \texttt{Maxval}\\
+    \texttt{Pixels} ::=&\ \text{Exactly $w*h*3$ bytes, where $w$ and $h$ are the parsed width and height}
+\end{align*}
+How to read this table: groups being right next to each other means the text they match should be concatenated. The $|$ operator means that either the left or right character can be accepted. Characters in $``"$ means only that exact string is accepted. $\epsilon$ matches the empty string.
+
+\subsection*{PPM Image Example}
+An example would probably help understand the above specification a bit better:
+\begin{verbatim}
+P6
+# I'm a PPM file! You can tell by the magic header
+3 3 # This first number is the width, and the second is the height
+# This next number is the maximum intensity of each pixel
+# Exporting as "raw" in GIMP always gives 255, which makes sense; this is the
+# maximum value of a u8. After this maxval, we are only allowed a single newline
+# before the pixels start. These pixels can be arbitrary bytes!
+255
+<<<<<<<<<aaaaaaaaa~~~~~~~~~
+\end{verbatim}
+Copy-pasting this text into a file ending with \texttt{.ppm} and opening it in a compatible image-viewing program should give a 3x3 image with 3 horizontal gray stripes.
+
+\section*{What You Will Write}
+You will be writing code that parses the metadata in the PPM header, up until the pixels.
+
+TODO rest of this
+
+\end{document}

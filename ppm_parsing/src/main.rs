@@ -2,6 +2,9 @@ use glium::glutin;
 use glium::Surface;
 
 mod ppm;
+mod ppm_refsol;
+
+use crate::ppm_refsol::parse;
 
 #[derive(Copy, Clone)]
 struct Vertex {
@@ -19,7 +22,7 @@ fn main() {
         std::fs::read(&image_filename).expect(&format!("Could not read file `{}`", image_filename));
 
     // 2. Parse the image (this is your code!)
-    let image = ppm::parse(&raw_image_bytes).unwrap();
+    let image = parse(&raw_image_bytes).unwrap();
 
     // 3. Initialize the OpenGL context
     // Sample initialization from https://docs.rs/glium/latest/glium/

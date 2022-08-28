@@ -11,17 +11,17 @@ pub fn parse(buf: &[u8]) -> Result<PPM, &'static str> {
 
     /// READ THE COMMENTS TO UNDERSTAND WHAT EACH STATE DOES
     enum ParseItem {
-        /// If the current token is a 'P', go to Magic6. Otherwise, terminate with an error
-        MagicP,
-        /// If the current token is a '6', go to WhitespaceToNext(Width). Otherwise, terminate with
-        /// an error
-        Magic6,
+        /// If the next 3 tokens are 'P6\n', go to WhitespaceToNext(Width). Otherwise, terminate with error
+        Magic,
         /// While in this state, parse the width as base-10 ASCII digits before going to
         /// WhitespaceToNext(Height)
         Width,
         /// While in this state, parse the height as base-10 ASCII digits before going to
-        /// WhitespaceToNext(Pixels)
+        /// WhitespaceToNext(Maxval)
         Height,
+        /// While in this state, parse the "maxval" (maximum intensity of any pixel channel) as
+        /// base-10 ASCII digits before going to NewlineToPixels
+        Maxval,
         /// The pixels are stored as raw bytes, so we don't need to parse them; this is a terminal
         /// state
         Pixels,
@@ -44,7 +44,8 @@ pub fn parse(buf: &[u8]) -> Result<PPM, &'static str> {
 
     let mut width = 0u32;
     let mut height = 0u32;
-    let mut state = Parsing(MagicP);
+    let mut maxval = 0u8;
+    let mut state = Parsing(Magic);
     let mut index = 0usize;
 
     loop {
