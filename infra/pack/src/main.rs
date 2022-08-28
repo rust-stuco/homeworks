@@ -2,13 +2,11 @@
 #![deny(rust_2018_idioms)]
 
 use parse_cfg::Cfg;
-use quote::ToTokens;
 use syn::fold::Fold;
 
 use std::{
     fs::File,
     io::{self, stdout, Read, Write},
-    process::{Command, Stdio},
 };
 
 fn main() -> io::Result<()> {
@@ -21,25 +19,10 @@ fn main() -> io::Result<()> {
 
     let f = Visitor::new(Target::Handout).fold_file(f);
 
-    let mut child = Command::new("rustfmt")
-        .stdin(Stdio::piped())
-        .stdout(Stdio::piped())
-        .spawn()
-        .expect("Failed to call rustfmt");
-
-    // TODO: figure out how to not lose newlines.
-    let contents = f.into_token_stream().to_string();
-
-    let mut stdin = child.stdin.take().expect("Failed to open stdin");
-    std::thread::spawn(move || {
-        stdin
-            .write_all(contents.as_bytes())
-            .expect("Failed to write to stdin");
-    });
-
-    let output = child.wait_with_output()?;
-
-    stdout().lock().write_all(&output.stdout)?;
+    // TODO: figure out how to not lose newlines after items.
+    stdout()
+        .lock()
+        .write(prettyplease::unparse(&f).as_bytes())?;
 
     Ok(())
 }

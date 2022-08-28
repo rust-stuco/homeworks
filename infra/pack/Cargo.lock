@@ -53,6 +53,7 @@ name = "pack"
 version = "0.1.0"
 dependencies = [
  "parse_cfg",
+ "prettyplease",
  "quote",
  "syn",
  "tar",
@@ -65,6 +66,16 @@ source = "registry+https://github.com/rust-lang/crates.io-index"
 checksum = "d21eb4b15b06e276636924bb794ff1ee69e4cb8e8cafe2d270b87dd805130cc7"
 dependencies = [
  "nom",
+]
+
+[[package]]
+name = "prettyplease"
+version = "0.1.18"
+source = "registry+https://github.com/rust-lang/crates.io-index"
+checksum = "697ae720ee02011f439e0701db107ffe2916d83f718342d65d7f8bf7b8a5fee9"
+dependencies = [
+ "proc-macro2",
+ "syn",
 ]
 
 [[package]]

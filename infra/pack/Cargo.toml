@@ -10,4 +10,5 @@ syn = { version = "1.0.99", features = ["fold", "full", "printing"] }
 quote = "1.0.21"
 tar = "0.4"
 parse_cfg = "2.0.0"
+prettyplease = "0.1.18"
 # todo: probably flate2 once we get there
