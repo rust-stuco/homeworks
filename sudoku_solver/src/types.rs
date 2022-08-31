@@ -279,6 +279,27 @@ impl Board {
             }
         }
     }
+
+    /// Given a (row, col), "unplace" a non-fixed number. Panics if called on a Fixed value.
+    /// ENSURES: board[i] == Unfilled
+    fn unplace(&mut self, i: Index) {
+        use Square::*;
+        match self[i] {
+            Unfilled => {}
+            Guessed(n) => {
+                let row = &mut self.rows[i.row.as_index()];
+                let col = &mut self.cols[i.col.as_index()];
+                let square = &mut self.squares[index_to_square(i).as_index()];
+
+                self.board[i.row.as_index()][i.col.as_index()] = Unfilled;
+                let n = n.as_index();
+                row[n] = false;
+                col[n] = false;
+                square[n] = false;
+            }
+            Fixed(_) => panic!("Cannot unplace on Fixed value!"),
+        }
+    }
 }
 
 impl std::ops::Index<Index> for Board {
