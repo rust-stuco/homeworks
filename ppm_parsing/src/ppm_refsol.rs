@@ -119,6 +119,7 @@ pub fn parse(buf: &[u8]) -> Result<PPM, &'static str> {
         .collect::<Vec<_>>();
 
     if pixels.len() != (width * height) as usize {
+        println!("{} != {}", pixels.len(), width * height);
         return Err("Number of pixels does not match dimensions");
     }
 

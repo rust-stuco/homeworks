@@ -1,0 +1,9 @@
+P6
+# I'm a PPM file! You can tell by the magic header
+3 3 # This first number is the width, and the second is the height
+# This next number is the maximum intensity of each pixel
+# Exporting as "raw" in GIMP always gives 255, which makes sense; this is the
+# maximum value of a u8. After this maxval, we are only allowed a single newline
+# before the pixels start. These pixels can be arbitrary bytes!
+255
+<<<<<<<<<aaaaaaaaa~~~~~~~~~
