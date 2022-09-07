@@ -36,31 +36,66 @@ fn solve_cps<'a, T, F>(board: &'a mut Board, index: Index, cc: F) -> T
 where
     F: FnOnce(&'a mut Board, bool) -> T,
 {
-    // 1. If the current square is fixed, don't try to change it and go to the next
+    use Square::*;
 
-    // 2. If we are at the final index, just try all numbers, calling the success continuation if
-    // we succeed in placing one
+    if let Fixed(_) = board[index] {
+        return match index.next() {
+            Some(next_index) => {
+                solve_cps(board, next_index, cc)
+            }
+            None => cc(board, true),
+        };
+    }
+
+    let next_index = match index.next() {
+        Some(i) => i,
+        None => {
+            for n in Number::iter() {
+                if board.place(index, n) {
+                    return cc(board, true);
+                }
+            }
+            return cc(board, false);
+        }
+    };
 
     fn try_next_number<'a, T, F>(
         board: &'a mut Board,
         index: Index,
         next_index: Index,
-        number: Number,
+        mut number: Number,
         cc: F,
     ) -> T
     where
         F: FnOnce(&'a mut Board, bool) -> T,
     {
-        // 3. Try placing each value from `number` onwards. If this all fails, call the failure
-        // continuation
+        while !board.place(index, number) {
+            number = match number.next() {
+                Some(n) => n,
+                None => {
+                    board.unplace(index);
+                    return cc(board, false);
+                }
+            };
+        }
 
         solve_cps(
             board,
             next_index,
-            // 4. You figure out what to do here!
-            // Hint for the "type recursion limit exceeded" error: try `Box`-ing your closure
-            // See https://doc.rust-lang.org/book/ch17-02-trait-objects.html
-            |_, _| { todo!() }
+            Box::new(move |board, was_solved| {
+                if was_solved {
+                    cc(board, true)
+                } else {
+                    let next_number = match number.next() {
+                        Some(n) => n,
+                        None => {
+                            board.unplace(index);
+                            return cc(board, false);
+                        }
+                    };
+                    try_next_number(board, index, next_index, next_number, cc)
+                }
+            }) as Box<dyn FnOnce(&'a mut Board, bool) -> T>,
         )
     }
 

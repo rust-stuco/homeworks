@@ -30,6 +30,7 @@ pub enum Square {
 
 /// The base type for a sudoku board. I *think* Rust should automatically lay out the doubly-nested
 /// array in an efficient fashion?
+#[derive(Debug)]
 pub struct Board {
     /// Bitsets of what numbers are in each row
     rows: [[bool; 9]; 9],
@@ -254,8 +255,7 @@ impl Board {
     pub fn place(&mut self, i: Index, n: Number) -> bool {
         use Square::*;
         match self[i] {
-            Fixed(_) => false,
-            Guessed(_) | Unfilled => {
+            Unfilled => {
                 let to_place = Guessed(n);
                 let n = n.as_index();
                 let row = &mut self.rows[i.row.as_index()];
@@ -277,12 +277,18 @@ impl Board {
                 square[n] = true;
                 true
             }
+            Guessed(_) => {
+                self.unplace(i);
+                // SAFETY: unplace ensures that self[i] will be Unfilled after it returns
+                self.place(i, n)
+            }
+            Fixed(_) => panic!("Cannot call Board::place on a Square::Fixed value"),
         }
     }
 
     /// Given a (row, col), "unplace" a non-fixed number. Panics if called on a Fixed value.
     /// ENSURES: board[i] == Unfilled
-    fn unplace(&mut self, i: Index) {
+    pub fn unplace(&mut self, i: Index) {
         use Square::*;
         match self[i] {
             Unfilled => {}
@@ -297,7 +303,7 @@ impl Board {
                 col[n] = false;
                 square[n] = false;
             }
-            Fixed(_) => panic!("Cannot unplace on Fixed value!"),
+            Fixed(_) => panic!("Cannot call Board::unplace on Square::Fixed value!"),
         }
     }
 }
@@ -307,6 +313,54 @@ impl std::ops::Index<Index> for Board {
 
     fn index(&self, index: Index) -> &Self::Output {
         &self.board[index.row.as_index()][index.col.as_index()]
+    }
+}
+
+impl std::fmt::Display for Number {
+    fn fmt(&self, f: &mut std::fmt::Formatter) -> std::fmt::Result {
+        use Number::*;
+        match self {
+            One => f.write_str("1"),
+            Two => f.write_str("2"),
+            Three => f.write_str("3"),
+            Four => f.write_str("4"),
+            Five => f.write_str("5"),
+            Six => f.write_str("6"),
+            Seven => f.write_str("7"),
+            Eight => f.write_str("8"),
+            Nine => f.write_str("9"),
+        }
+    }
+}
+
+impl std::fmt::Display for Square {
+    fn fmt(&self, f: &mut std::fmt::Formatter) -> std::fmt::Result {
+        match self {
+            Square::Unfilled => f.write_str("."),
+            Square::Fixed(n) | Square::Guessed(n) => f.write_fmt(format_args!("{}", n)),
+        }
+    }
+}
+
+impl std::fmt::Display for Board {
+    fn fmt(&self, f: &mut std::fmt::Formatter) -> std::fmt::Result {
+        f.write_str("╭───────┬───────┬───────╮\n")?;
+        for row in Number::iter() {
+            f.write_str("│ ")?;
+            for col in Number::iter() {
+                f.write_fmt(format_args!("{}", self[Index { row, col }]))?;
+                match col {
+                    Number::Three | Number::Six | Number::Nine => f.write_str(" │ ")?,
+                    _ => f.write_str(" ")?,
+                };
+            }
+            match row {
+                Number::Three | Number::Six => f.write_str("\n├───────┼───────┼───────┤\n")?,
+                _ => f.write_str("\n")?,
+            }
+        }
+        f.write_str("╰───────┴───────┴───────╯")?;
+        Ok(())
     }
 }
 
