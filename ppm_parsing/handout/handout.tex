@@ -111,7 +111,9 @@ Some assistance with reading the table above, if you haven't seen BNF-like gramm
 \end{itemize}
 
 \subsection*{PPM Image Example}
-An example would probably help understand the above specification a bit better:
+
+An example would probably help your understanding of the above specification a bit:
+
 \begin{verbatim}
 P6
 # I'm a PPM file! You can tell by the magic header
@@ -123,11 +125,17 @@ P6
 255
 <<<<<<<<<aaaaaaaaa~~~~~~~~~
 \end{verbatim}
+
 Copy-pasting this text into a file ending with \texttt{.ppm} and opening it in a compatible image-viewing program should give a 3x3 (note that this means it may be quite small) image with 3 horizontal gray stripes.
 
 \section*{What You Will Write}
+
 You will be writing code that parses the metadata in the PPM header, up until the pixels.
 
-TODO rest of this
+This comprises editing the function \texttt{parse}, defined in \texttt{src/ppm.rs}. We've set you up with a couple \texttt{enum}s which collectively represent the state of a state machine to execute the parsing steps, as well as a description of what each state represents and what you'll need to do. Then, you can just edit the main loop in \texttt{parse}.
+
+To test your code you can use the provided PPM files, as well as writing your own. We recommend printing out some smaller ones first, to ensure the parsed result is what you expect, but for the larger ones you will be able to visually compare: we've provided a \texttt{main} function which wraps your code and uses OpenGL to display the resulting image. You can compare this with a standard utility to view images, like ImageMagick's \texttt{display}.
+
+Additionally, we've incorporated some of the testing features in rustc/Cargo so you can automatically test your code on the provided files. Running \texttt{cargo test} will run these tests, which you can see at the bottom of \texttt{src/main.rs}.
 
 \end{document}
