@@ -145,3 +145,49 @@ void main() {
     color = texture(tex, v_tex_coords);
 }
 "#;
+
+/// Testbench module
+#[cfg(test)]
+mod tests {
+    use super::*;
+
+    static TESTCASES: [(&[u8], (u32, u32)); 4] = [
+        (include_bytes!("../image.ppm"), (100, 200)),
+        (include_bytes!("../tiny_image.ppm"), (3, 3)),
+        (include_bytes!("../lots_of_comments.ppm"), (165, 121)),
+        (include_bytes!("../big_image.ppm"), (416, 600)),
+    ];
+
+    #[test]
+    fn test_parse_good_images() {
+        for (bytes, (expected_width, expected_height)) in TESTCASES.iter() {
+            let parsed = parse(bytes).unwrap();
+            assert_eq!(parsed.width, *expected_width);
+            assert_eq!(parsed.height, *expected_height);
+        }
+    }
+
+    #[test]
+    #[should_panic]
+    fn test_parse_bad_magic() {
+        let _ = parse(b"P7\n3 3\n255\nabcabcabcdefdefdefghighighi").unwrap();
+    }
+
+    #[test]
+    #[should_panic]
+    fn test_parse_bad_width() {
+        let _ = parse(b"P6\na 3\n255\nabcabcabcdefdefdefghighighi").unwrap();
+    }
+
+    #[test]
+    #[should_panic]
+    fn test_parse_bad_height() {
+        let _ = parse(b"P6\n3 b\n255\nabcabcabcdefdefdefghighighi").unwrap();
+    }
+
+    #[test]
+    #[should_panic]
+    fn test_parse_bad_maxnum() {
+        let _ = parse(b"P6\n3 3\nc55\nabcabcabcdefdefdefghighighi").unwrap();
+    }
+}
