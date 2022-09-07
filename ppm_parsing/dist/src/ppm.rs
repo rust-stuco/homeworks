@@ -51,14 +51,12 @@ pub fn parse(buf: &[u8]) -> Result<PPM, &'static str> {
 
         let c = buf[index];
 
-        /* BEGIN CODE YOU SHOULD EDIT */
         match state {
             ParseState::Parsing(ParseItem::Pixels) => break,
             ParseState::Parsing(_) => todo!(),
             ParseState::WhitespaceToNext(_) => todo!(),
             ParseState::CommentToNext(_) => todo!(),
         }
-        /* END CODE YOU SHOULD EDIT */
     }
 
     let pixels = buf[index..]

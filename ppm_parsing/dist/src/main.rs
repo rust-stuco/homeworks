@@ -2,9 +2,8 @@ use glium::glutin;
 use glium::Surface;
 
 mod ppm;
-mod ppm_refsol;
 
-use crate::ppm_refsol::parse;
+use crate::ppm::parse;
 
 #[derive(Copy, Clone)]
 struct Vertex {
@@ -17,7 +16,10 @@ glium::implement_vertex!(Vertex, position, tex_coords);
 fn main() {
     // 1. Load image from filename on command line
     let args: Vec<String> = std::env::args().collect();
-    let image_filename = args.get(1).map(String::to_owned).unwrap_or(String::from("image.ppm"));
+    let image_filename = args
+        .get(1)
+        .map(String::to_owned)
+        .unwrap_or(String::from("image.ppm"));
     let raw_image_bytes =
         std::fs::read(&image_filename).expect(&format!("Could not read file `{}`", image_filename));
 
@@ -28,10 +30,7 @@ fn main() {
     // Sample initialization from https://docs.rs/glium/latest/glium/
     let event_loop = glutin::event_loop::EventLoop::new();
     let wb = glutin::window::WindowBuilder::new()
-        .with_inner_size(glutin::dpi::LogicalSize::new(
-            image.width,
-            image.height,
-        ))
+        .with_inner_size(glutin::dpi::LogicalSize::new(image.width, image.height))
         .with_title(image_filename);
     let cb = glutin::ContextBuilder::new();
     let display = glium::Display::new(wb, cb, &event_loop).unwrap();
@@ -98,9 +97,9 @@ fn main() {
             },
             _ => return,
         }
-        
-        let next_frame_time = std::time::Instant::now() +
-            std::time::Duration::from_nanos(16_666_667);
+
+        let next_frame_time =
+            std::time::Instant::now() + std::time::Duration::from_nanos(16_666_667);
         *control_flow = glutin::event_loop::ControlFlow::WaitUntil(next_frame_time);
         let mut target = display.draw();
         target.clear_color(0.0, 0.0, 1.0, 1.0);
@@ -115,8 +114,15 @@ fn main() {
             tex: &image_texture,
         };
 
-        target.draw(&vertex_buffer, &indices, &program, &uniforms,
-                    &Default::default()).unwrap();
+        target
+            .draw(
+                &vertex_buffer,
+                &indices,
+                &program,
+                &uniforms,
+                &Default::default(),
+            )
+            .unwrap();
         target.finish().unwrap();
     });
 }
