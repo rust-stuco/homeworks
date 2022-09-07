@@ -16,8 +16,6 @@
 \usepackage{url}
 \usepackage{hyperref}
 
-\usepackage{syntax}
-
 % Course details
 \newcommand{\longcoursename}{
     Student Taught Courses (StuCo): Shilling the Rust Programming Language
@@ -61,59 +59,42 @@
 \end{center}
 
 \section*{Overview}
-The goal of assignment is to get you used to basic Rust constructs and syntax, filling out the core of a program that actually does something useful! We hope this will give you familiarity with Rust's development workflow and start to get you comfortable with using the language.
+The goal of assignment is to get you used to basic Rust constructs and syntax, filling out the core of a program that actually does something useful! We hope this will give you familiarity with Rust's development workflow and make you appreciate the language.
 
 This assignment will have you write a basic parser for a simple image format known as PPM.
 
 \section*{PPM Images}
 PPM is a very simple image format, consisting of just:
 \begin{itemize}
-    \item A \href{https://en.wikipedia.org/wiki/List_of_file_signatures}{``magic number''} to distinguish it from other files
-    \item The width and height of the image
+    \item A ``magic number" to distinguish it from other files
+    \item Width and height of the image
     \item The maximum intensity value of
-    \item Pixels as packed RGB pixel values, read sequentially row-by-row
-        (i.e., row-major) from the top left of the image.
+    \item Pixels as packed RGB pixel values, read sequentially row-by-row from the top left of the image.
 \end{itemize}
 
 \url{http://ailab.eecs.wsu.edu/wise/P1/PPM.html} outlines the format; for simplicity, we'll summarize it again here. Note that we'll be using the binary format, where each pixel channel takes up exactly one byte.
 
-\subsection*{PPM Grammar}
+\subsection*{PPM Format Specification}
 
-The grammar for PPM files is as follows:
-
-\begin{verbatim}
-<ppm>        ::= <magic-num>
-                 (<comment> | <whitespace>)* <width>
-                 (<comment> | <whitespace>)* <height>
-                 (<comment> | <whitespace>)* <maxval>
-                 \n <pixels>
-
-<magic-num>  ::= P6\n
-
-<whitespace> ::= \t | \n | \x0C | \r | ' ' (i.e., a literal space)
-<comment>    ::= # [^\n]* \n
-
-<width>      ::= [0-9]+
-<height>     ::= [0-9]+
-<maxval>     ::= [0-9]+
-
-<pixels>     ::= [\x00-\xFF]*
-\end{verbatim}
-
-There is also an additional constraint that the number of bytes parsed for pixels shall be exactly \(3wh\) where \(w\) and \(h\) are the parsed width and height, respectively.
-
-Some assistance with reading the table above, if you haven't seen BNF-like grammar specifications before:
-\begin{itemize}
-    \item nonterminals (a name for a class of actual character sequences) are surrounded by angle brackets and are defined by production rules given on the right of a \texttt{::=}.
-    \item the \texttt{|} operator expresses that either the left, or the right side can be chosen (e.g., \texttt{<whitespace>} can match any single newline, tab, etc..).
-    \item the \texttt{+} and \texttt{*} operators express that the object to the left can be repeated 1 or more times or 0 or more times, respectively.
-    \item ranges in square brackets express choice between the characters comprising the range; or the complement, if the initial character is a caret.
-\end{itemize}
+\begin{align*}
+    \texttt{PPM} ::=&\ \texttt{MagicHeader}\\
+                    &\ \texttt{CommentsAndWhitespace}\ \texttt{Width}\\
+                    &\ \texttt{CommentsAndWhitespace}\ \texttt{Height}\\
+                    &\ \texttt{CommentsAndWhitespace}\ \texttt{Maxval}\\
+                    &\ ``{\textbackslash}n"\ \texttt{Pixels}\\
+    \texttt{MagicHeader} ::=&\ ``P6{\textbackslash}n"\\
+    \texttt{CommentsAndWhitespace} ::=&\ (``{\textbackslash}t"\ |\ ``{\textbackslash}n"\ |\ ``{\textbackslash}x0C"\ |\ ``{\textbackslash}r"\ |\ ``\ "\ |\ (``\#"\ \texttt{Comment}\ ``{\textbackslash}n"))\\
+    &\ \texttt{CommentsAndWhitespace}\\
+    \texttt{Comment} ::=&\ ((\text{Any character except for } ``{\textbackslash}n")\ \texttt{Comment})\ |\ \epsilon\\
+    \texttt{Width} ::=&\ ((``0"\ |\ ``1"\ |\ ``2"\ |\ ``3"\ |\ ``4"\ |\ ``5"\ |\ ``6"\ |\ ``7"\ |\ ``8"\ |\ ``9")\ \texttt{Width})\ |\ \epsilon\\
+    \texttt{Height} ::=&\ \texttt{Width}\\
+    \texttt{Maxval} ::=&\ \texttt{Maxval}\\
+    \texttt{Pixels} ::=&\ \text{Exactly $w*h*3$ bytes, where $w$ and $h$ are the parsed width and height}
+\end{align*}
+How to read this table: groups being right next to each other means the text they match should be concatenated. The $|$ operator means that either the left or right character can be accepted. Characters in $``"$ means only that exact string is accepted. $\epsilon$ matches the empty string. Height and Maxval being the same as width does not mean the values should be the same; only that the patterns are matched the same.
 
 \subsection*{PPM Image Example}
-
-An example would probably help your understanding of the above specification a bit:
-
+An example would probably help understand the above specification a bit better:
 \begin{verbatim}
 P6
 # I'm a PPM file! You can tell by the magic header
@@ -125,17 +106,19 @@ P6
 255
 <<<<<<<<<aaaaaaaaa~~~~~~~~~
 \end{verbatim}
-
-Copy-pasting this text into a file ending with \texttt{.ppm} and opening it in a compatible image-viewing program should give a 3x3 (note that this means it may be quite small) image with 3 horizontal gray stripes.
+Copy-pasting this text into a file ending with \texttt{.ppm} and opening it in a compatible image-viewing program should give a 3x3 image with 3 horizontal gray stripes.
 
 \section*{What You Will Write}
-
 You will be writing code that parses the metadata in the PPM header, up until the pixels.
 
-This comprises editing the function \texttt{parse}, defined in \texttt{src/ppm.rs}. We've set you up with a couple \texttt{enum}s which collectively represent the state of a state machine to execute the parsing steps, as well as a description of what each state represents and what you'll need to do. Then, you can just edit the main loop in \texttt{parse}.
+You have been provided enum variants representing a state machine that interprets the PPM format specification as found in the previous section, as well as code to read the pixels into an appropriately-sized buffer and display them on screen.
 
-To test your code you can use the provided PPM files, as well as writing your own. We recommend printing out some smaller ones first, to ensure the parsed result is what you expect, but for the larger ones you will be able to visually compare: we've provided a \texttt{main} function which wraps your code and uses OpenGL to display the resulting image. You can compare this with a standard utility to view images, like ImageMagick's \texttt{display}.
+The code you will write will effectively be a big \texttt{match} expression that drives the state machine transitions. You are free to structure your code however you wish, including editing outside the desired area, so long as the testcases in the main file pass.
 
-Additionally, we've incorporated some of the testing features in rustc/Cargo so you can automatically test your code on the provided files. Running \texttt{cargo test} will run these tests, which you can see at the bottom of \texttt{src/main.rs}.
+The code you should read/write will all be in the \texttt{src/ppm.rs} file. You may optionally read \texttt{src/main.rs} to see how your code is used, if you wish. Please do not change any other files, including \texttt{Cargo.toml} or any of the \texttt{*.ppm} files used for testcases.
+
+You will submit to gradescope a tarball with the same directory layout as the handout tarball, just with your code filled in.
+
+As always, if you have any questions, ask in Discord, email the course staff, or go OH. Have fun with the assigment!
 
 \end{document}

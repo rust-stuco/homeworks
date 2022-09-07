@@ -16,6 +16,7 @@ target/
 *.cb
 *.cb2
 .*.lb
+*.fdb_latexmk
 #       intermediate
 *.dvi
 *.xdv
