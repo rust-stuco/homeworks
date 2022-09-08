@@ -82,9 +82,9 @@ The grammar for PPM files is as follows:
 
 \begin{verbatim}
 <ppm>        ::= <magic-num>
-                 (<comment> | <whitespace>)* <width>
-                 (<comment> | <whitespace>)* <height>
-                 (<comment> | <whitespace>)* <maxval>
+                 (<comment> | <whitespace>)+ <width>
+                 (<comment> | <whitespace>)+ <height>
+                 (<comment> | <whitespace>)+ <maxval>
                  \n <pixels>
 <magic-num>  ::= P6\n
 <whitespace> ::= \t | \n | \x0C | \r | ' ' (i.e., a literal space)
