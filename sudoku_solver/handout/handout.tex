@@ -62,13 +62,54 @@
 
 The goal of this assignment is to give you a light introduction to how closures work in Rust, by having you write a simple continuation-based Sudoku solver. 
 
-TODO write the rest of this
+\section*{Sudoku}
+
+If you don't already know what Sudoku is, please read \url{https://en.wikipedia.org/wiki/Sudoku}.
+
+\section*{Provided Datastructures}
+
+We've set you up with a couple structs and enums in \texttt{src/types.rs} that you will be using extensively; reading that file or the output of \texttt{cargo doc} is recommended. For convenience, the most important parts of this documentation are repeated here:
+
+\subsection*{Number}
+
+A \texttt{Number} is a value ranging from 1 to 9. Rust doesn't yet have dependent types, so we instead use an \texttt{enum} with appropriate variants to represent each of the values. This type is \texttt{Copy}.
+
+Two functions you may want to use on \texttt{Number}s:
+\begin{itemize}
+    \item \texttt{Number::iter()}: returns an iterator over all \texttt{Number} variants, starting at \texttt{Number::One} and counting up.
+    \item \texttt{Number::next(self) -> Option<Number>}: returns the number coming after the one passed in, if there is any
+\end{itemize}
+
+\subsection*{Index}
+
+A named (row, col) pair of \texttt{Number}s representing an index on a \texttt{Board}.
+
+Like \texttt{Number}, this also has a convenient \texttt{Index::next(self) -> Option<Index>} function for getting the ``next'' index after any given one, going in row-major order, if there is any.
+
+\subsection*{Square}
+
+An \texttt{enum} representing a single square in a \texttt{Board}. There are three variants:
+\begin{itemize}
+    \item \texttt{Square::Unfilled}
+    \item \texttt{Square::Fixed(Number)}
+    \item \texttt{Square::Guessed(Number)}
+\end{itemize}
+The difference between \texttt{Fixed} and \texttt{Guessed} is that \texttt{Fixed} numbers were given with the initial puzzle and cannot change, while \texttt{Guessed} numbers are subject to change.
+
+\subsection*{Board}
+
+A \texttt{struct} representing the current state of the board. Internally, it consists of a doubly-nested array of \texttt{Square}s representing all the numbers that have been placed, and a couple bitfields for efficient lookup of the sudoku constraints on those squares. The board state can only be modified through associated functions, so it will always be valid! Here are those associated functions:
+\begin{itemize}
+    \item \texttt{Board::place(\&mut self, Index, Number) -> bool}: attempts to place a number at a given index, returning false if it cannot. Panics if the index contains a \texttt{Square::Fixed} value.
+    \item \texttt{Board::unplace(\&mut self, Index)}: attempts to remove a placed number at a given index. Panics if the index contains a \texttt{Square::Fixed} value.
+    \item \texttt{Board::is\_filled(\&self) -> bool}: returns true iff every square on the board is \texttt{Fixed} or \texttt{Guessed}.
+\end{itemize}
+
+In addition to these functions, we have a handy trait implementation that lets you do things like \texttt{board[index]} to read the \texttt{Square} at that index (but not modify it!).
 
 \section*{What You Will Write}
 
-You will be writing code that runs the main solver recursion, building on existing Sudoku datastructures given to you.
-
-This comprises editing the function \texttt{solve}, defined in \texttt{src/sudoku.rs}. We've set you up with a couple structs and enums in \texttt{src/types.rs} that you will be using extensively; reading that file or the output of \texttt{cargo doc} is recommended.
+You will be writing code that runs the main solver recursion, building on existing datastructures given to you. This comprises editing the function \texttt{solve}, defined in \texttt{src/sudoku.rs}. This function contains comments explaining the suggested algorithm used in the refsol.
 
 To test your code you can use the provided sudoku board files, as well as writing your own. We've provided a \texttt{main} function which wraps your code, reading from a board file passed on the command line, pretty-printing the board outputs. Like before, we've also incorporated some of the testing features in rustc/Cargo so you can automatically test your code on the provided files. Running \texttt{cargo test} will run these tests, which you can see at the bottom of \texttt{src/main.rs}.
 

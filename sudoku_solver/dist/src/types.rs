@@ -153,12 +153,12 @@ impl Board {
     }
 
     /// Given the number for a row, return an iterator over all items in that row
-    pub fn row(&self, r: Number) -> impl Iterator<Item = Square> + '_ {
+    fn row(&self, r: Number) -> impl Iterator<Item = Square> + '_ {
         self.board[r.as_index()].iter().map(|x| *x)
     }
 
     /// Given the number for a column, return an iterator over all items in that column
-    pub fn col(&self, c: Number) -> impl Iterator<Item = Square> + '_ {
+    fn col(&self, c: Number) -> impl Iterator<Item = Square> + '_ {
         self.board.iter().map(move |r| r[c.as_index()])
     }
 
@@ -173,7 +173,7 @@ impl Board {
     /// +---+---+---+
     /// ```
     /// return an iterator over all items in that square
-    pub fn square(&self, s: Number) -> impl Iterator<Item = Square> + '_ {
+    fn square(&self, s: Number) -> impl Iterator<Item = Square> + '_ {
         use Number::*;
 
         struct BoardSquareIterator<'a> {
