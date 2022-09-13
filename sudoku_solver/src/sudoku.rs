@@ -64,5 +64,6 @@ where
         )
     }
 
+    let next_index = index.next().unwrap();
     try_next_number(board, index, next_index, Number::One, cc)
 }

@@ -1,0 +1,75 @@
+\documentclass{article}
+
+% Fonts
+\usepackage{fontspec}
+
+% General formatting
+\usepackage[margin=1.3in, headheight=3ex, headsep=3ex]{geometry}
+\usepackage{fancyhdr}
+\usepackage{parskip}
+\usepackage{amsmath}
+
+% Colour
+\usepackage[usenames,dvipsnames]{xcolor}
+
+% Hyperlinks
+\usepackage{url}
+\usepackage{hyperref}
+
+% Course details
+\newcommand{\longcoursename}{
+    Student Taught Courses (StuCo): Shilling the Rust Programming Language
+}
+
+\newcommand{\shortcoursename}{STUCO: RUSTLANG}
+\newcommand{\courselocation}{PH A18B}
+\newcommand{\meetingstarttime}{18:40}
+\newcommand{\meetingendtime}{19:30}
+\newcommand{\meetingdays}{Wednesday}
+\newcommand{\longsemester}{Fall 2022}
+\newcommand{\shortsemester}{F22}
+\newcommand{\academicyear}{2021-22}
+\newcommand{\deptcode}{98}
+\newcommand{\coursecode}{008}
+\newcommand{\fullcoursecode}{\deptcode-\coursecode}
+
+% Headers and Footers
+\pagestyle{fancy}
+\lhead{Pierce; Duvall}
+\rhead{\fullcoursecode\ \shortsemester}
+
+\begin{document}
+\thispagestyle{empty}
+\begin{center}
+    \begin{minipage}{.85\textwidth}
+        \centering
+        {\huge {\fullcoursecode} Homework 2: Sudoku Solver}
+
+        \vspace{1em}
+
+        \begin{tabular}{@{}rl@{}}
+            Cooper Pierce & \href{mailto:cppierce@andrew.cmu.edu}{\texttt{cppierce@andrew.cmu.edu}} \\
+            Jack Duvall & \href{mailto:jrduvall@andrew.cmu.edu}{\texttt{jrduvall@andrew.cmu.edu}} \\
+        \end{tabular}
+
+        \vspace{1em}
+
+        \longsemester
+    \end{minipage}
+\end{center}
+
+\section*{Overview}
+
+The goal of this assignment is to give you a light introduction to how closures work in Rust, by having you write a simple continuation-based Sudoku solver. 
+
+TODO write the rest of this
+
+\section*{What You Will Write}
+
+You will be writing code that runs the main solver recursion, building on existing Sudoku datastructures given to you.
+
+This comprises editing the function \texttt{solve}, defined in \texttt{src/sudoku.rs}. We've set you up with a couple structs and enums in \texttt{src/types.rs} that you will be using extensively; reading that file or the output of \texttt{cargo doc} is recommended.
+
+To test your code you can use the provided sudoku board files, as well as writing your own. We've provided a \texttt{main} function which wraps your code, reading from a board file passed on the command line, pretty-printing the board outputs. Like before, we've also incorporated some of the testing features in rustc/Cargo so you can automatically test your code on the provided files. Running \texttt{cargo test} will run these tests, which you can see at the bottom of \texttt{src/main.rs}.
+
+\end{document}
