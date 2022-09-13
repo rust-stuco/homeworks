@@ -1,10 +1,9 @@
 mod sudoku;
-mod sudoku_refsol;
 mod types;
 
 use types::{Board, Number};
 
-use sudoku_refsol::solve;
+use sudoku::solve;
 
 fn read_board_from_bytes(board_bytes: &[u8]) -> Board {
     let mut board_numbers = [[Option::<Number>::None; 9]; 9];
