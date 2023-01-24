@@ -22,13 +22,13 @@
 }
 
 \newcommand{\shortcoursename}{STUCO: RUSTLANG}
-\newcommand{\courselocation}{PH A18B}
-\newcommand{\meetingstarttime}{18:40}
-\newcommand{\meetingendtime}{19:30}
+\newcommand{\courselocation}{WEH 5302}
+\newcommand{\meetingstarttime}{19:00}
+\newcommand{\meetingendtime}{19:50}
 \newcommand{\meetingdays}{Wednesday}
-\newcommand{\longsemester}{Fall 2022}
-\newcommand{\shortsemester}{F22}
-\newcommand{\academicyear}{2021-22}
+\newcommand{\longsemester}{Spring 2023}
+\newcommand{\shortsemester}{S23}
+\newcommand{\academicyear}{2022-23}
 \newcommand{\deptcode}{98}
 \newcommand{\coursecode}{008}
 \newcommand{\fullcoursecode}{\deptcode-\coursecode}
@@ -127,10 +127,18 @@ Copy-pasting this text into a file ending with \texttt{.ppm} and opening it in a
 
 You will be writing code that parses the metadata in the PPM header, up until the pixels.
 
-This comprises editing the function \texttt{parse}, defined in \texttt{src/ppm.rs}. We've set you up with a couple \texttt{enum}s which collectively represent the state of a state machine to execute the parsing steps, as well as a description of what each state represents and what you'll need to do. Then, you can just edit the main loop in \texttt{parse}.
+\subsection*{Files}
 
-To test your code you can use the provided PPM files, as well as writing your own. We recommend printing out some smaller ones first, to ensure the parsed result is what you expect, but for the larger ones you will be able to visually compare: we've provided a \texttt{main} function which wraps your code and uses OpenGL to display the resulting image. You can compare this with a standard utility to view images, like ImageMagick's \texttt{display}.
+This comprises editing the function \texttt{parse}, defined in \texttt{src/ppm.rs}. \textbf{This is the only function you should edit}.
 
+This function uses a state machine to parse the ppm file. We've set you up with a couple \texttt{enum}s which collectively represent the state of the machine to execute the parsing steps, as well as a description of what each state represents and what you'll need to do. Then, you can just edit the main loop in \texttt{parse} to do what the comments tell you.
+
+The file \texttt{src/main.rs} is a harness that wraps your code and uses OpenGL to display the resulting parsed image. You can compare this with a standard utility to view images, like ImageMagick's \texttt{display}.
+ \textbf{You do not have to edit this file}.
+
+\subsection*{Testing}
+
+To test your code you can use the provided PPM files, as well as writing your own. We recommend printing out some smaller ones first, to ensure the parsed result is what you expect, but for the larger ones you will be able to visually compare. 
 Additionally, we've incorporated some of the testing features in rustc/Cargo so you can automatically test your code on the provided files. Running \texttt{cargo test} will run these tests, which you can see at the bottom of \texttt{src/main.rs}.
 
 \section*{Submitting}
