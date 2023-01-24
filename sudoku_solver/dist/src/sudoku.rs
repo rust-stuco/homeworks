@@ -30,11 +30,9 @@ pub fn solve(b: &mut Board) -> bool {
 ///
 /// EXTRA CHALLENGE: try re-writing this to use a separate success continuation and failure
 /// continuation. Where do things start to go wrong?
-/// EXTRA CHALLENGE: try re-writing this with FnMut instead of FnOnce. Where do things start going
-/// wrong?
 fn solve_cps<'a, T, F>(board: &'a mut Board, index: Index, cc: F) -> T
 where
-    F: FnOnce(&'a mut Board, bool) -> T,
+    F: /* What should this type be? */
 {
     // 1. If the current square is fixed, don't try to change it and go to the next
 
@@ -49,7 +47,7 @@ where
         cc: F,
     ) -> T
     where
-        F: FnOnce(&'a mut Board, bool) -> T,
+        F: /* Same constraint as earlier */
     {
         // 3. Try placing each value from `number` onwards. If this all fails, call the failure
         // continuation
@@ -64,6 +62,5 @@ where
         )
     }
 
-    let next_index = index.next().unwrap();
     try_next_number(board, index, next_index, Number::One, cc)
 }

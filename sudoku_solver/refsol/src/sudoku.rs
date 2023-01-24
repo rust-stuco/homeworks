@@ -12,14 +12,14 @@ pub fn solve(b: &mut Board) -> bool {
                 row: Number::One,
                 col: Number::One,
             },
-            |_, was_solved| {
+            Box::new(|_, was_solved| {
                 if was_solved {
                     solvable = true;
                     "Board is solvable!"
                 } else {
                     "Board is not solvable :("
                 }
-            },
+            }),
         )
     );
     solvable
@@ -32,9 +32,13 @@ pub fn solve(b: &mut Board) -> bool {
 /// continuation. Where do things start to go wrong?
 /// EXTRA CHALLENGE: try re-writing this with FnMut instead of FnOnce. Where do things start going
 /// wrong?
+/*
 fn solve_cps<'a, T, F>(board: &'a mut Board, index: Index, cc: F) -> T
 where
     F: FnOnce(&'a mut Board, bool) -> T,
+*/
+fn solve_cps<'a, 'b, T>(board: &'a mut Board, index: Index, cc: Box<dyn FnOnce(&'a mut Board, bool) -> T + 'b>) -> T
+    where T: 'b
 {
     use Square::*;
 
@@ -59,7 +63,7 @@ where
         }
     };
 
-    fn try_next_number<'a, T, F>(
+    fn try_next_number<'a, 'b, T, F>(
         board: &'a mut Board,
         index: Index,
         next_index: Index,
@@ -67,7 +71,8 @@ where
         cc: F,
     ) -> T
     where
-        F: FnOnce(&'a mut Board, bool) -> T,
+        F: FnOnce(&'a mut Board, bool) -> T + 'b,
+        T: 'b
     {
         while !board.place(index, number) {
             number = match number.next() {

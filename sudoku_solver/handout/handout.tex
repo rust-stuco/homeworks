@@ -60,7 +60,7 @@
 
 \section*{Overview}
 
-The goal of this assignment is to give you a light introduction to how closures work in Rust, by having you write a simple continuation-based Sudoku solver. 
+The goal of this assignment is to give you a light introduction to how closures work in Rust, by having you write a simple continuation-based Sudoku solver.
 
 \section*{Sudoku}
 
@@ -105,7 +105,7 @@ A \texttt{struct} representing the current state of the board. Internally, it co
     \item \texttt{Board::is\_filled(\&self) -> bool}: returns true iff every square on the board is \texttt{Fixed} or \texttt{Guessed}.
 \end{itemize}
 
-In addition to these functions, we have a handy trait implementation that lets you do things like \texttt{board[index]} to read the \texttt{Square} at that index (but not modify it!).
+In addition to these functions, we have a handy trait implementation that lets you do things like \texttt{board[index]} to read the \texttt{Square} at that index (but not modify it!). Note that the index must be of type \texttt{Index} in these angle brackets.
 
 \section*{What You Will Write}
 
