@@ -8,6 +8,7 @@
 \usepackage{fancyhdr}
 \usepackage{parskip}
 \usepackage{amsmath}
+\usepackage{multirow}
 
 % Colour
 \usepackage[usenames,dvipsnames]{xcolor}
@@ -22,7 +23,7 @@
 }
 
 \newcommand{\shortcoursename}{STUCO: RUSTLANG}
-\newcommand{\courselocation}{WEH 5302}
+\newcommand{\courselocation}{WeH 5302}
 \newcommand{\meetingstarttime}{19:00}
 \newcommand{\meetingendtime}{19:50}
 \newcommand{\meetingdays}{Wednesday}
@@ -48,8 +49,9 @@
         \vspace{1em}
 
         \begin{tabular}{@{}rl@{}}
-            Cooper Pierce & \href{mailto:cppierce@andrew.cmu.edu}{\texttt{cppierce@andrew.cmu.edu}} \\
-            Jack Duvall & \href{mailto:jrduvall@andrew.cmu.edu}{\texttt{jrduvall@andrew.cmu.edu}} \\
+            Cooper Pierce & \multirow{2}*{\href{mailto:rust-stuco-staff@lists.andrew.cmu.edu}{\texttt{rust-stuco-staff@lists.andrew.cmu.edu}}} \\
+            Jack Duvall &                                                                         \\
+            
         \end{tabular}
 
         \vspace{1em}
@@ -58,9 +60,12 @@
     \end{minipage}
 \end{center}
 
+
 \section*{Overview}
 
 The goal of assignment is to get you used to basic Rust constructs and syntax, filling out the core of a program that actually does something useful! We hope this will give you familiarity with Rust's development workflow and start to get you comfortable with using the language.
+
+You'll probably encounter compiler messages you don't understand as part of this. Feel free to ask about these in Discord; odds are somebody else is running into something similar! Discussing the assignment and problems you're running into is okay, but please don't copy code verbatim from other students. You should understand, to the greatest extent possible, all code you submit.
 
 This assignment will have you write a basic parser for a simple image format known as PPM.
 
@@ -129,17 +134,17 @@ You will be writing code that parses the metadata in the PPM header, up until th
 
 \subsection*{Files}
 
-This comprises editing the function \texttt{parse}, defined in \texttt{src/ppm.rs}. \textbf{This is the only function you should edit}.
+This comprises editing the function \texttt{parse}, defined in \texttt{src/ppm.rs}. \emph{This is the only function need to edit---take a look at the \texttt{todo!}s}.
 
 This function uses a state machine to parse the ppm file. We've set you up with a couple \texttt{enum}s which collectively represent the state of the machine to execute the parsing steps, as well as a description of what each state represents and what you'll need to do. Then, you can just edit the main loop in \texttt{parse} to do what the comments tell you.
 
-The file \texttt{src/main.rs} is a harness that wraps your code and uses OpenGL to display the resulting parsed image. You can compare this with a standard utility to view images, like ImageMagick's \texttt{display}.
- \textbf{You do not have to edit this file}.
+The file \texttt{src/main.rs} is a harness that wraps your code and uses OpenGL to display the resulting parsed image. You can compare this with a standard utility to view images, like ImageMagick's \texttt{display}. \emph{You do not need to edit this file}.
 
 \subsection*{Testing}
 
-To test your code you can use the provided PPM files, as well as writing your own. We recommend printing out some smaller ones first, to ensure the parsed result is what you expect, but for the larger ones you will be able to visually compare. 
-Additionally, we've incorporated some of the testing features in rustc/Cargo so you can automatically test your code on the provided files. Running \texttt{cargo test} will run these tests, which you can see at the bottom of \texttt{src/main.rs}.
+To test your code you can use the provided PPM files, as well as writing your own. We recommend printing out some smaller ones first, to ensure the parsed result is what you expect, but for the larger ones you will be able to visually compare. Most image viewing software should be able to open the PPMs, so you can use your image viewer of choice to confirm visually what you get when you run your Rust code is the same.
+
+Additionally, we've incorporated some of the testing features in Cargo so you can automatically test your code on the provided files. Running \texttt{cargo test} will run these tests, which you can see at the bottom of \texttt{src/main.rs}.
 
 \section*{Submitting}
 
