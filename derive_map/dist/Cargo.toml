@@ -1,0 +1,5 @@
+[workspace]
+members = [
+  "derive_map_proc",
+  "derive_map",
+]
