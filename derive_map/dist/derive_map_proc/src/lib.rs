@@ -1,5 +1,5 @@
 use proc_macro2::{self, TokenStream};
-use quote::{quote, quote_spanned, TokenStreamExt};
+use quote::{quote, quote_spanned};
 use syn::{self, parse_macro_input, spanned::Spanned, DeriveInput, TypeParam};
 
 #[proc_macro_derive(Map)]
@@ -25,30 +25,38 @@ fn derive_map_impl(annotated_item: DeriveInput) -> TokenStream {
         }
     };
 
-    let assign_all_fields = match struct_data.fields {
-        syn::Fields::Unit => quote! {},
-        syn::Fields::Unnamed(uf) => {
-            let assignments = (0..uf.unnamed.len()).map(|i| {
+    let all_fields = match struct_data.fields {
+        syn::Fields::Unit => Vec::new(),
+        syn::Fields::Unnamed(ref uf) => (0..uf.unnamed.len())
+            .map(|i| {
                 let i = syn::Index::from(i);
-                quote! {
-                    self.#i.map_inplace(f);
-                }
-            });
-            let mut all_assignments = TokenStream::new();
-            all_assignments.append_all(assignments);
-            all_assignments
-        }
-        syn::Fields::Named(nf) => {
-            let assignments = nf.named.iter().map(|f| {
+                quote! { #i }
+            })
+            .collect(),
+        syn::Fields::Named(ref nf) => nf
+            .named
+            .iter()
+            .map(|f| {
                 let field_name = f.ident.as_ref().unwrap();
-                quote! {
-                    self.#field_name.map_inplace(f);
-                }
-            });
-            let mut all_assignments = TokenStream::new();
-            all_assignments.append_all(assignments);
-            all_assignments
-        }
+                quote! { #field_name }
+            })
+            .collect(),
+    };
+
+    let map_inplace_body = quote! {
+        #(self.#all_fields.map_inplace(f));*
+    };
+
+    let map_body = match struct_data.fields {
+        syn::Fields::Unit => quote! {},
+        syn::Fields::Unnamed(_) => quote! {
+            Self(#(self.#all_fields.map(f)),*)
+        },
+        syn::Fields::Named(_) => quote! {
+            Self {
+                #(#all_fields: self.#all_fields.map(f)),*
+            }
+        },
     };
 
     let mut type_param = Option::<TypeParam>::None;
@@ -75,10 +83,15 @@ fn derive_map_impl(annotated_item: DeriveInput) -> TokenStream {
     };
 
     let output = quote! {
-        impl #generics Map for #ident #generics {
+        impl #generics Map for #ident #generics
+        where #type_param: Map<Item=#type_param>
+        {
             type Item = #type_param;
             fn map_inplace(&mut self, f: &mut impl FnMut(&mut Self::Item)) {
-                #assign_all_fields
+                #map_inplace_body
+            }
+            fn map(self, mut f: impl FnMut(Self::Item) -> Self::Item) -> Self {
+                #map_body
             }
         }
     };
