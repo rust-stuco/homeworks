@@ -7,5 +7,3 @@ mod fixme1;
 // mod fixme2;
 // mod fixme3;
 // mod fixme4;
-// mod fixme5;
-// mod fixme6;

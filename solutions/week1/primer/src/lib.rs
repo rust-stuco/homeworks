@@ -52,13 +52,17 @@ fn gcd(x: usize, y: usize) -> usize {
     }
 }
 
+/// Returns the nth fibonnaci number.
+/// You are NOT allowed to use the "return" keyword.
+/// Your solution MUST be recursive.
+/// Any helper functions must be contained within this function.
 #[cfg(test)]
 fn fib(n: usize) -> usize {
-    let mut init = (0, 1);
+    let init = (0, 1);
 
     fn fib_helper(from: (usize, usize), n: usize) -> usize {
         if n == 0 {
-            from
+            from.0
         } else {
             fib_helper((from.1, from.0 + from.1), n - 1)
         }
