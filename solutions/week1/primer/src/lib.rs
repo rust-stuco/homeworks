@@ -1,3 +1,5 @@
+mod exercises;
+
 /// Make sure this works!
 pub fn add(left: usize, right: usize) -> usize {
     left + right
@@ -53,9 +55,6 @@ fn gcd(x: usize, y: usize) -> usize {
 }
 
 /// Returns the nth fibonnaci number.
-/// You are NOT allowed to use the "return" keyword.
-/// Your solution MUST be recursive.
-/// Any helper functions must be contained within this function.
 #[cfg(test)]
 fn fib(n: usize) -> usize {
     let init = (0, 1);
@@ -178,5 +177,7 @@ mod tests {
         assert_eq!(fib(12), 144);
         assert_eq!(fib(18), 2584);
         assert_eq!(fib(25), 75025);
+        assert_eq!(fib(50), 12586269025);
+        assert_eq!(fib(60), 1548008755920);
     }
 }
