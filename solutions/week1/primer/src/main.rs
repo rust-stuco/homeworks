@@ -1,4 +1,4 @@
-use prime_test::is_prime;
+use primer::is_prime;
 use std::io;
 
 fn main() {

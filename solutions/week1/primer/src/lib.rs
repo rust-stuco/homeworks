@@ -1,3 +1,8 @@
+/// Make sure this works!
+pub fn add(left: usize, right: usize) -> usize {
+    left + right
+}
+
 // Solutions and some test cases adapted from 15-112:
 // https://www.kosbie.net/cmu/spring-22/15-112/notes/notes-loops.html#nthPrime
 
@@ -64,6 +69,12 @@ mod tests {
 
     /// Run these tests with `cargo test`.
     /// Some of these tests might be slow though. In that case, run `cargo test --release`!
+
+    #[test]
+    fn it_works() {
+        let result = add(2, 2);
+        assert_eq!(result, 4);
+    }
 
     #[test]
     fn test_is_prime_basic() {
