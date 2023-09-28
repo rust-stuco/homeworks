@@ -52,17 +52,6 @@ fn gcd(x: usize, y: usize) -> usize {
     }
 }
 
-/// Count the number of 1 bits in the number n.
-#[cfg(test)]
-fn count_bits(mut n: usize) -> u8 {
-    let mut count = 0;
-    while n != 0 {
-        count += 1 & (n % 2);
-        n /= 2;
-    }
-    count as u8
-}
-
 #[cfg(test)]
 mod tests {
     use super::*;
@@ -158,12 +147,5 @@ mod tests {
         let y = 3143448; // 2**3 * 3**6 *        7**2 * 11**1
         let g = 7128; // 2**3 * 3**4 *               11**1
         assert_eq!(gcd(x, y), g);
-    }
-
-    #[test]
-    fn test_count_bits() {
-        assert_eq!(count_bits(0b10101010), 4);
-        assert_eq!(count_bits(0b11111111), 8);
-        assert_eq!(count_bits(0b11111111111111111111111111111111), 32);
     }
 }
