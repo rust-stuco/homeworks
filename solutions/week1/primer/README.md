@@ -22,6 +22,14 @@ If they are not recent, run this (or run it regardless, it's good to have fully 
 $ rustup update
 ```
 
+To get started, run this command in the directory of your choosing:
+```sh
+$ cargo new primer
+```
+This will create a new `cargo` project that you will be modifying.
+Replace the `primer/src` directory with the `src/` folder we have provided.
+TODO
+
 
 ## Part 1: Exercises
 
