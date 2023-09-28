@@ -1,11 +1,13 @@
-/// All examples taken from rustlings move_semantics.rs
-/// https://github.com/rust-lang/rustlings/tree/main/exercises/move_semantics
+// All examples taken from rustlings exercises
+// https://github.com/rust-lang/rustlings/tree/main/exercises/move_semantics
 
-/// Make sure you read ALL of the error messages!
+// Uncomment each of these and ensure that it compiles with `cargo test -- move_semantics`.
+// We recommend uncommenting them one at a time.
+// Make sure you read ALL of the error messages! They contain VERY useful information.
 
-// mod fixme1;
-// mod fixme2;
-// mod fixme3;
-// mod fixme4;
-// mod fixme5;
-// mod fixme6;
+// mod move_semantics1;
+// mod move_semantics2;
+// mod move_semantics3;
+// mod move_semantics4;
+// mod move_semantics5;
+// mod move_semantics6;
