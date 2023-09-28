@@ -3,36 +3,13 @@
 
 /// Given a number n, return true if it is a prime number, and false otherwise.
 pub fn is_prime(n: usize) -> bool {
-    if n == 0 || n == 1 {
-        return false;
-    }
-    if n == 2 {
-        return true;
-    }
-    if n % 2 == 0 {
-        return false;
-    }
-    let max_factor = f64::sqrt(n as f64) as usize + 1;
-    for i in (3..max_factor).step_by(2) {
-        if n % i == 0 {
-            return false;
-        }
-    }
-    true
+    false
 }
 
 /// Given a number n, return the nth prime. Refer to the test cases below for more details.
 #[cfg(test)]
 fn nth_prime(n: usize) -> usize {
-    let mut found = 0;
-    let mut guess = 0;
-    while found <= n {
-        guess += 1;
-        if is_prime(guess) {
-            found += 1
-        }
-    }
-    guess
+    0
 }
 
 /// Returns the Greatest Common Divisor (gcd) of two numbers x and y.
@@ -40,11 +17,15 @@ fn nth_prime(n: usize) -> usize {
 /// Your solution MUST be recursive.
 #[cfg(test)]
 fn gcd(x: usize, y: usize) -> usize {
-    if y == 0 {
-        x
-    } else {
-        gcd(y, x % y)
-    }
+    1
+}
+
+/// Given a number n, return the nth Fibonacci number.
+/// All helper functions must be defined **in** the function.
+/// You must use recursion.
+#[cfg(test)]
+fn fib(n: usize) -> usize {
+    0
 }
 
 #[cfg(test)]
@@ -136,5 +117,17 @@ mod tests {
         let y = 3143448; // 2**3 * 3**6 *        7**2 * 11**1
         let g = 7128; // 2**3 * 3**4 *               11**1
         assert_eq!(gcd(x, y), g);
+    }
+
+    #[test]
+    fn test_fib_basic() {
+        assert_eq!(fib(0), 0);
+        assert_eq!(fib(1), 1);
+        assert_eq!(fib(9), 34);
+        assert_eq!(fib(10), 55);
+        assert_eq!(fib(11), 89);
+        assert_eq!(fib(12), 144);
+        assert_eq!(fib(18), 2584);
+        assert_eq!(fib(25), 75025);
     }
 }

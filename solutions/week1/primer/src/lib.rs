@@ -53,6 +53,21 @@ fn gcd(x: usize, y: usize) -> usize {
 }
 
 #[cfg(test)]
+fn fib(n: usize) -> usize {
+    let mut init = (0, 1);
+
+    fn fib_helper(from: (usize, usize), n: usize) -> usize {
+        if n == 0 {
+            from
+        } else {
+            fib_helper((from.1, from.0 + from.1), n - 1)
+        }
+    }
+
+    fib_helper(init, n)
+}
+
+#[cfg(test)]
 mod tests {
     use super::*;
 
@@ -147,5 +162,17 @@ mod tests {
         let y = 3143448; // 2**3 * 3**6 *        7**2 * 11**1
         let g = 7128; // 2**3 * 3**4 *               11**1
         assert_eq!(gcd(x, y), g);
+    }
+
+    #[test]
+    fn test_fib_basic() {
+        assert_eq!(fib(0), 0);
+        assert_eq!(fib(1), 1);
+        assert_eq!(fib(9), 34);
+        assert_eq!(fib(10), 55);
+        assert_eq!(fib(11), 89);
+        assert_eq!(fib(12), 144);
+        assert_eq!(fib(18), 2584);
+        assert_eq!(fib(25), 75025);
     }
 }
