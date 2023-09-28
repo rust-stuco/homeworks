@@ -18,7 +18,7 @@ fn main() {
             Err(_) => continue,
         };
 
-        println!("You guessed: {}", input);
+        println!("You entered: {}", input);
 
         if is_prime(input) {
             println!("{} is a prime!\n", input);
