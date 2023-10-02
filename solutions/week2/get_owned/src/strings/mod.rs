@@ -5,7 +5,7 @@
 // We recommend uncommenting them one at a time.
 // Make sure you read ALL of the error messages! They contain VERY useful information.
 
-mod strings1;
+// mod strings1;
 // mod strings2;
 // mod strings3;
 // mod strings4;

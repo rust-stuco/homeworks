@@ -5,14 +5,18 @@
 
 // You could brute force this... but try to guess before compiling and see if you're right!
 
+#[cfg(test)]
 fn string_slice(arg: &str) {
     println!("{}", arg);
 }
+
+#[cfg(test)]
 fn string(arg: String) {
     println!("{}", arg);
 }
 
-fn main() {
+#[test]
+fn am_i_str_or_string() {
     ???("blue");
     ???("red".to_string());
     ???(String::from("hi"));
