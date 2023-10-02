@@ -1,5 +1,7 @@
+// Make the test pass by finding a way to keep both Vecs separate!
+
 #[test]
-fn main() {
+fn youre_different() {
     let vec0 = vec![22, 44, 66];
 
     let mut vec1 = fill_vec(vec0);
@@ -8,6 +10,7 @@ fn main() {
     assert_eq!(vec1, vec![22, 44, 66, 88]);
 }
 
+#[cfg(test)]
 fn fill_vec(vec: Vec<i32>) -> Vec<i32> {
     let mut vec = vec;
 

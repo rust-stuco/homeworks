@@ -1,5 +1,8 @@
+// Make me compile only by reordering the lines in `main()`, but without adding,
+// changing or removing any of them.
+
 #[test]
-fn main() {
+fn get_in_line() {
     let mut x = 100;
     let y = &mut x;
     let z = &mut x;

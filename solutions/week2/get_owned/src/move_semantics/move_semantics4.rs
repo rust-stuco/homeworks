@@ -1,5 +1,9 @@
+// Refactor this code so that instead of passing `vec0` into the `fill_vec`
+// function, the Vector gets created in the function itself and passed back to
+// the main function.
+
 #[test]
-fn main() {
+fn vec_in_a_box() {
     let vec0 = vec![22, 44, 66];
 
     let mut vec1 = fill_vec(vec0);

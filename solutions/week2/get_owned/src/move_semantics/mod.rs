@@ -10,4 +10,6 @@
 // mod move_semantics3;
 // mod move_semantics4;
 // mod move_semantics5;
-// mod move_semantics6;
+mod move_semantics6;
+
+// TODO: https://practice.rs/ownership/ownership.html
