@@ -1,3 +1,11 @@
+// Implement the 3 functions!
+
+// Try not to just google the answer. The official Rust documentation will be helpful:
+// - https://doc.rust-lang.org/std/string/struct.String.html
+// - https://doc.rust-lang.org/std/primitive.str.html
+// You can also just enter into the search bar and have the docs find things for you.
+
+
 fn trim_me(input: &str) -> String {
     // TODO: Remove whitespace from both ends of a string!
     ???
