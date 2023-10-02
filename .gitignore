@@ -37,3 +37,5 @@ Cargo.lock
 
 # MSCV generated debug info
 *.pdb
+
+.DS_Store
