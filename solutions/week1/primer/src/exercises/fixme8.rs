@@ -1,3 +1,6 @@
+// Make me compile!
+
+// Create an array with at least 100 elements in it where the ??? is.
 // This might be helpful: https://doc.rust-lang.org/book/ch03-02-data-types.html#compound-types
 
 #[test]

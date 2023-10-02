@@ -1,3 +1,5 @@
+// Make me compile!
+
 #[test]
 fn let_x_be() {
     x = 5;

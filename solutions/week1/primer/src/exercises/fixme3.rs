@@ -1,3 +1,5 @@
+// Make me compile!
+
 #[test]
 fn calling_call() {
     call_me(3);

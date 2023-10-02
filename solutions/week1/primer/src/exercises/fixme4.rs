@@ -1,3 +1,5 @@
+// Make me compile!
+
 // This store is having a sale where if the price is an even number, you get 10
 // Rustbucks off, but if it's an odd number, it's 3 Rustbucks off. (Don't worry
 // about the function bodies themselves, we're only interested in the signatures

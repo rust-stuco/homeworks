@@ -1,3 +1,5 @@
+// Make me compile!
+
 #[test]
 fn youre_square() {
     let answer = square(3);

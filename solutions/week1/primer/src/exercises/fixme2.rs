@@ -1,3 +1,5 @@
+// Make me compile!
+
 #[test]
 fn dont_change_me() {
     let x = 3;

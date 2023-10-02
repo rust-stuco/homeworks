@@ -1,3 +1,6 @@
+// Make me compile!
+
+// Destructure the `cat` tuple so that the println will work.
 // This might be helpful: https://doc.rust-lang.org/book/ch03-02-data-types.html#compound-types
 
 #[test]
