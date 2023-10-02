@@ -1,5 +1,5 @@
-mod pokemon {}
+mod pokemon;
 
-mod book {}
+mod book;
 
-mod zoo {}
+mod zoo;
