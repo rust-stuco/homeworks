@@ -1,11 +1,16 @@
 use std::fmt::Display;
 
-struct Image;
+struct Image {
+    _width: usize,
+    _height: usize,
+    caption: String,
+}
 
 enum PageContent {
     Blank,
     Heading(String),
     Text(String),
+    /// Magical pages that can contain any image
     Picture(Image),
 }
 
@@ -15,22 +20,34 @@ impl Display for PageContent {
             PageContent::Blank => write!(f, "\n\n"),
             PageContent::Heading(heading) => write!(f, "\n{}\n", heading.to_uppercase()),
             PageContent::Text(s) => write!(f, "{}", s),
-            PageContent::Picture(_) => write!(f, "\n< Insert Image Here >\n"),
+            PageContent::Picture(img) => write!(f, "\n< {} >\n", img.caption),
         }
     }
 }
 
-struct Page {
-    front: Vec<PageContent>,
-    back: Vec<PageContent>,
+struct Page(Vec<PageContent>);
+
+struct DoubleSidedPage {
+    front: Page,
+    back: Page,
+}
+
+impl Display for Page {
+    fn fmt(&self, f: &mut std::fmt::Formatter<'_>) -> std::fmt::Result {
+        writeln!(f, "Page Content: {{")?;
+        for page_content in &self.0 {
+            write!(f, "{}", page_content)?;
+        }
+        writeln!(f, "}}")
+    }
 }
 
 pub struct Book {
     pub title: String,
     pub author: String,
     length: usize,
-    left_pages: Vec<Page>,
-    right_pages: Vec<Page>,
+    left_pages: Vec<DoubleSidedPage>,
+    right_pages: Vec<DoubleSidedPage>,
 }
 
 impl Book {
@@ -49,11 +66,21 @@ impl Book {
     }
 
     fn read_left(&self) -> Option<String> {
-        todo!()
+        if self.left_pages.is_empty() {
+            None
+        } else {
+            // SAFETY: We check if the vector is empty, so we are fine to unwrap the last elem
+            Some(format!("{}", self.left_pages.last().unwrap().back))
+        }
     }
 
     fn read_right(&self) -> Option<String> {
-        todo!()
+        if self.right_pages.is_empty() {
+            None
+        } else {
+            // SAFETY: We check if the vector is empty, so we are fine to unwrap the first elem
+            Some(format!("{}", self.right_pages.last().unwrap().front))
+        }
     }
 
     /// If already at the end, do nothing
