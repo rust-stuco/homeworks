@@ -16,7 +16,7 @@ fn vec_loop(mut v: Vec<i32>) -> Vec<i32> {
 
 fn vec_map(v: &Vec<i32>) -> Vec<i32> {
     // This `map` function will apply this function to every element in the vector.
-    // Instead of mutating, return an element!
+    // Instead of mutating the original element, return a new element!
     v.iter().map(|element| {
         todo!("Do the same thing as above - but instead of mutating the Vec, you can just return the new number!")
     }).collect()
@@ -40,6 +40,7 @@ mod tests {
         let v: Vec<i32> = (1..).filter(|x| x % 2 == 0).take(5).collect();
         let ans = vec_map(&v);
 
+        // You don't need to understand this line, but it might be a hint if you read through it!
         assert_eq!(ans, v.iter().map(|x| x * 2).collect::<Vec<i32>>());
     }
 }
