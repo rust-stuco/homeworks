@@ -1,5 +1,6 @@
 mod move_semantics;
 mod strings;
+mod vecs;
 
 pub fn add(left: usize, right: usize) -> usize {
     left + right
