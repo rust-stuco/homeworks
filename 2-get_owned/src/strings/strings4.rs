@@ -17,14 +17,19 @@ fn string(arg: String) {
 
 #[test]
 fn am_i_str_or_string() {
-    ???("blue");
-    ???("red".to_string());
-    ???(String::from("hi"));
-    ???("rust is fun!".to_owned());
-    ???("nice weather".into());
-    ???(format!("Interpolation {}", "Station"));
-    ???(&String::from("abc")[0..1]);
-    ???("  hello there ".trim());
-    ???("Happy Monday!".to_string().replace("Mon", "Tues"));
-    ???("mY sHiFt KeY iS sTiCkY".to_lowercase());
+    // Some examples:
+    string_slice("");
+    string(String::new());
+
+    // Replace all of the `todo!()`s with `string_slice` or `string`!
+    todo!("blue");
+    todo!("red".to_string());
+    todo!(String::from("hi"));
+    todo!("rust is fun!".to_owned());
+    todo!("nice weather".into());
+    todo!(format!("Interpolation {}", "Station"));
+    todo!(&String::from("abc")[0..1]);
+    todo!("  hello there ".trim());
+    todo!("Happy Monday!".to_string().replace("Mon", "Tues"));
+    todo!("mY sHiFt KeY iS sTiCkY".to_lowercase());
 }
