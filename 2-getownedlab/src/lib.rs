@@ -7,6 +7,7 @@ mod vecs;
 /// Take a vector and create a new vector with all of the duplicate elements removed.
 /// The elements should be in the same order they appeared, unless removed.
 /// You are NOT allowed to use the built-in vector method `dedup()` or any similar methods.
+/// Also, ignore the clippy::ptr_arg warning you get.
 #[cfg(test)]
 fn create_with_removed_duplicates(v: &Vec<i32>) -> Vec<i32> {
     let mut v = v.clone();
@@ -14,7 +15,7 @@ fn create_with_removed_duplicates(v: &Vec<i32>) -> Vec<i32> {
 
     let mut i = 1;
     while i < v.len() {
-        if v[i-1] == v[i] {
+        if v[i - 1] == v[i] {
             // SAFETY: we know i is in bounds and also the element at i-1 must exist
             v.remove(i);
         } else {
@@ -35,7 +36,7 @@ fn remove_duplicates(v: &mut Vec<i32>) {
 
     let mut i = 1;
     while i < v.len() {
-        if v[i-1] == v[i] {
+        if v[i - 1] == v[i] {
             // SAFETY: we know i is in bounds and also the element at i-1 must exist
             v.remove(i);
         } else {
@@ -43,8 +44,6 @@ fn remove_duplicates(v: &mut Vec<i32>) {
         }
     }
 }
-
-
 
 #[cfg(test)]
 mod tests {
@@ -64,6 +63,7 @@ mod tests {
         // TODO make more tests
     }
 
+    #[test]
     fn test_destructible() {
         let mut vec1 = vec![3, 5, 3, 3, 6];
         let mut vec2 = vec![1, 3, 5, 3, 3, 2, 1, 7, 5];

@@ -5,7 +5,7 @@
 // We recommend uncommenting them one at a time.
 // Make sure you read ALL of the error messages! They contain VERY useful information.
 
-mod move_semantics1;
+// mod move_semantics1;
 // mod move_semantics2;
 // mod move_semantics3;
 // mod move_semantics4;
