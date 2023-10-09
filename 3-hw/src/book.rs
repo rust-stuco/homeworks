@@ -1,44 +1,41 @@
 use std::fmt::Display;
 
 struct Image {
-    _width: usize,
-    _height: usize,
+    width: usize,
+    height: usize,
     caption: String,
 }
 
-enum PageContent {
+enum Page {
     Blank,
-    Heading(String),
     Text(String),
-    /// Magical pages that can contain any image
+    /// These magical pages can contain any image
     Picture(Image),
 }
 
-impl Display for PageContent {
+impl Display for Page {
     fn fmt(&self, f: &mut std::fmt::Formatter<'_>) -> std::fmt::Result {
         match &self {
-            PageContent::Blank => write!(f, "\n\n"),
-            PageContent::Heading(heading) => write!(f, "\n{}\n", heading.to_uppercase()),
-            PageContent::Text(s) => write!(f, "{}", s),
-            PageContent::Picture(img) => write!(f, "\n< {} >\n", img.caption),
+            Page::Blank => writeln!(f, "\n\n\n"),
+            Page::Text(s) => writeln!(f, "{}", s),
+            Page::Picture(img) => {
+                writeln!(f, "\n< {} >({}x{})\n", img.caption, img.width, img.height)
+            }
         }
     }
 }
-
-struct Page(Vec<PageContent>);
 
 struct DoubleSidedPage {
     front: Page,
     back: Page,
 }
 
-impl Display for Page {
-    fn fmt(&self, f: &mut std::fmt::Formatter<'_>) -> std::fmt::Result {
-        writeln!(f, "Page Content: {{")?;
-        for page_content in &self.0 {
-            write!(f, "{}", page_content)?;
+impl DoubleSidedPage {
+    fn flip(self) -> Self {
+        Self {
+            front: self.back,
+            back: self.front,
         }
-        writeln!(f, "}}")
     }
 }
 
@@ -65,6 +62,7 @@ impl Book {
         self.length
     }
 
+    /// TODO description
     fn read_left(&self) -> Option<String> {
         if self.left_pages.is_empty() {
             None
@@ -74,6 +72,7 @@ impl Book {
         }
     }
 
+    /// TODO description
     fn read_right(&self) -> Option<String> {
         if self.right_pages.is_empty() {
             None
@@ -83,13 +82,29 @@ impl Book {
         }
     }
 
-    /// If already at the end, do nothing
-    fn flip_right(&mut self) {
-        todo!()
+    /// TODO description
+    /// Always inserts wherever the book is open on the right side
+    fn insert_page(&mut self, new_page: DoubleSidedPage) {
+        self.right_pages.push(new_page);
     }
 
+    // Maybe add a remove page?
+
+    /// TODO description
+    /// If already at the end, do nothing
+    fn flip_next(&mut self) {
+        match self.right_pages.pop() {
+            None => (),
+            Some(page) => self.left_pages.push(page.flip()),
+        }
+    }
+
+    /// TODO description
     /// If already at the beginning, do nothing
-    fn flip_left(&mut self) {
-        todo!()
+    fn flip_prev(&mut self) {
+        match self.left_pages.pop() {
+            None => (),
+            Some(page) => self.right_pages.push(page.flip()),
+        }
     }
 }
