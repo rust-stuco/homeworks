@@ -4,11 +4,10 @@
 // Make me pass the test!
 
 fn vec_loop(mut v: Vec<i32>) -> Vec<i32> {
+    // Here, element is a mutable reference into v. You can think of this as a pointer.
+    // Try doing what you would do in C and see if that works!
     for element in v.iter_mut() {
-        // TODO: Fill this up so that each element in the Vec `v` is multiplied by 2.
-        // Here, element is a mutable reference into v.
-        // Try doing what you would do in C and see if that works
-        todo!()
+        todo!("Fill this up so that each element in the Vec `v` is multiplied by 2.")
     }
 
     // At this point, `v` should be equal to [4, 8, 12, 16, 20].
@@ -16,10 +15,10 @@ fn vec_loop(mut v: Vec<i32>) -> Vec<i32> {
 }
 
 fn vec_map(v: &Vec<i32>) -> Vec<i32> {
+    // This `map` function will apply this function to every element in the vector.
+    // Instead of mutating, return an element!
     v.iter().map(|element| {
-        // TODO: Do the same thing as above - but instead of mutating the
-        // Vec, you can just return the new number!
-        todo!()
+        todo!("Do the same thing as above - but instead of mutating the Vec, you can just return the new number!")
     }).collect()
 }
 
