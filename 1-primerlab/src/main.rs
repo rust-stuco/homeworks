@@ -1,6 +1,11 @@
 use primer::is_prime;
 use std::io;
 
+mod tests;
+
+/// The main function is our entrypoint, just like in C.
+/// In this case, we implemented a nice command line interface, using
+/// is_prime from lib.rs
 fn main() {
     println!("Test if a number is prime!");
 
