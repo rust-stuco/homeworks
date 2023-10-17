@@ -3,7 +3,7 @@
 
 The goal of this homework is to make sure that you understand Rust's basic syntax.
 
-We  recommend you make use of the [Rust Book](https://doc.rust-lang.org/book/title-page.html), chapters 1-3, as a "textbook" of this course. It's generally easy to follow along with, and would make handy reference material for the labs in this course.
+We recommend you make use of the [Rust Book](https://doc.rust-lang.org/book/title-page.html), chapters 1-3, as a "textbook" of this course. It's generally easy to follow along with, and would make handy reference material for the labs in this course.
 
 We expect you to spend less than an hour on this homework, so if you are spending more than that, please let us know! This time limit does not include setting up Rust on your machine though, so if you have trouble with installing Rust, make sure to ask for help.
 
@@ -32,7 +32,7 @@ When you are able to run `cargo test -- fixme` without any errors, move on to th
 ## Part 2: Function implementations
 
 For this part, you will need to implement 4 simple functions in Rust.
-In `src/lib.rs`, you will find 4 functions with a `todo!()` inside of them. Replace that `todo!()` with your implementation, according to the comment specification. two of the four functions require you to implement them a certain way, so make sure to read those comments carefully.
+In `src/lib.rs`, you will find 4 functions with a `todo!()` inside of them. Replace that `todo!()` with your implementation, according to the comment specification. Two of the four functions require you to implement them a certain way, so make sure to read those comments carefully.
 
 To test all of your functions, run:
 ```sh
@@ -49,7 +49,7 @@ $ cargo run
 - Run `make handin`
 - Submit the resultant `handin.tar` to Gradescope.
 
-If you do not have `make` and `tar` installed on your system, you can either use the CMU Linux SSH machines, install `make` and `tar` on your machine, or reach out to us for assistance.
+If you do not have `make` and `tar` installed on your system, install `make` and `tar` on your machine or use the CMU Linux SSH machines. If you need help with this, please reach out to us!
 
 ## Collaboration
 In general, feel free to discuss homeworks with other students! As long as you do not copy someone else's work, any communication is fair game. Feel free to discuss on the course Discord so that other students can see your questions and answers, as well.
