@@ -5,7 +5,7 @@
 // We recommend uncommenting them one at a time.
 // Make sure you read ALL of the error messages! They contain VERY useful information.
 
-// mod fixme1;
+mod fixme1;
 // mod fixme2;
 // mod fixme3;
 // mod fixme4;
