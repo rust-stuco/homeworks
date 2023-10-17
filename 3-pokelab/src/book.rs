@@ -1,33 +1,8 @@
-use std::fmt::Display;
-
-struct Image {
-    width: usize,
-    height: usize,
-    caption: String,
-}
-
-enum Page {
-    Blank,
-    Text(String),
-    /// These magical pages can contain any image
-    Picture(Image),
-}
-
-impl Display for Page {
-    fn fmt(&self, f: &mut std::fmt::Formatter<'_>) -> std::fmt::Result {
-        match &self {
-            Page::Blank => writeln!(f, "\n\n\n"),
-            Page::Text(s) => writeln!(f, "{}", s),
-            Page::Picture(img) => {
-                writeln!(f, "\n< {} >({}x{})\n", img.caption, img.width, img.height)
-            }
-        }
-    }
-}
+#![allow(dead_code)]
 
 struct DoubleSidedPage {
-    front: Page,
-    back: Page,
+    front: String,
+    back: String,
 }
 
 impl DoubleSidedPage {
@@ -42,69 +17,78 @@ impl DoubleSidedPage {
 pub struct Book {
     pub title: String,
     pub author: String,
-    length: usize,
     left_pages: Vec<DoubleSidedPage>,
     right_pages: Vec<DoubleSidedPage>,
 }
 
 impl Book {
-    fn new(title: &str, author: &str, length: usize) -> Self {
+    /// Creates an empty book given a title and an author
+    fn new(title: &str, author: &str) -> Self {
         Self {
             title: title.to_string(),
             author: author.to_string(),
-            length,
-            left_pages: Vec::with_capacity((length + 1) / 2),
-            right_pages: Vec::with_capacity((length + 1) / 2),
+            left_pages: Vec::new(),
+            right_pages: Vec::new(),
         }
     }
 
+    /// Returns the number of pages in the book
     fn size(&self) -> usize {
-        self.length
+        // 2 extra for the front and back cover
+        self.left_pages.len() + self.right_pages.len() + 2
     }
 
-    /// TODO description
-    fn read_left(&self) -> Option<String> {
+    /// Read the left page of where the book is opened to
+    /// If the book is at the very beginning, return the title of the book
+    fn read_left_page(&self) -> &str {
         if self.left_pages.is_empty() {
-            None
-        } else {
-            // SAFETY: We check if the vector is empty, so we are fine to unwrap the last elem
-            Some(format!("{}", self.left_pages.last().unwrap().back))
-        }
-    }
-
-    /// TODO description
-    fn read_right(&self) -> Option<String> {
-        if self.right_pages.is_empty() {
-            None
+            &self.title
         } else {
             // SAFETY: We check if the vector is empty, so we are fine to unwrap the first elem
-            Some(format!("{}", self.right_pages.last().unwrap().front))
+            &self.left_pages.last().unwrap().back
         }
     }
 
-    /// TODO description
+    /// Read the right page of where the book is opened to
+    /// If the book is at the very end, return "The End" as a string
+    fn read_right_page(&self) -> &str {
+        if self.right_pages.is_empty() {
+            "The End"
+        } else {
+            // SAFETY: We check if the vector is empty, so we are fine to unwrap the first elem
+            &self.right_pages.last().unwrap().front
+        }
+    }
+
+    /// Insert a DoubleSidedPage into the book
     /// Always inserts wherever the book is open on the right side
     fn insert_page(&mut self, new_page: DoubleSidedPage) {
         self.right_pages.push(new_page);
     }
 
-    // Maybe add a remove page?
+    // TODO Maybe add a remove page?
 
-    /// TODO description
-    /// If already at the end, do nothing
-    fn flip_next(&mut self) {
+    /// Turn the book to the right to see the next two pages
+    /// If already at the end, return false, otherwise return true
+    fn next_pages(&mut self) -> bool {
         match self.right_pages.pop() {
-            None => (),
-            Some(page) => self.left_pages.push(page.flip()),
+            None => false,
+            Some(page) => {
+                self.left_pages.push(page.flip());
+                true
+            }
         }
     }
 
-    /// TODO description
-    /// If already at the beginning, do nothing
-    fn flip_prev(&mut self) {
+    /// Turn the book to the left to see the previous two pages
+    /// If already at the beginning, return false, otherwise return true
+    fn prev_pages(&mut self) -> bool {
         match self.left_pages.pop() {
-            None => (),
-            Some(page) => self.right_pages.push(page.flip()),
+            None => false,
+            Some(page) => {
+                self.right_pages.push(page.flip());
+                true
+            }
         }
     }
 }
