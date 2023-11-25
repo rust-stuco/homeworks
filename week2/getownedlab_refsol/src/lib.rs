@@ -22,56 +22,32 @@
 //!
 //!
 //!
-//! # Setup
+//! # Part 1: Slices
 //!
-//! Run `cargo doc` at the root of this package to generate the documentation for this lab.
-//!
-//! ```sh
-//! $ cargo doc
-//! Documenting getownedlab v0.1.0 (<path>/getownedlab)
-//! Finished dev [unoptimized + debuginfo] target(s) in 0.11s
-//! Generated <path>/getownedlab/target/doc/getownedlab/index.html
-//! ```
-//!
-//! `cargo doc` will generate an HTML file that you can view in your browser!
-//! It might be easier to read the markdown-rendered docs than the comments in the handout.
+//! Like the previous homework, you will modify 3 files that don't pass the borrow checker
+//! by changing a few things to make them compile! This is basically identical to the previous
+//! homework. You should be able to run `cargo test` with all the
+//! modules (`pub mod`s) in `src/slices/mod.rs` uncommented.
 //!
 //!
 //!
-//! # Part 1: Move Semantics
+//! # Part 2: Move Semantics
 //!
-//! Like the previous homework, you will modify 5 files that don't pass the borrow checker
-//! by changing a few things to make them compile! The first 3 exercises involve the `Vec` type,
-//! which is an _owned_ type.
+//! Like the previous section, you will modify 5 files that don't pass the borrow checker.
+//! The first 3 exercises involve the `Vec` type, which is an _owned_ type.
 //!
-//! For this homework, all you need to know is the `vec![]` macro
-//! and the `push` method on vectors. Recall the `vec![]` creates a new vector with elements, and
+//! For this homework, all you need to know is the `vec![]` macro and the `push` method on vectors.
+//! Recall the `vec![]` creates a new vector with elements, and
 //! `push` appends an element onto the end of a vector.
 //!
-//! Run this command in the root of your project (parent directory of the `src/` folder):
-//! ```sh
-//! $ cargo test
-//! ```
-//! **What does the error say?** Go into `src/move_semantics/move_semantics1.rs`
-//! and make the change.
-//!
-//! When you are able to run `cargo test` without any errors, move on to the next
-//! exercise by uncommenting `pub mod move_semantics2` in `src/move_semantics/mod.rs`.
-//! Go through all 5 of the exercises in `src/move_semantics` and
-//! make sure that all the test cases pass when you run `cargo test`.
 //!
 //!
-//!
-//! # Part 2: Strings
+//! # Part 3: Strings
 //!
 //! In this section, you'll be working with `String` and `&str` instead of `Vec`.
 //!
-//!
 //! The first three exercises in `src/strings` are just like the previous section,
 //! where you need to make a change to pass the borrow checker and compile.
-//! Uncomment `pub mod strings1;` in `src/strings/mod.rs` and run `cargo test`.
-//! What does the compiler tell you? Make the change in `src/strings/strings1.rs` and then
-//! move onto the next exercises by uncommenting the other `pub mod strings_;`.
 //!
 //! A useful thing to remember here is that a `&String` can be _coerced_ into a `&str`.
 //! Other than that, just remember to make sure that you always read what the compiler tells you
@@ -115,5 +91,6 @@
 //! you should reach out to us and let us know as well ---
 //! chances are, you're not the only one!
 
+pub mod slices;
 pub mod move_semantics;
 pub mod strings;
