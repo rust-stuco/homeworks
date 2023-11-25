@@ -1,4 +1,5 @@
-// Make the test pass by finding a way to keep both Vecs separate!
+/// Make me compile!
+/// Hint: What does the compiler tell you?
 
 #[test]
 fn youre_different() {

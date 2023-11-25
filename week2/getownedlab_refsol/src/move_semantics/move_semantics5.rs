@@ -1,12 +1,29 @@
-// Make me compile only by reordering the lines in `main()`, but without adding,
-// changing or removing any of them.
+/// Make me compile!
+/// You can't change anything except adding or removing references (`&`).
+///
+/// Hint:
+/// The first function SHOULD NOT take ownership of `data`.
+/// The second function SHOULD take ownership of `data`.
 
 #[test]
-fn get_in_line() {
-    let mut x = 100;
-    let y = &mut x;
-    let z = &mut x;
-    *y += 100;
-    *z += 1000;
-    assert_eq!(x, 1200);
+fn did_you_get_that_reference() {
+    let data = "Rust is great!".to_string();
+
+    get_char(data);
+
+    string_uppercase(&data);
+}
+
+// Should not take ownership
+#[cfg(test)]
+fn get_char(data: String) -> char {
+    data.chars().last().unwrap()
+}
+
+// Should take ownership
+#[cfg(test)]
+fn string_uppercase(mut data: &String) {
+    data = &data.to_uppercase();
+
+    println!("{}", data);
 }

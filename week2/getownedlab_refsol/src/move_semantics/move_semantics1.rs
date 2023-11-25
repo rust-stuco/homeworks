@@ -1,3 +1,6 @@
+/// Make me compile!
+/// Hint: What does the compiler tell you?
+
 #[test]
 fn gimme_one_more() {
     let vec0 = vec![22, 44, 66];

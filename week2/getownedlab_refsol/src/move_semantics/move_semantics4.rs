@@ -1,22 +1,12 @@
-// Refactor this code so that instead of passing `vec0` into the `fill_vec`
-// function, the Vector gets created in the function itself and passed back to
-// the main function.
+/// Make me compile by ONLY reordering the lines in `main()`,
+/// but without adding, changing or removing any of them.
 
 #[test]
-fn vec_in_a_box() {
-    let vec0 = vec![22, 44, 66];
-
-    let mut vec1 = fill_vec(vec0);
-
-    assert_eq!(vec1, vec![22, 44, 66, 88]);
-}
-
-// `fill_vec()` no longer takes `vec: Vec<i32>` as argument - don't change this!
-fn fill_vec() -> Vec<i32> {
-    // Instead, let's create and fill the Vec in here - how do you do that?
-    let mut vec = vec;
-
-    vec.push(88);
-
-    vec
+fn get_in_line() {
+    let mut x = 100;
+    let y = &mut x;
+    let z = &mut x;
+    *y += 100;
+    *z += 1000;
+    assert_eq!(x, 1200);
 }
