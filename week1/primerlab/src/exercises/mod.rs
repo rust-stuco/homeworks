@@ -6,13 +6,13 @@
 /// Make sure you read ALL of the error messages! They contain VERY useful information.
 
 pub mod fixme1;
-pub mod fixme2;
-pub mod fixme3;
-pub mod fixme4;
-pub mod fixme5;
-pub mod fixme6;
-pub mod fixme7;
-pub mod fixme8;
+// pub mod fixme2;
+// pub mod fixme3;
+// pub mod fixme4;
+// pub mod fixme5;
+// pub mod fixme6;
+// pub mod fixme7;
+// pub mod fixme8;
 
 // Rustlings exercise reference:
 // Exercise 1: variables exercise number 1

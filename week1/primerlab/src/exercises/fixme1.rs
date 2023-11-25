@@ -3,6 +3,6 @@
 
 #[test]
 fn let_x_be() {
-    let x = 5;
+    x = 5;
     println!("x has the value {}", x);
 }

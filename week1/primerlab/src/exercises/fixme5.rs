@@ -10,5 +10,5 @@ fn youre_square() {
 
 #[cfg(test)]
 fn square(num: i32) -> i32 {
-    num * num
+    num * num;
 }

@@ -14,7 +14,7 @@ fn rustbucks() {
 }
 
 #[cfg(test)]
-fn sale_price(price: i32) -> i32 {
+fn sale_price(price: i32) -> {
     if is_even(price) {
         price - 10
     } else {
