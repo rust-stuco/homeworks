@@ -32,18 +32,22 @@
 //! Make sure both of those commands execute successfully, and have relatively recent dates.
 //! If the dates are not recent, you can update `rustup` with `rustup update`.
 //!
-//! Once you have `cargo` installed, run `cargo doc` in this directory to generate documentation
-//! for this homework.
+//! Once you have `cargo` installed, you can also run `cargo doc` in this directory
+//! to generate documentation for this homework, if you would like a local version of this writeup.
+//!
+//! _This will also be available on our course website, but you might as well try Rust's_
+//! _documentation system out!_ 🦀
 //!
 //! ```sh
 //! $ cargo doc
 //! Documenting primerlab v0.1.0 (<path>/primerlab)
-//! Finished dev [unoptimized + debuginfo] target(s) in 0.11s
-//! Generated <path>/primerlab/target/doc/primerlab/index.html
+//!    Finished dev [unoptimized + debuginfo] target(s) in 0.11s
+//!   Generated <path>/primerlab/target/doc/primerlab/index.html
 //! ```
 //!
 //! `cargo doc` will generate an HTML file that you can view in your browser!
 //! It might be easier to read the markdown-rendered docs than the comments in this handout.
+//! Again, this will be available on our website if that is more your style.
 //!
 //!
 //!
