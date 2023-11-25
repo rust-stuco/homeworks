@@ -1,35 +1,43 @@
-// Ok, here are a bunch of values-- some are `String`s, some are `&str`s. Your
-// task is to call one of these two functions on each value depending on what
-// you think each value is. That is, add either `string_slice` or `string`
-// before the parentheses on each line. If you're right, it will compile!
+// Implement the 3 functions!
 
-// You could brute force this... but try to guess before compiling and see if you're right!
+// Try not to just google the answer. The official Rust documentation will be helpful:
 
-#[cfg(test)]
-fn string_slice(arg: &str) {
-    println!("{}", arg);
+// - https://doc.rust-lang.org/std/primitive.str.html
+// You can also just enter into the search bar and have the docs find things for you.
+
+
+fn trim_me(input: &str) -> String {
+    todo!("Remove whitespace from both ends of a string!")
+}
+
+fn compose_me(input: &str) -> String {
+    todo!("Add 'world!' to the string! There's multiple ways to do this!")
+}
+
+fn replace_me(input: &str) -> String {
+    todo!("Replace 'cars' in the string with 'balloons'!")
 }
 
 #[cfg(test)]
-fn string(arg: String) {
-    println!("{}", arg);
-}
+mod tests {
+    use super::*;
 
-#[test]
-fn am_i_str_or_string() {
-    // Some examples:
-    string_slice("");
-    string(String::new());
+    #[test]
+    fn trim_a_string() {
+        assert_eq!(trim_me("Hello!     "), "Hello!");
+        assert_eq!(trim_me("  What's up!"), "What's up!");
+        assert_eq!(trim_me("   Hola!  "), "Hola!");
+    }
 
-    // Replace all of the `todo!()`s with `string_slice` or `string`!
-    todo!("blue");
-    todo!("red".to_string());
-    todo!(String::from("hi"));
-    todo!("rust is fun!".to_owned());
-    todo!("nice weather".into());
-    todo!(format!("Interpolation {}", "Station"));
-    todo!(&String::from("abc")[0..1]);
-    todo!("  hello there ".trim());
-    todo!("Happy Monday!".to_string().replace("Mon", "Tues"));
-    todo!("mY sHiFt KeY iS sTiCkY".to_lowercase());
+    #[test]
+    fn compose_a_string() {
+        assert_eq!(compose_me("Hello"), "Hello world!");
+        assert_eq!(compose_me("Goodbye"), "Goodbye world!");
+    }
+
+    #[test]
+    fn replace_a_string() {
+        assert_eq!(replace_me("I think cars are cool"), "I think balloons are cool");
+        assert_eq!(replace_me("I love to look at cars"), "I love to look at balloons");
+    }
 }
