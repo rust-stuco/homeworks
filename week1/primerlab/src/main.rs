@@ -1,4 +1,4 @@
-use primerlab_refsol::functions::is_prime;
+use primerlab::functions::is_prime;
 use std::io;
 
 mod tests;

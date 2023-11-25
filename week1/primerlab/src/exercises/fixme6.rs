@@ -6,7 +6,7 @@
 #[test]
 fn old_cats() {
     let cat = ("Furry McFurson", 3.5);
-    let (name, age) = cat;
+    let /* your pattern here */ = cat;
 
     println!("{} is {} years old.", name, age);
 }

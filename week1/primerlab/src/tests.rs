@@ -1,4 +1,4 @@
-use primerlab_refsol::functions::{add, fib, gcd, is_prime, nth_prime};
+use primerlab::functions::{add, fib, gcd, is_prime, nth_prime};
 
 /// Run these tests with `cargo test`.
 /// Some of these tests might be slow though. In that case, run `cargo test --release`!

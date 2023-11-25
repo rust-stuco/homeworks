@@ -5,7 +5,7 @@
 
 #[test]
 fn big_arr() {
-    let a = [42; 100];
+    let a = ???
 
     if a.len() >= 100 {
         println!("Wow, that's a big array!");
