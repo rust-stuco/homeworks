@@ -95,9 +95,9 @@ pub fn gcd(x: usize, y: usize) -> usize {
     }
 }
 
-/// Returns the nth fibonnaci number.
+/// Returns the nth fibonacci number.
 ///
-/// We consider the 0th fibonnaci number to be 0, and the first to be 1.
+/// We consider the 0th fibonacci number to be 0, and the first to be 1.
 ///
 /// # Example
 ///
