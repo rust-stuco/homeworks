@@ -1,38 +1,36 @@
 #![allow(unused_variables, dead_code, clippy::new_without_default)]
 
-/// In this module, we'll be implementing a water type pokemon that represents
-/// some of the Eevee evolution line:
-///  - Eevee
-///  - Vaporeon
-///  - Jolteon
-///  - Flareon
+//! In this module, we'll be implementing a water type pokemon that represents
+//! some of the Eevee evolution line:
+//!  - Eevee
+//!    - Vaporeon
+//!    - Jolteon
+//!    - Flareon
 ///
-/// To model the evolution line, we want to design a struct that acts like a state machine.
-/// The struct will have a `EeveeEvolution` enum attribute that will
-/// represent the current state of the pokemon.
+//! To model the evolution line, we want to design a struct that acts like a state machine.
+//! The struct will have a `EeveeEvolution` enum attribute that will
+//! represent the current state of the pokemon.
 ///
-/// In our model we'll allow Eevee to evolve into Vaporeon, Jolteon, or Flareon,
-/// as well as "devolve" back into Eevee.
+//! In our model we'll allow Eevee to evolve into Vaporeon, Jolteon, or Flareon,
+//! as well as "devolve" back into Eevee.
+
 pub struct Eevee {
-    level: u16,
-    health: u16,
-    attack: u16,
-    defense: u16,
-    evolution: EeveeEvolution,
+    level: u8,
+    health: usize,
+    attack: usize,
+    defense: usize,
 }
 
-/// TODO: code examples on every method and redo some documentation
+struct EeveeEvolutionStats {
+    inner: Eevee,
+    multiplier: f32,
+}
 
-/// `EeveeEvolution::Eevee` represents the starting state of an `Eevee`.
-/// Note that the struct `Eevee` is not the same as the enum variant `EeveeEvolution::Eevee`.
-/// Each of the 3 evolution states has an `f32` field that represents a multiplier on the
-/// pokemon's base stats. TODO code example
-#[derive(PartialEq)]
+
 pub enum EeveeEvolution {
-    Eevee,
-    Vaporeon(f32),
-    Jolteon(f32),
-    Flareon(f32),
+    Vaporeon(EeveeEvolution, f32),
+    Flareon(EeveeEvoltuion, usize),
+    Jolteon(EeveeEvolution, u8),
 }
 
 impl Eevee {
@@ -57,12 +55,6 @@ impl Eevee {
     /// The attack value is calculated by multiplying the base attack
     /// by the Eevee state multiplier, and rounding
     pub fn get_attack(&self) -> f32 {
-        match self.evolution {
-            EeveeEvolution::Eevee => self.attack as f32,
-            EeveeEvolution::Vaporeon(m) => self.attack as f32 * m,
-            EeveeEvolution::Jolteon(m) => self.attack as f32 * m,
-            EeveeEvolution::Flareon(m) => self.attack as f32 * m,
-        }
     }
 
     /// Get the defense value of the Eevee.
