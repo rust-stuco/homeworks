@@ -3,33 +3,50 @@
 //! In this module, we'll be implementing a water type pokemon that represents
 //! some of the Eevee evolution line:
 //!  - Eevee
-//!    - Vaporeon
-//!    - Jolteon
-//!    - Flareon
+//!      - Vaporeon
+//!      - Jolteon
+//!      - Flareon
 //!
 //! To model the evolution line, we will want to use a type system that represents the possible
-//! states that the Eevee can be in.
+//! states that the Eevee can be in. We have an [`Eevee`] type that contains stats about the
+//! Eevee, and several methods that can retrieve and modify these stats. We also have an
+//! [`EvolvedEevee`] type that can be one of Vaporeon, Flareon, and Jolteon.
 //!
-//! In our model we'll allow Eevee to evolve into Vaporeon, Jolteon, or Flareon,
-//! as well as "devolve" back into Eevee.
+//! An [`Eevee`] can `evolve` into an [`EvolvedEevee`], and an [`EvolvedEevee`] can `devolve`
+//! back into an [`Eevee`]. Go to the documentation for each of these types to learn more.
 
+/// This type represents a basic `Eevee` pokemon. It has a level, as well as health,
+/// attack, and defense stats.
 pub struct Eevee {
-    pub level: u8,
-    pub health: u16,
-    pub attack: u16,
-    pub defense: u16,
+    level: u8,
+    health: u16,
+    attack: u16,
+    defense: u16,
 }
 
+/// These stones are used to evolve an [`Eevee`] into an [`EvolvedEevee`].
 pub enum ElementalStone {
+    /// This Water Stone turns an [`Eevee`] into an [`EvolvedEevee::Vaporeon`]
     WaterStone,
+    /// This Fire Stone turns an [`Eevee`] into an [`EvolvedEevee::Flareon`]
     FireStone,
+    /// This Electric Stone turns an [`Eevee`] into an [`EvolvedEevee::Jolteon`]
     ElectricStone,
 }
 
+/// This type represent an evolved Eevee in the form of either Vaporeon, Flareon, or Jolteon.
+///
+/// An [`EvolvedEevee`] contains an inner [`Eevee`] as well as a secondary attribute value.
+/// This attribute value changes one of the inner [`Eevee`]'s base stats depending on which
+/// of the 3 types the [`EvolvedEevee`] is.
+///
+/// - If it is a Vaporeon, then the secondary attribute is added to the base health
+/// - If it is a Flareon, then the secondary attribute is added to the base attack
+/// - If it is a Jolteon, then the secondary attribute is added to the base defense
 pub enum EvolvedEevee {
     Vaporeon(Eevee, u16),
-    Flareon(Eevee, f32),
-    Jolteon(Eevee, u8),
+    Flareon(Eevee, u16),
+    Jolteon(Eevee, u16),
 }
 
 impl Eevee {
@@ -56,15 +73,40 @@ impl Eevee {
         }
     }
 
-    /// Level up the Eevee by `l`.
+    /// Retrieves the level of the Eevee
+    pub fn get_level(&self) -> u8 {
+        self.level
+    }
+
+    /// Retrieves the health of the Eevee
+    pub fn get_health(&self) -> u16 {
+        self.health
+    }
+
+    /// Retrieves the attack of the Eevee
+    pub fn get_attack(&self) -> u16 {
+        self.attack
+    }
+
+    /// Retrieves the defense of the Eevee
+    pub fn get_defense(&self) -> u16 {
+        self.defense
+    }
+
+    /// Level up the Eevee by `levels`.
     ///
     /// Example:
     /// ```
     /// let new_eevee = Eevee::new();
     /// assert_eq!(new_eevee.level, 1);
     /// ```
-    pub fn level_up(&mut self, l: u8) {
-        self.level += l;
+    pub fn level_up(&mut self, levels: u8) {
+        self.level += levels;
+    }
+
+    pub fn take_damage(&mut self, damage: u16) {
+        // TODO what happens when no more health left
+        self.health -= damage;
     }
 
     /// This method must accomplish the following:
