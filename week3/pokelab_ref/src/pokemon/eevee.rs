@@ -6,98 +6,128 @@
 //!    - Vaporeon
 //!    - Jolteon
 //!    - Flareon
-///
-//! To model the evolution line, we want to design a struct that acts like a state machine.
-//! The struct will have a `EeveeEvolution` enum attribute that will
-//! represent the current state of the pokemon.
-///
+//!
+//! To model the evolution line, we will want to use a type system that represents the possible
+//! states that the Eevee can be in.
+//!
 //! In our model we'll allow Eevee to evolve into Vaporeon, Jolteon, or Flareon,
 //! as well as "devolve" back into Eevee.
 
-pub struct Eevee {
+#[derive(Clone, Copy)]
+pub enum Eevee {
+    Basic(BasicEeveeStats),
+    Evolved(BasicEeveeStats, EvolvedEeveeStats),
+}
+
+#[derive(Clone, Copy)]
+pub struct BasicEeveeStats {
     level: u8,
-    health: usize,
-    attack: usize,
-    defense: usize,
+    health: u16,
+    attack: u16,
+    defense: u16,
 }
 
-struct EeveeEvolutionStats {
-    inner: Eevee,
-    multiplier: f32,
-}
-
-
-pub enum EeveeEvolution {
-    Vaporeon(EeveeEvolution, f32),
-    Flareon(EeveeEvoltuion, usize),
-    Jolteon(EeveeEvolution, u8),
+#[derive(Clone, Copy)]
+pub enum EvolvedEeveeStats {
+    Vaporeon(u16),
+    Flareon(f32),
+    Jolteon(u8),
 }
 
 impl Eevee {
-    /// Creates an Eevee with the following base stats:
+    /// Creates a basic Eevee with the following base stats:
     /// - level: 1
     /// - health: 55
     /// - attack: 55
     /// - defense: 50
-    /// - evolution: EeveeEvolution::Eevee
     /// TODO code example
-    pub fn new() -> Eevee {
-        Self {
+    pub fn new() -> Self {
+        Self::Basic(BasicEeveeStats {
             level: 1,
             health: 55,
             attack: 55,
             defense: 50,
-            evolution: EeveeEvolution::Eevee,
+        })
+    }
+
+    /// TODO docs and code example
+    pub fn is_evolved(&self) -> bool {
+        match self {
+            Eevee::Basic(_) => false,
+            Eevee::Evolved(_, _) => true,
         }
     }
 
     /// Get the attack value of the Eevee.
     /// The attack value is calculated by multiplying the base attack
     /// by the Eevee state multiplier, and rounding
-    pub fn get_attack(&self) -> f32 {
+    /// TODO docs and code example
+    pub fn get_attack(&self) -> u16 {
+        match self {
+            Eevee::Basic(base) => base.attack + base.level as u16,
+            Eevee::Evolved(base, evolved) => match evolved {
+                EvolvedEeveeStats::Flareon(multiplier) => {
+                    (base.attack as f32 * multiplier) as u16 + base.level as u16
+                }
+                _ => base.attack + base.level as u16,
+            },
+        }
     }
 
     /// Get the defense value of the Eevee.
     /// The defense value is calculated by multiplying the base defense by the Eevee state multiplier.
-    pub fn get_defense(&self) -> f32 {
-        match self.evolution {
-            EeveeEvolution::Eevee => self.defense as f32,
-            EeveeEvolution::Vaporeon(m) => self.defense as f32 * m,
-            EeveeEvolution::Jolteon(m) => self.defense as f32 * m,
-            EeveeEvolution::Flareon(m) => self.defense as f32 * m,
+    /// TODO docs and code example
+    pub fn get_defense(&self) -> u16 {
+        match self {
+            Eevee::Basic(base) => base.defense + base.level as u16,
+            Eevee::Evolved(base, _) => base.attack + base.level as u16,
         }
     }
 
     /// Get the health value of the Eevee.
     /// The health value is calculated by multiplying the base health by the Eevee state multiplier.
-    pub fn get_health(&self) -> f32 {
-        match self.evolution {
-            EeveeEvolution::Eevee => self.health as f32,
-            EeveeEvolution::Vaporeon(m) => self.health as f32 * m,
-            EeveeEvolution::Jolteon(m) => self.health as f32 * m,
-            EeveeEvolution::Flareon(m) => self.health as f32 * m,
+    /// TODO docs and code example
+    pub fn get_health(&self) -> u16 {
+        match self {
+            Eevee::Basic(base) => base.health + base.level as u16,
+            Eevee::Evolved(base, evolved) => match evolved {
+                EvolvedEeveeStats::Vaporeon(extra_health) => {
+                    base.health + extra_health + base.level as u16
+                }
+                _ => base.health + base.level as u16,
+            },
         }
     }
 
     /// Get the level of the Eevee.
-    pub fn get_level(&self) -> u16 {
-        self.level
+    /// TODO docs and code example
+    pub fn get_level(&self) -> u8 {
+        match self {
+            Eevee::Basic(base) => base.level,
+            Eevee::Evolved(base, _) => base.level,
+        }
     }
 
     /// Level up the Eevee by l. Preserves the rest of the state.
+    /// TODO docs and code example
     pub fn level_up(&mut self, l: u16) {
-        self.level += l;
+        match self {
+            Eevee::Basic(base) => base.level += 1,
+            Eevee::Evolved(base, _) => base.level += 1,
+        }
     }
 
     /// Get the type of the Eevee as a String.
     /// ex: "Eevee", "Vaporeon", "Jolteon", "Flareon"
-    /// TODO code example
+    /// TODO docs and code example
     pub fn get_type(&self) -> String {
-        match self.evolution {
-            EeveeEvolution::Eevee => "Eevee".to_string(),
-            EeveeEvolution::Vaporeon(_) => "Vaporeon".to_string(),
-            EeveeEvolution::Jolteon(_) => "Jolteon".to_string(),
-            EeveeEvolution::Flareon(_) => "Flareon".to_string(),
+        match self {
+            Eevee::Basic(_) => "Eevee".to_string(),
+            Eevee::Evolved(_, evolved) => match evolved {
+                EvolvedEeveeStats::Vaporeon(_) => "Vaporeon".to_string(),
+                EvolvedEeveeStats::Jolteon(_) => "Jolteon".to_string(),
+                EvolvedEeveeStats::Flareon(_) => "Flareon".to_string(),
+            },
         }
     }
 
@@ -110,15 +140,13 @@ impl Eevee {
     /// - If the level is greater 10, evolve into Flareon.
     /// The change in state will also change the pokemon's base stats by
     /// a randomly generated multiplier between 0.5 and 1.75
-    pub fn evolve(&mut self, evolution: EeveeEvolution) {
-        if self.evolution != EeveeEvolution::Eevee {
-            panic!("Tried to evolve an already evolved Eevee");
-        }
-        match evolution {
-            EeveeEvolution::Eevee => panic!("Tried to evolve an Eevee into another Eevee"),
-            EeveeEvolution::Vaporeon(_) => todo!(),
-            EeveeEvolution::Jolteon(_) => todo!(),
-            EeveeEvolution::Flareon(_) => todo!(),
+    /// TODO docs and code example
+    pub fn evolve(&mut self, evolution: EvolvedEeveeStats) {
+        match self {
+            Eevee::Basic(base) => {
+                *self = Self::Evolved(*base, evolution);
+            }
+            Eevee::Evolved(_, _) => panic!("Tried to evolve an already evolved Eevee"),
         }
     }
 
@@ -126,10 +154,11 @@ impl Eevee {
     // This method must accomplish the following:
     // - If the current state is Eevee, do nothing.
     // - If the current state is an evolution (not Eevee), devolve into Eevee.
+    /// TODO docs and code example
     pub fn devolve(&mut self) {
-        if self.evolution == EeveeEvolution::Eevee {
-            panic!("Tried to devolve an Eevee");
+        match self {
+            Eevee::Basic(base) => panic!("Tried to devolve a basic Eevee"),
+            Eevee::Evolved(base, _) => *self = Self::Basic(*base),
         }
-        self.evolution = EeveeEvolution::Eevee;
     }
 }
