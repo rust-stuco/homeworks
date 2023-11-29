@@ -1,5 +1,5 @@
 [package]
-name = "primerlab_refsol"
+name = "primerlab_ref"
 version = "0.1.0"
 edition = "2021"
 
