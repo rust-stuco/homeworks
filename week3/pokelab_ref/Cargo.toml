@@ -1,5 +1,5 @@
 [package]
-name = "pokelab_refsol"
+name = "pokelab_ref"
 version = "0.1.0"
 edition = "2021"
 
