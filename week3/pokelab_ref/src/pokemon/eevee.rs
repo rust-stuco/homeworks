@@ -22,12 +22,24 @@
 
 /// This type represents a basic [`Eevee`] pokemon. It has a level, as well as health,
 /// attack, and defense stats.
+///
+/// Something to note is that while it is possible to implement getters and setters for struct
+/// fields as if they were objects in OOP-paradigm languages, it is generally unnecessary for Rust.
+/// It can even get you into trouble with the borrow checker when dealing
+/// with fields that are referneces (we may talk about this when we get to _lifetimes_ in week 7).
+///
+/// Marking a field as `pub`, coupled with the borrow checker, will give you very similar
+/// semantics as to normal getters and setters.
+///
+/// There are, of course, places where you _do_ want these.
+/// And when we talk about traits in week 5,
+/// we will _need_ to have them if we want to share behavior among types.
 pub struct Eevee {
-    /// For this homework, [`Eevee::level`] doesn't actually represent anything important.
-    level: u8,
-    health: u16,
-    attack: u16,
-    defense: u16,
+    /// For this homework, [`level`](Eevee::level) doesn't actually represent anything important.
+    pub level: u8,
+    pub health: u16,
+    pub attack: u16,
+    pub defense: u16,
 }
 
 /// These stones are used to evolve an [`Eevee`] into an [`EvolvedEevee`].
@@ -37,12 +49,13 @@ pub struct Eevee {
 /// there could be more variants of [`ElementalStone`] added in the future.
 #[non_exhaustive]
 pub enum ElementalStone {
-    /// This Water Stone turns an [`Eevee`] into an [`EvolvedEevee::Vaporeon`]
+    /// This Water Stone turns an [`Eevee`] into an [`Vaporeon`](EvolvedEevee::Vaporeon)
     WaterStone,
-    /// This Fire Stone turns an [`Eevee`] into an [`EvolvedEevee::Flareon`]
+    /// This Fire Stone turns an [`Eevee`] into an [`Flareon`](EvolvedEevee::Flareon)
     FireStone,
-    /// This Electric Stone turns an [`Eevee`] into an [`EvolvedEevee::Jolteon`]
+    /// This Electric Stone turns an [`Eevee`] into an [`Jolteon`](EvolvedEevee::Jolteon)
     ElectricStone,
+    /// Placeholder for future stones we might want to add for new evolutions!
     DullRock,
 }
 
@@ -73,10 +86,10 @@ impl Eevee {
     /// use pokelab_ref::pokemon::eevee::*;
     ///
     /// let new_eevee = Eevee::new();
-    /// assert_eq!(new_eevee.get_level(), 0);
-    /// assert_eq!(new_eevee.get_health(), 100);
-    /// assert_eq!(new_eevee.get_attack(), 55);
-    /// assert_eq!(new_eevee.get_defense(), 20);
+    /// assert_eq!(new_eevee.level, 0);
+    /// assert_eq!(new_eevee.health, 100);
+    /// assert_eq!(new_eevee.attack, 55);
+    /// assert_eq!(new_eevee.defense, 20);
     /// ```
     pub fn new() -> Self {
         Self {
@@ -87,40 +100,20 @@ impl Eevee {
         }
     }
 
-    /// Retrieves the level of the Eevee
-    pub fn get_level(&self) -> u8 {
-        self.level
-    }
-
-    /// Retrieves the health of the Eevee
-    pub fn get_health(&self) -> u16 {
-        self.health
-    }
-
-    /// Retrieves the attack of the Eevee
-    pub fn get_attack(&self) -> u16 {
-        self.attack
-    }
-
-    /// Retrieves the defense of the Eevee
-    pub fn get_defense(&self) -> u16 {
-        self.defense
-    }
-
     /// Deals `damage` amount of damage to the Eevee's health.
     ///
     /// ```
     /// use pokelab_ref::pokemon::eevee::*;
     ///
     /// let mut new_eevee = Eevee::new();
-    /// assert_eq!(new_eevee.get_health(), 100);
-    /// assert_eq!(new_eevee.get_defense(), 20);
+    /// assert_eq!(new_eevee.health, 100);
+    /// assert_eq!(new_eevee.defense, 20);
     ///
     /// new_eevee.take_damage(10);
-    /// assert_eq!(new_eevee.get_health(), 100); // Not enough damage to overcome defense
+    /// assert_eq!(new_eevee.health, 100); // Not enough damage to overcome defense
     ///
     /// new_eevee.take_damage(30);
-    /// assert_eq!(new_eevee.get_health(), 90); // 30 - 20 = 10 damage taken
+    /// assert_eq!(new_eevee.health, 90); // 30 - 20 = 10 damage taken
     /// ```
     ///
     /// This function should panic with the message "Eevee fainted!" if it takes more damage
@@ -160,7 +153,8 @@ impl Eevee {
 }
 
 /// There's a lot of boiler plate code here that we'll implement for you.
-/// All you need to do is implement [`EvolvedEevee::take_damage`] and [`EvolvedEevee::devolve`].
+/// All you need to do is implement
+/// [`take_damage`](EvolvedEevee::take_damage) and [`devolve`](EvolvedEevee::devolve).
 ///
 /// In all honesty, if you had to actually implement this logic, you would probably have each
 /// [`EvolvedEevee`] variant be its own standalone type,
@@ -169,33 +163,33 @@ impl Eevee {
 impl EvolvedEevee {
     pub fn get_level(&self) -> u8 {
         match self {
-            EvolvedEevee::Vaporeon(base, _) => base.get_level(),
-            EvolvedEevee::Flareon(base, _) => base.get_level(),
-            EvolvedEevee::Jolteon(base, _) => base.get_level(),
+            EvolvedEevee::Vaporeon(base, _) => base.level,
+            EvolvedEevee::Flareon(base, _) => base.level,
+            EvolvedEevee::Jolteon(base, _) => base.level,
         }
     }
 
     pub fn get_health(&self) -> u16 {
         match self {
-            EvolvedEevee::Vaporeon(base, _) => base.get_health(),
-            EvolvedEevee::Flareon(base, _) => base.get_health(),
-            EvolvedEevee::Jolteon(base, _) => base.get_health(),
+            EvolvedEevee::Vaporeon(base, h) => base.health + h,
+            EvolvedEevee::Flareon(base, _) => base.health,
+            EvolvedEevee::Jolteon(base, _) => base.health,
         }
     }
 
     pub fn get_attack(&self) -> u16 {
         match self {
-            EvolvedEevee::Vaporeon(base, _) => base.get_attack(),
-            EvolvedEevee::Flareon(base, _) => base.get_attack(),
-            EvolvedEevee::Jolteon(base, _) => base.get_attack(),
+            EvolvedEevee::Vaporeon(base, _) => base.attack,
+            EvolvedEevee::Flareon(base, a) => base.attack + a,
+            EvolvedEevee::Jolteon(base, _) => base.attack,
         }
     }
 
     pub fn get_defense(&self) -> u16 {
         match self {
-            EvolvedEevee::Vaporeon(base, _) => base.get_defense(),
-            EvolvedEevee::Flareon(base, _) => base.get_defense(),
-            EvolvedEevee::Jolteon(base, _) => base.get_defense(),
+            EvolvedEevee::Vaporeon(base, _) => base.defense,
+            EvolvedEevee::Flareon(base, _) => base.defense,
+            EvolvedEevee::Jolteon(base, d) => base.defense + d,
         }
     }
 
@@ -209,15 +203,16 @@ impl EvolvedEevee {
 
     /// Deals `damage` amount of damage to the [`EvolvedEevee`]'s health.
     ///
-    /// This is similar to [`Eevee::take_damage`], but the logic is slightly different for
-    /// [`EvolvedEevee::Vaporeon`] and [`EvolvedEevee::Jolteon`], since they have
+    /// This is similar to [`Eevee::take_damage`],
+    /// but the logic is slightly different for [`Vaporeon`](EvolvedEevee::Vaporeon)
+    /// and [`Flareon`](EvolvedEevee::Flareon), since they have
     /// extra health and extra defense, respectively.
     ///
     /// For Vaporeon, you will want to apply the damage to the extra health,
     /// until the extra health runs out. For Jolteon, you apply the extra defense
-    /// on every `take_damage` call.
+    /// on every [`take_damage`](EvolvedEevee::take_damage) call.
     ///
-    /// It's also fine to just panic with the same message, "Eevee fainted!".
+    /// It's also fine to just panic with the same message, `"Eevee fainted!"`.
     ///
     /// ```
     /// use pokelab_ref::pokemon::eevee::*;
