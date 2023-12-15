@@ -2,29 +2,26 @@ use std::fs;
 use std::io::prelude::*;
 use std::process::Command;
 
-// Add all patterns here
+/// Add all patterns here
 const PATTERNS: [&str; 2] = ["src/exercises/fixme*.rs", "src/functions.rs"];
+/// Temp file to run tar command
+const SHELL_SCRIPT: &str = "handin.sh";
+/// Output tar handin file
+const HANDIN: &str = "handin.tar";
 
 fn main() {
-    // Create the shell script no matter what OS this is running on
-    create_submit_script().expect("Unable to create submit.sh script");
+    // Create the shell script no matter what
+    create_handin_script().expect(&format!("Unable to create {} script", SHELL_SCRIPT));
 
-    // Automatically create handin for unix
-    if cfg!(unix) {
-        tar_submission();
-    } else if cfg!(windows) {
-        todo!("Auto generate handin.tar for windows is not yet implemented")
-    }
-
-    // Will rerun this file every time code in this crate is changed
-    println!("cargo:rerun-if-changed=build.rs");
+    // Automatically create handin, delete shell script if successful
+    tar_handin();
 }
 
 // All of these functions _shouldn't_ fail, unless the user doesn't have correct permissions
-fn create_submit_script() -> Result<(), std::io::Error> {
-    let mut file = fs::File::create("submit.sh")?;
+fn create_handin_script() -> Result<(), std::io::Error> {
+    let mut file = fs::File::create(SHELL_SCRIPT)?;
 
-    let mut script = String::from("tar -cvf handin.tar");
+    let mut script = format!("tar -cvf {}", HANDIN);
     for pattern in PATTERNS {
         script.push(' ');
         script.push_str(pattern);
@@ -35,20 +32,21 @@ fn create_submit_script() -> Result<(), std::io::Error> {
     Ok(())
 }
 
-fn tar_submission() {
+fn tar_handin() {
     // check if tar is actually installed
     let tar_status = Command::new("which")
         .arg("tar")
         .status()
         .expect("`which` failed to execute");
 
+    // If tar is found then create the handin
     if let Some(0) = tar_status.code() {
         Command::new("sh")
-            .arg("submit.sh")
+            .arg(SHELL_SCRIPT)
             .output()
-            .expect("Failed to tar submission files");
+            .expect("Failed to tar handin files");
 
-        // Only remove submit.sh if we successfully created handin.tar, since we don't need it
-        fs::remove_file("submit.sh").expect("Unable to remove submit.sh");
+        // Only remove handin.sh if we successfully created handin.tar, since we don't need it
+        fs::remove_file(SHELL_SCRIPT).expect(&format!("Unable to remove {}", SHELL_SCRIPT));
     }
 }
