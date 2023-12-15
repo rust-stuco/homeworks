@@ -38,7 +38,7 @@ fn create_submit_script() -> Result<(), std::io::Error> {
 fn tar_submission() {
     // check if tar is actually installed
     let tar_status = Command::new("which")
-        .arg("asdf")
+        .arg("tar")
         .status()
         .expect("`which` failed to execute");
 
