@@ -67,28 +67,48 @@ Try searching for methods called `trim` there!
 
 
 # Submission
-- Run `make handin`
-- Submit the resultant `handin.tar` to Gradescope.
+We will try to create a `handin.tar` automatically for you,
+**but you will need to have `tar` already installed**.
 
-If you do not have `make` and `tar` installed on your system,
-install `make` and `tar` on your machine or use the CMU Linux SSH machines.
+If you _do not_ have `tar` installed on your system,
+install `tar` on your machine or use the CMU Linux SSH machines.
 If you need help with this, please reach out to us!
+
+You can also submit manually.
+If `tar` is not installed, a `submit.sh` file should be created with the following inside it
+(you can run this manually if you want):
+
+```
+tar -cvf handin.tar src/exercises/fixme*.rs src/functions.rs
+```
+
+If you _do_ have `tar` already installed, we will create the `handin.tar` automatically for you
+(_take a peek into `build.rs` if you're interested in how!_).
+
+Once you have the `handin.tar`, submit it to Gradescope.
 
 
 
 # Collaboration
+
 In general, feel free to discuss homeworks with other students!
 As long as you do not copy someone else's work, any communication is fair game.
-Feel free to discuss on the course Discord
-so that other students can see your questions and answers, as well.
+
+Try to discuss on the course Discord or Piazza so that
+other students can see your questions and answers as well!
+
+Remember that all formal questions should be asked on Piazza.
 
 
 
 # Feedback
+
 We would like to reiterate that you should let us know if you spent
 anywhere in significant excess of an hour on this homework.
+
 These assignments are being deployed for the first time,
-and we are definitely open to feedback regarding the length and difficulty.
+and we are very open to feedback regarding the length and difficulty.
+
 In addition, Rust has a notoriously steep learning curve,
 so if you find yourself not understanding the concepts,
 you should reach out to us and let us know as well ---
