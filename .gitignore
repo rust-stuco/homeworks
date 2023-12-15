@@ -41,3 +41,4 @@ Cargo.lock
 .DS_Store
 
 *.tar
+firedbg/
