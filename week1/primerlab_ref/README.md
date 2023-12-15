@@ -109,7 +109,7 @@ You can also submit manually.
 If `tar` is not installed, a `submit.sh` file should be created with the following inside it
 (you can run this manually if you want):
 
-```
+```sh
 tar -cvf handin.tar src/exercises/fixme*.rs src/functions.rs
 ```
 
