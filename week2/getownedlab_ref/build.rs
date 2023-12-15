@@ -4,8 +4,9 @@ use std::process::Command;
 const PATTERNS: [&str; 3] = [
     "src/slices/slices*.rs",
     "src/move_semantics/move_semantics*.rs",
-    "src/strings/strings*.rs"
+    "src/strings/strings*.rs",
 ];
+
 /// Output tar handin file
 const HANDIN: &str = "handin.tar";
 
