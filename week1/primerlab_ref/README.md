@@ -6,14 +6,18 @@
 
 The goal of this homework is to make sure that you understand Rust's basic syntax.
 
+There is a markdown-rendered version of this writeup on our website that we would recommend using.
+It is automatically generated using Rust's documentation tooling,
+and is very similar to Rust documentation that you will find in the wild!
+
 We recommend you make use of the [Rust Book](https:doc.rust-lang.org/book/title-page.html)
 chapters 1-3, as the "textbook" of this course. It's generally easy to follow along with,
 and would make handy reference material for the homeworks in this course.
 
 We've tried to calibrate this homework to take around an hour,
 so if you are spending much more than that, please let us know!
-This time limit does not include setting up Rust on your machine though,
-so if you have trouble with installing Rust, make sure to ask for help.
+However, this time bound does _not_ include setting up Rust on your machine,
+so if you have trouble with installing Rust, make sure to ask for help!
 
 
 
@@ -33,6 +37,7 @@ Make sure that both of those commands execute successfully,
 and that they have relatively recent dates.
 If the dates are not recent, you can update `rustup` by running `rustup update`.
 
+If you want a local version of the writeup, you can generate it with `cargo doc`.
 Once you have `cargo` installed, run `cargo doc --open` in this directory to generate documentation
 for this homework.
 
@@ -43,8 +48,7 @@ Documenting primerlab v0.1.0 (<path>/primerlab)
     Opening <path>/primerlab/target/doc/primerlab/index.html
 ```
 
-`cargo doc` will generate an HTML file that you can view in your browser!
-It might be easier to read the markdown-rendered docs than the comments in this handout.
+Either way, a version of this writeup will be up on our website!
 
 
 
@@ -94,12 +98,25 @@ with the name of the test instead of `it_works`.
 
 
 # Submission
-- Run `make handin`
-- Submit the `handin.tar` that was generated to Gradescope.
+We will try to create a `handin.tar` automatically for you,
+**but you will need to have `tar` already installed**.
 
-If you do not have `make` and `tar` installed on your system,
-install `make` and `tar` on your machine or use the CMU Linux SSH machines.
+If you _do not_ have `tar` installed on your system,
+install `tar` on your machine or use the CMU Linux SSH machines.
 If you need help with this, please reach out to us!
+
+You can also submit manually.
+If `tar` is not installed, a `submit.sh` file should be created with the following inside it
+(you can run this manually if you want):
+
+```
+tar -cvf handin.tar src/exercises/fixme*.rs src/functions.rs
+```
+
+If you _do_ have `tar` already installed, we will create the `handin.tar` automatically for you
+(_take a peek into `build.rs` if you're interested in how!_).
+
+Once you have the `handin.tar`, submit it to Gradescope.
 
 
 
@@ -107,8 +124,11 @@ If you need help with this, please reach out to us!
 
 In general, feel free to discuss homeworks with other students!
 As long as you do not copy someone else's work, any communication is fair game.
+
 Try to discuss on the course Discord or Piazza so that
 other students can see your questions and answers as well!
+
+Remember that all formal questions should be asked on Piazza.
 
 
 
@@ -116,8 +136,10 @@ other students can see your questions and answers as well!
 
 We would like to reiterate that you should let us know if you spent
 anywhere in significant excess of an hour on this homework.
+
 These assignments are being deployed for the first time,
-and we are definitely open to feedback regarding the length and difficulty.
+and we are very open to feedback regarding the length and difficulty.
+
 In addition, Rust has a notoriously steep learning curve,
 so if you find yourself not understanding the concepts,
 you should reach out to us and let us know as well ---
