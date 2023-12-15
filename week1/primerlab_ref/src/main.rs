@@ -1,9 +1,6 @@
 use primerlab_ref::functions::is_prime;
 use std::io;
 
-#[cfg(test)]
-mod tests;
-
 /// The main function is our entrypoint, just like in C.
 /// In this case, we implemented a nice command line interface, using
 /// is_prime from lib.rs
