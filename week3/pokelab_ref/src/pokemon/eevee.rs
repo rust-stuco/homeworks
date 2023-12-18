@@ -26,7 +26,7 @@
 /// Something to note is that while it is possible to implement getters and setters for struct
 /// fields as if they were objects in OOP-paradigm languages, it is generally unnecessary for Rust.
 /// It can even get you into trouble with the borrow checker when dealing
-/// with fields that are referneces (we may talk about this when we get to _lifetimes_ in week 7).
+/// with fields that are references (we may talk about this when we get to _lifetimes_ in week 7).
 ///
 /// Marking a field as `pub`, coupled with the borrow checker, will give you very similar
 /// semantics as to normal getters and setters.
