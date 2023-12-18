@@ -12,19 +12,74 @@ mod eevee_tests {
     }
 
     #[test]
+    fn test_takes_damage() {
+        let mut eevee = Eevee::new();
+        assert_eq!(eevee.health, 100);
+
+        eevee.take_damage(20);
+        assert_eq!(eevee.health, 100);
+
+        eevee.take_damage(30);
+        assert_eq!(eevee.health, 90);
+    }
+
+    #[test]
+    #[should_panic(expected = "Eevee fainted!")]
+    fn test_eevee_fainted() {
+        let mut eevee = Eevee::new();
+        assert_eq!(eevee.health, 100);
+
+        eevee.take_damage(120);
+    }
+
+    #[test]
+    fn test_eevee_evolves() {
+        let alvin = Eevee::new();
+        let simon = Eevee::new();
+        let theodore = Eevee::new();
+
+        let alvin = alvin.evolve(ElementalStone::PyroStone);
+        let simon = simon.evolve(ElementalStone::HydroStone);
+         // Supposed to be green but whatever
+        let theodore = theodore.evolve(ElementalStone::MossyStone);
+
+        assert!(matches!(alvin, EvolvedEevee::Flareon(_, _)));
+        assert!(matches!(simon, EvolvedEevee::Vaporeon(_, _)));
+        assert!(matches!(theodore, EvolvedEevee::Leafeon(_, _)));
+    }
+
+    #[test]
+    #[should_panic(expected = "Encountered a weird rock...")]
+    fn test_weird_rock() {
+        let eevee = Eevee::new();
+
+        eevee.evolve(ElementalStone::DullRock);
+    }
+
+    #[test]
+    fn test_vaporean() {
+        todo!()
+    }
+
+    #[test]
+    fn test_flareon() {
+        todo!()
+    }
+
+    #[test]
+    fn test_leafeon() {
+        todo!()
+    }
+
+    #[test]
     fn test_eevee_evolutions() {
         let alvin = Eevee::new();
         let simon = Eevee::new();
         let theodore = Eevee::new();
 
-        let mut alvin = alvin.evolve(ElementalStone::FireStone);
-        let mut simon = simon.evolve(ElementalStone::WaterStone);
-         // Supposed to be green but whatever
-        let mut theodore = theodore.evolve(ElementalStone::ElectricStone);
-
-        assert!(matches!(alvin, EvolvedEevee::Flareon(_, _)));
-        assert!(matches!(simon, EvolvedEevee::Vaporeon(_, _)));
-        assert!(matches!(theodore, EvolvedEevee::Jolteon(_, _)));
+        let mut alvin = alvin.evolve(ElementalStone::PyroStone);
+        let mut simon = simon.evolve(ElementalStone::HydroStone);
+        let mut theodore = theodore.evolve(ElementalStone::MossyStone);
 
         alvin.set_secondary_attribute(10);
         simon.set_secondary_attribute(10);
@@ -39,8 +94,6 @@ mod eevee_tests {
 
         assert!(alvin.attack == simon.attack);
     }
-
-    // TODO more tests
 }
 
 // #[cfg(test)]

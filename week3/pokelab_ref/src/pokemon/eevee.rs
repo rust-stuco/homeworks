@@ -3,19 +3,19 @@
 //! This module contains the [`Eevee`] and [`EvolvedEevee`] type, as well as its
 //! method implementations.
 //!
-//! In this module, we'll be implementing a water type pokemon that represents
+//! In this module, we'll be implementing a variable-type pokemon that represents
 //! some of the Eevee evolution line:
 //!  - Eevee
 //!      - Vaporeon
-//!      - Jolteon
 //!      - Flareon
+//!      - Leafeon
 //!
 //! To model the evolution line, we use a type system that represents the possible
 //! states that the Eevee can be in.
 //!
 //! We have an [`Eevee`] type that contains stats about the
 //! Eevee, and several methods that can retrieve and modify these stats. We also have an
-//! [`EvolvedEevee`] type that can be one of Vaporeon, Flareon, and Jolteon.
+//! [`EvolvedEevee`] type that can be one of Vaporeon, Flareon, and Leafeon.
 //!
 //! An [`Eevee`] can `evolve` into an [`EvolvedEevee`], and an [`EvolvedEevee`] can `devolve`
 //! back into an [`Eevee`]. Go to the documentation for each of these types to learn more.
@@ -50,16 +50,16 @@ pub struct Eevee {
 #[non_exhaustive]
 pub enum ElementalStone {
     /// This Water Stone turns an [`Eevee`] into an [`Vaporeon`](EvolvedEevee::Vaporeon)
-    WaterStone,
+    HydroStone,
     /// This Fire Stone turns an [`Eevee`] into an [`Flareon`](EvolvedEevee::Flareon)
-    FireStone,
-    /// This Electric Stone turns an [`Eevee`] into an [`Jolteon`](EvolvedEevee::Jolteon)
-    ElectricStone,
+    PyroStone,
+    /// This Electric Stone turns an [`Eevee`] into an [`Leafeon`](EvolvedEevee::Leafeon)
+    MossyStone,
     /// Placeholder for future stones we might want to add for new evolutions!
     DullRock,
 }
 
-/// This type represent an evolved Eevee in the form of either Vaporeon, Flareon, or Jolteon.
+/// This type represent an evolved Eevee in the form of either Vaporeon, Flareon, or Leafeon.
 ///
 /// An [`EvolvedEevee`] contains an inner [`Eevee`] as well as a secondary attribute value.
 /// This attribute value changes one of the inner [`Eevee`]'s base stats depending on which
@@ -69,8 +69,8 @@ pub enum EvolvedEevee {
     Vaporeon(Eevee, u16),
     /// The secondary attribute for `Flareon` is added to the base attack.
     Flareon(Eevee, u16),
-    /// The secondary attribute for `Jolteon` is added to the base defense.
-    Jolteon(Eevee, u16),
+    /// The secondary attribute for `Leafeon` is added to the base defense.
+    Leafeon(Eevee, u16),
 }
 
 impl Eevee {
@@ -139,14 +139,14 @@ impl Eevee {
     ///
     /// let mut new_eevee = Eevee::new();
     ///
-    /// let vaporeon = new_eevee.evolve(ElementalStone::WaterStone);
+    /// let vaporeon = new_eevee.evolve(ElementalStone::HydroStone);
     /// assert!(matches!(vaporeon, EvolvedEevee::Vaporeon(_, _)));
     /// ```
     pub fn evolve(self, evolution: ElementalStone) -> EvolvedEevee {
         match evolution {
-            ElementalStone::WaterStone => EvolvedEevee::Vaporeon(self, 0),
-            ElementalStone::FireStone => EvolvedEevee::Flareon(self, 0),
-            ElementalStone::ElectricStone => EvolvedEevee::Jolteon(self, 0),
+            ElementalStone::HydroStone => EvolvedEevee::Vaporeon(self, 0),
+            ElementalStone::PyroStone => EvolvedEevee::Flareon(self, 0),
+            ElementalStone::MossyStone => EvolvedEevee::Leafeon(self, 0),
             _ => panic!("Encountered a weird rock..."),
         }
     }
@@ -165,7 +165,7 @@ impl EvolvedEevee {
         match self {
             EvolvedEevee::Vaporeon(base, _) => base.level,
             EvolvedEevee::Flareon(base, _) => base.level,
-            EvolvedEevee::Jolteon(base, _) => base.level,
+            EvolvedEevee::Leafeon(base, _) => base.level,
         }
     }
 
@@ -173,7 +173,7 @@ impl EvolvedEevee {
         match self {
             EvolvedEevee::Vaporeon(base, h) => base.health + h,
             EvolvedEevee::Flareon(base, _) => base.health,
-            EvolvedEevee::Jolteon(base, _) => base.health,
+            EvolvedEevee::Leafeon(base, _) => base.health,
         }
     }
 
@@ -181,7 +181,7 @@ impl EvolvedEevee {
         match self {
             EvolvedEevee::Vaporeon(base, _) => base.attack,
             EvolvedEevee::Flareon(base, a) => base.attack + a,
-            EvolvedEevee::Jolteon(base, _) => base.attack,
+            EvolvedEevee::Leafeon(base, _) => base.attack,
         }
     }
 
@@ -189,7 +189,7 @@ impl EvolvedEevee {
         match self {
             EvolvedEevee::Vaporeon(base, _) => base.defense,
             EvolvedEevee::Flareon(base, _) => base.defense,
-            EvolvedEevee::Jolteon(base, d) => base.defense + d,
+            EvolvedEevee::Leafeon(base, d) => base.defense + d,
         }
     }
 
@@ -197,7 +197,7 @@ impl EvolvedEevee {
         match self {
             EvolvedEevee::Vaporeon(_, attr) => *attr = extra,
             EvolvedEevee::Flareon(_, attr) => *attr = extra,
-            EvolvedEevee::Jolteon(_, attr) => *attr = extra,
+            EvolvedEevee::Leafeon(_, attr) => *attr = extra,
         }
     }
 
@@ -209,7 +209,7 @@ impl EvolvedEevee {
     /// extra health and extra defense, respectively.
     ///
     /// For Vaporeon, you will want to apply the damage to the extra health,
-    /// until the extra health runs out. For Jolteon, you apply the extra defense
+    /// until the extra health runs out. For Leafeon, you apply the extra defense
     /// on every [`take_damage`](EvolvedEevee::take_damage) call.
     ///
     /// It's also fine to just panic with the same message, `"Eevee fainted!"`.
@@ -217,21 +217,21 @@ impl EvolvedEevee {
     /// ```
     /// use pokelab_ref::pokemon::eevee::*;
     ///
-    /// let mut flareon = Eevee::new().evolve(ElementalStone::FireStone);
+    /// let mut flareon = Eevee::new().evolve(ElementalStone::PyroStone);
     /// flareon.take_damage(40);
     /// assert_eq!(flareon.get_health(), 80);
     ///
-    /// let mut vaporeon = Eevee::new().evolve(ElementalStone::WaterStone);
+    /// let mut vaporeon = Eevee::new().evolve(ElementalStone::HydroStone);
     /// vaporeon.set_secondary_attribute(20); // Adds 20 extra health
     /// vaporeon.take_damage(40);
     /// assert_eq!(vaporeon.get_health(), 100);
     ///
-    /// let mut jolteon = Eevee::new().evolve(ElementalStone::ElectricStone);
-    /// jolteon.set_secondary_attribute(5); // Adds 5 extra defense
+    /// let mut leafeon = Eevee::new().evolve(ElementalStone::MossyStone);
+    /// leafeon.set_secondary_attribute(5); // Adds 5 extra defense
     /// for _ in 0..100 {
-    ///     jolteon.take_damage(25);
+    ///     leafeon.take_damage(25);
     /// }
-    /// assert_eq!(jolteon.get_health(), 100);
+    /// assert_eq!(leafeon.get_health(), 100);
     /// ```
     pub fn take_damage(&mut self, damage: u16) {
         match self {
@@ -244,7 +244,7 @@ impl EvolvedEevee {
                 }
             }
             EvolvedEevee::Flareon(base, _) => base.take_damage(damage),
-            EvolvedEevee::Jolteon(base, extra_defense) => {
+            EvolvedEevee::Leafeon(base, extra_defense) => {
                 // Only need to take inner damage if it exceeds our extra defense
                 if damage > *extra_defense {
                     base.take_damage(damage - *extra_defense);
@@ -258,16 +258,16 @@ impl EvolvedEevee {
     /// ```
     /// use pokelab_ref::pokemon::eevee::*;
     ///
-    /// let jolteon = Eevee::new().evolve(ElementalStone::ElectricStone);
-    /// assert!(matches!(jolteon, EvolvedEevee::Jolteon(_, _)));
+    /// let leafeon = Eevee::new().evolve(ElementalStone::MossyStone);
+    /// assert!(matches!(leafeon, EvolvedEevee::Leafeon(_, _)));
     ///
-    /// let back_to_eevee: Eevee = jolteon.devolve();
+    /// let back_to_eevee: Eevee = leafeon.devolve();
     /// ```
     pub fn devolve(self) -> Eevee {
         match self {
             EvolvedEevee::Vaporeon(base, _) => base,
             EvolvedEevee::Flareon(base, _) => base,
-            EvolvedEevee::Jolteon(base, _) => base,
+            EvolvedEevee::Leafeon(base, _) => base,
         }
     }
 }
