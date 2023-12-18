@@ -15,7 +15,7 @@ This homework is a bit shorter than the previous one, mainly so you can have ext
 read through the book and stew with the concepts a bit.
 
 If you find yourself getting stuck,
-it might be good to take a small break and just go over the borrow checker's rules.
+it might be good to take a small break and go over the borrow checker's rules.
 
 Remember to always read the error message that the compiler gives you, and as always,
 we encourage you to reach out for help!
@@ -67,6 +67,7 @@ Try searching for methods called `trim` there!
 
 
 # Submission
+
 We will try to create a `handin.tar` automatically for you,
 **but you will need to have `tar` already installed**.
 
@@ -74,16 +75,8 @@ If you _do not_ have `tar` installed on your system,
 install `tar` on your machine or use the CMU Linux SSH machines.
 If you need help with this, please reach out to us!
 
-You can also submit manually.
-If `tar` is not installed, a `submit.sh` file should be created with the following inside it
-(you can run this manually if you want):
-
-```sh
-$ tar -cvf handin.tar src/exercises/fixme*.rs src/functions.rs
-```
-
-If you _do_ have `tar` already installed, we will create the `handin.tar` automatically for you
-(_take a peek into `build.rs` if you're interested in how!_).
+Once you have `tar` installed, we will create the `handin.tar` automatically for you
+(_take a peek into `build.rs` if you're interested in how this works!_).
 
 Once you have the `handin.tar`, submit it to Gradescope.
 
@@ -105,9 +98,6 @@ Remember that all formal questions should be asked on Piazza.
 
 We would like to reiterate that you should let us know if you spent
 anywhere in significant excess of an hour on this homework.
-
-These assignments are being deployed for the first time,
-and we are very open to feedback regarding the length and difficulty.
 
 In addition, Rust has a notoriously steep learning curve,
 so if you find yourself not understanding the concepts,
