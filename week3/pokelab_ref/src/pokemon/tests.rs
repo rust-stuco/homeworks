@@ -1,4 +1,17 @@
 #[cfg(test)]
+mod charmander_tests {
+    use crate::pokemon::charmander::*;
+
+    #[test]
+    fn test_charmander_new() {
+        let charmander = Charmander::new(String::from("David"));
+        assert_eq!(charmander.get_health(), 100);
+        assert_eq!(charmander.get_attack(), 42);
+        assert_eq!(charmander.get_defense(), 33);
+    }
+}
+
+#[cfg(test)]
 mod eevee_tests {
     use crate::pokemon::eevee::*;
 
@@ -155,52 +168,3 @@ mod eevee_tests {
         assert!(alvin.attack == simon.attack);
     }
 }
-
-// #[cfg(test)]
-// mod charmander_tests {
-//     use crate::pokemon::firetype::Charmander;
-
-//     #[test]
-//     fn test_charmander_new() {
-//         let charmander = Charmander::new(String::from("Charmander"));
-//         assert_eq!(charmander.get_level(), 1);
-//         assert_eq!(charmander.get_health(), 100);
-//         assert_eq!(charmander.get_attack(), 52);
-//         assert_eq!(charmander.get_defense(), 43);
-//     }
-
-//     #[test]
-//     fn test_charmander_level() {
-//         let mut charmander = Charmander::new(String::from("Charmander"));
-//         assert_eq!(charmander.get_level(), 1);
-//         charmander.level_up(5);
-//         assert_eq!(charmander.get_level(), 6);
-//         charmander.level_up(5);
-//         assert_eq!(charmander.get_level(), 11);
-//         charmander.level_up(5);
-//         assert_eq!(charmander.get_level(), 16);
-//     }
-
-//     // The attack value is calculated by the following formula: (attack * level) / 2
-//     #[test]
-//     fn test_charmander_level_up() {
-//         let mut charmander = Charmander::new(String::from("Charmander"));
-//         charmander.level_up(1);
-//         assert_eq!(charmander.get_attack(), 62);
-//         assert_eq!(charmander.get_defense(), 53);
-//         assert_eq!(charmander.get_health(), 100);
-//     }
-
-//     #[test]
-//     fn test_charmander_attacks() {
-//         let mut attacker = Charmander::new(String::from("Attacker"));
-//         let mut defender = Charmander::new(String::from("Defender"));
-
-//         attack(&mut attacker, &mut defender);
-//         assert_eq!(defender.get_health(), 100);
-
-//         attacker.level_up(1);
-//         attack(&mut attacker, &mut defender);
-//         assert_eq!(defender.get_health(), 23);
-//     }
-// }
