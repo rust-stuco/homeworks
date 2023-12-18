@@ -1,4 +1,4 @@
-#![allow(unused_variables, clippy::new_without_default)]
+#![allow(clippy::new_without_default)]
 
 //! This module contains the [`Eevee`] and [`EvolvedEevee`] type, as well as its
 //! method implementations.
