@@ -79,7 +79,7 @@ If `tar` is not installed, a `submit.sh` file should be created with the followi
 (you can run this manually if you want):
 
 ```sh
-tar -cvf handin.tar src/exercises/fixme*.rs src/functions.rs
+$ tar -cvf handin.tar src/exercises/fixme*.rs src/functions.rs
 ```
 
 If you _do_ have `tar` already installed, we will create the `handin.tar` automatically for you
