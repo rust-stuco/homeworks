@@ -4,10 +4,72 @@ mod charmander_tests {
 
     #[test]
     fn test_charmander_new() {
-        let charmander = Charmander::new(String::from("David"));
+        let charmander = Charmander::new(String::from("Ben"));
         assert_eq!(charmander.get_health(), 100);
         assert_eq!(charmander.get_attack(), 42);
         assert_eq!(charmander.get_defense(), 33);
+    }
+
+    #[test]
+    fn test_level_up() {
+        let mut charmander = Charmander::new(String::from("Steve"));
+
+        charmander.level_up(3);
+        assert_eq!(charmander.get_health(), 115); // +15
+        assert_eq!(charmander.get_attack(), 51); // +9
+        assert_eq!(charmander.get_defense(), 45); // +12
+
+        charmander.level_up(12); // 15 total levels
+        assert_eq!(charmander.get_health(), 175); // +75
+        assert_eq!(charmander.get_attack(), 87); // +45
+        assert_eq!(charmander.get_defense(), 93); // +60
+    }
+
+    #[test]
+    fn test_take_damage() {
+        let mut charmander = Charmander::new(String::from("Ash"));
+
+        charmander.take_damage(10);
+        assert_eq!(charmander.get_health(), 100);
+
+        charmander.take_damage(40);
+        assert_eq!(charmander.get_health(), 93);
+
+        charmander.level_up(2);
+        assert_eq!(charmander.get_health(), 103); // Health should increase
+
+        charmander.take_damage(44);
+        assert_eq!(charmander.get_health(), 100);
+
+        charmander.level_up(1000);
+        charmander.take_damage(3000);
+        assert_eq!(charmander.get_health(), 5100);
+    }
+
+    #[test]
+    #[should_panic(expected = "C++ fainted!")]
+    fn test_should_faint() {
+        let mut compiler = Charmander::new(String::from("C++"));
+        compiler.take_damage(1000);
+    }
+
+    #[test]
+    fn test_fight() {
+        let mut charmander1 = Charmander::new(String::from("David"));
+        let mut charmander2 = Charmander::new(String::from("Connor"));
+
+        Charmander::fight(&mut charmander1, &mut charmander2);
+        assert_eq!(charmander1.get_health(), 91);
+        assert_eq!(charmander2.get_health(), 91);
+
+        charmander1.level_up(4);
+        assert_eq!(charmander1.get_health(), 111); // +20
+        assert_eq!(charmander1.get_attack(), 54);  // +12
+        assert_eq!(charmander1.get_defense(), 49); // +26
+
+        Charmander::fight(&mut charmander1, &mut charmander2);
+        assert_eq!(charmander1.get_health(), 111); // no damage taken
+        assert_eq!(charmander2.get_health(), 70);  // 54 - 33 = 21 damage taken
     }
 }
 
