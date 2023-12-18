@@ -40,7 +40,6 @@ mod eevee_tests {
 
         let alvin = alvin.evolve(ElementalStone::PyroStone);
         let simon = simon.evolve(ElementalStone::HydroStone);
-         // Supposed to be green but whatever
         let theodore = theodore.evolve(ElementalStone::MossyStone);
 
         assert!(matches!(alvin, EvolvedEevee::Flareon(_, _)));
@@ -57,18 +56,79 @@ mod eevee_tests {
     }
 
     #[test]
-    fn test_vaporean() {
-        todo!()
+    fn test_vaporeon() {
+        let eevee = Eevee::new();
+
+        let mut vaporeon = eevee.evolve(ElementalStone::HydroStone);
+
+        assert_eq!(vaporeon, EvolvedEevee::Vaporeon(Eevee::new(), 0));
+
+        vaporeon.set_secondary_attribute(10);
+        assert_eq!(vaporeon.get_health(), 110);
+
+        vaporeon.take_damage(50);
+        // 50 damage mitigated by 20 defense and 10 overhealth results in 20 actual damage taken
+        assert_eq!(vaporeon.get_health(), 80);
+
+        // Even though we devolve, we still need to keep the damage taken
+        let new_eevee = vaporeon.devolve();
+        assert_eq!(
+            new_eevee,
+            Eevee {
+                health: 80,
+                ..Eevee::new()
+            }
+        )
     }
 
     #[test]
     fn test_flareon() {
-        todo!()
+        let eevee = Eevee::new();
+
+        let mut flareon = eevee.evolve(ElementalStone::PyroStone);
+
+        assert_eq!(flareon, EvolvedEevee::Flareon(Eevee::new(), 0));
+
+        flareon.set_secondary_attribute(10);
+        assert_eq!(flareon.get_attack(), 65);
+
+        flareon.take_damage(50);
+        // 50 damage mitigated by 20 defense results in 30 actual damage taken
+        assert_eq!(flareon.get_health(), 70);
+
+        let new_eevee = flareon.devolve();
+        assert_eq!(
+            new_eevee,
+            Eevee {
+                health: 70,
+                ..Eevee::new()
+            }
+        )
     }
 
     #[test]
     fn test_leafeon() {
-        todo!()
+        let eevee = Eevee::new();
+
+        let mut leafeon = eevee.evolve(ElementalStone::MossyStone);
+
+        assert_eq!(leafeon, EvolvedEevee::Leafeon(Eevee::new(), 0));
+
+        leafeon.set_secondary_attribute(10);
+        assert_eq!(leafeon.get_defense(), 30);
+
+        leafeon.take_damage(50);
+        // 50 damage mitigated by 30 defense results in 20 actual damage taken
+        assert_eq!(leafeon.get_health(), 80);
+
+        let new_eevee = leafeon.devolve();
+        assert_eq!(
+            new_eevee,
+            Eevee {
+                health: 80,
+                ..Eevee::new()
+            }
+        )
     }
 
     #[test]

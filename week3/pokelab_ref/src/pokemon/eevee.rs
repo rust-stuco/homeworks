@@ -34,6 +34,7 @@
 /// There are, of course, places where you _do_ want these.
 /// And when we talk about traits in week 5,
 /// we will _need_ to have them if we want to share behavior among types.
+#[derive(Debug, PartialEq, Eq)]
 pub struct Eevee {
     /// For this homework, [`level`](Eevee::level) doesn't actually represent anything important.
     pub level: u8,
@@ -64,6 +65,7 @@ pub enum ElementalStone {
 /// An [`EvolvedEevee`] contains an inner [`Eevee`] as well as a secondary attribute value.
 /// This attribute value changes one of the inner [`Eevee`]'s base stats depending on which
 /// of the 3 types the [`EvolvedEevee`] is.
+#[derive(Debug, PartialEq, Eq)]
 pub enum EvolvedEevee {
     /// The secondary attribute for `Vaporeon` is added to the base health.
     Vaporeon(Eevee, u16),
@@ -254,6 +256,8 @@ impl EvolvedEevee {
     }
 
     /// Devolves an [`EvolvedEevee`] into an [`Eevee`].
+    ///
+    /// Note that base stats like health should not change even after devolving.
     ///
     /// ```
     /// use pokelab_ref::pokemon::eevee::*;
