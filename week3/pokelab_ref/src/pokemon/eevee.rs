@@ -85,8 +85,8 @@ impl Eevee {
     /// _Note: We 0-level because we're programmers_ 😎
     ///
     /// ```
-    /// use pokelab_ref::pokemon::eevee::*;
-    ///
+    /// # use pokelab_ref::pokemon::eevee::*;
+    /// #
     /// let new_eevee = Eevee::new();
     /// assert_eq!(new_eevee.level, 0);
     /// assert_eq!(new_eevee.health, 100);
@@ -105,8 +105,8 @@ impl Eevee {
     /// Deals `damage` amount of damage to the Eevee's health.
     ///
     /// ```
-    /// use pokelab_ref::pokemon::eevee::*;
-    ///
+    /// # use pokelab_ref::pokemon::eevee::*;
+    /// #
     /// let mut new_eevee = Eevee::new();
     /// assert_eq!(new_eevee.health, 100);
     /// assert_eq!(new_eevee.defense, 20);
@@ -137,8 +137,8 @@ impl Eevee {
     /// panic with the message "Encountered a weird rock...".
     ///
     /// ```
-    /// use pokelab_ref::pokemon::eevee::*;
-    ///
+    /// # use pokelab_ref::pokemon::eevee::*;
+    /// #
     /// let mut new_eevee = Eevee::new();
     ///
     /// let vaporeon = new_eevee.evolve(ElementalStone::HydroStone);
@@ -217,8 +217,8 @@ impl EvolvedEevee {
     /// It's also fine to just panic with the same message, `"Eevee fainted!"`.
     ///
     /// ```
-    /// use pokelab_ref::pokemon::eevee::*;
-    ///
+    /// # use pokelab_ref::pokemon::eevee::*;
+    /// #
     /// let mut flareon = Eevee::new().evolve(ElementalStone::PyroStone);
     /// flareon.take_damage(40);
     /// assert_eq!(flareon.get_health(), 80);
@@ -260,8 +260,8 @@ impl EvolvedEevee {
     /// Note that base stats like health should not change even after devolving.
     ///
     /// ```
-    /// use pokelab_ref::pokemon::eevee::*;
-    ///
+    /// # use pokelab_ref::pokemon::eevee::*;
+    /// #
     /// let leafeon = Eevee::new().evolve(ElementalStone::MossyStone);
     /// assert!(matches!(leafeon, EvolvedEevee::Leafeon(_, _)));
     ///
