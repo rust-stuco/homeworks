@@ -14,6 +14,37 @@ and we are very open to feedback regarding the length and difficulty.
 
 
 
+# Setup
+
+Make sure you have Rust installed. You should have installed Rust through `rustup`.
+To confirm, run:
+
+```sh
+$ rustup --version
+rustup 1.26.0 (2023-11-14)
+$ cargo --version
+cargo 1.74.0 (ecb9851af 2023-10-18)
+```
+
+Make sure that both of those commands execute successfully,
+and that they have relatively recent dates.
+If the dates are not recent, you can update `rustup` by running `rustup update`.
+
+If you want a local version of the writeup, you can generate it with `cargo doc`.
+Once you have `cargo` installed, run `cargo doc --open` in this directory to generate documentation
+for this homework.
+
+```sh
+$ cargo doc --open
+Documenting primerlab v0.1.0 (<path>/primerlab)
+   Finished dev [unoptimized + debuginfo] target(s) in 0.11s
+    Opening <path>/primerlab/target/doc/primerlab/index.html
+```
+
+Either way, a version of this writeup will be up on our website!
+
+
+
 # Submission
 
 We will try to create a `handin.tar` automatically for you,
