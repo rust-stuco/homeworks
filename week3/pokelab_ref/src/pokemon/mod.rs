@@ -1,5 +1,5 @@
 pub mod eevee;
-pub mod firetype;
+pub mod charmander;
 
 #[cfg(test)]
 mod tests;
