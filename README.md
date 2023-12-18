@@ -30,7 +30,7 @@ Make sure that both of those commands execute successfully,
 and that they have relatively recent dates.
 If the dates are not recent, you can update `rustup` by running `rustup update`.
 
-If you want a local version of the writeup, you can generate it with `cargo doc`.
+If you want a local version of this writeup, you can generate it with `cargo doc`.
 Once you have `cargo` installed, run `cargo doc --open` in this directory to generate documentation
 for this homework.
 
