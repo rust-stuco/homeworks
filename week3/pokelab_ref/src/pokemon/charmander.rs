@@ -47,7 +47,7 @@ pub struct Charmander {
     defense: usize,
 }
 
-/// Implement the Charmander struct here
+/// Implement the Charmander struct here.
 impl Charmander {
     /// Takes in a `name` as a `String` and creates a new [`Charmander`]
     /// struct with the following default values:
