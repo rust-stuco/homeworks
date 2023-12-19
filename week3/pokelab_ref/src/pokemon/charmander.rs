@@ -1,26 +1,29 @@
 //! This module contains the [`Charmander`] type, as well as its method implementations.
 //!
 //! The [`Charmander`] struct will model the pokemon of the same name.
-//! We want to design the struct such that it is easy to create a new fire type pokemon.
-//! As well as modify the pokemon's attributes such as its health, level, and name.
+//! We want to design the struct in such a way that we can easily create a [`Charmander`] and
+//! modify its attributes like health, level, and name.
 //!
-//! [`Charmander`] has the following attributes:
+//! [`Charmander`] should have the following attributes:
 //!  - `name: String`
 //!  - `level: usize`
 //!  - `health: usize`
 //!  - `attack: usize`
 //!  - `defense: usize`
+//!
 //! All of these fields should be _private_.
 //!
-//! Once you've designed the struct, implement the following methods:
+//! ---
+//!
+//! Once you've added the fields to the struct, implement the following methods:
 //! - [`new`](Charmander::new): This method will take in a name and create a new [`Charmander`]
 //! struct with the following default values:
-//!     - `level: 1`
+//!     - `level: 0`
 //!     - `health: 100`
 //!     - `attack: 42`
 //!     - `defense: 33`
 //! - [`level_up`](Charmander::level_up): This method will increase the level of the
-//! [`Charmander`] struct by the input `l`.
+//! [`Charmander`] struct by the input `levels`.
 //! - [`get_health`](Charmander::get_health): This method will return the health value of the
 //! [`Charmander`] struct.
 //! - [`get_attack`](Charmander::get_attack): This method will return the attack value of the
@@ -29,16 +32,18 @@
 //! [`Charmander`] struct.
 //!
 //! For some of these methods, you may have to do some extra work to determine the value to return.
-//! Make sure to read the specification in either the comments in the code or on this writeup!
+//! **Make sure to read the specification in either the comments in the code or on this writeup!**
+//!
+//! ---
 //!
 //! We also want [`Charmander`]s to battle with each other.
 //! We'll implement the following methods
 //! [`attack`](Charmander::attack) and [`fight`](Charmander::fight).
 //! Click on these hyperlinks or read the doc comments to see the specification for these methods!
 //!
-//! **Note that this pokemon is _completely_ different from the**
-//! **[`Eevee`](crate::pokemon::eevee::Eevee)**
-//! **pokemon that you will implement in the next part, so make sure not to mix them up!**
+//! _Note that this pokemon is **completely** different from the_
+//! _[`Eevee`](crate::pokemon::eevee::Eevee)_
+//! _pokemon that you will implement in the next part, so make sure not to mix them up!_
 pub struct Charmander {
     name: String,
     level: usize,
@@ -55,6 +60,8 @@ impl Charmander {
     /// - `health: 100`
     /// - `attack: 42`
     /// - `defense: 33`
+    ///
+    /// _Note: We 0-level because we're programmers_ 😎
     pub fn new(name: String) -> Self {
         Self {
             name,
@@ -65,9 +72,9 @@ impl Charmander {
         }
     }
 
-    /// Increases the level of the [`Charmander`] by the input `l`.
-    pub fn level_up(&mut self, l: usize) {
-        self.level += l;
+    /// Increases the level of the [`Charmander`] by the input `levels`.
+    pub fn level_up(&mut self, levels: usize) {
+        self.level += levels;
     }
 
     /// Return the health value of the [`Charmander`].
@@ -91,6 +98,11 @@ impl Charmander {
     }
 
     /// Takes `damage` subtracted by [`Charmander`]'s `defense`.
+    ///
+    /// If the [`Charmander`] takes more damage than it has health,
+    /// this function should panic with the message
+    /// `"{name} fainted!"`, where `"{name}"` is the name of the [`Charmander`].
+    /// In other words, we should panic if the [`Charmander`] hits 0 health.
     ///
     /// ```
     /// # use pokelab_ref::pokemon::charmander::*;
@@ -121,7 +133,7 @@ impl Charmander {
     /// Attacks another [`Charmander`] struct and deals damage.
     ///
     /// [`attack`](Charmander::attack) will do damage to the `other` [`Charmander`]
-    /// equal to its current attack.
+    /// equal to its current attack. Will panic if the other [`Charmander`] faints.
     ///
     /// ```
     /// # use pokelab_ref::pokemon::charmander::*;
@@ -147,11 +159,12 @@ impl Charmander {
     /// Note that this is an associated function, so you cannot write `charmander.fight(other)`.
     ///
     /// The [`Charmander`] with the higher level will go first.
+    /// Will panic if a [`Charmander`] faints.
     ///
     /// ```
     /// # use pokelab_ref::pokemon::charmander::*;
     /// #
-    /// let mut charmander1 = Charmander::new(String::from("David"));
+    /// let mut charmander1 = Charmander::new(String::from("Ben"));
     /// let mut charmander2 = Charmander::new(String::from("Connor"));
     ///
     /// charmander1.level_up(5);

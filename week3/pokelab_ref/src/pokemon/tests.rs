@@ -64,12 +64,12 @@ mod charmander_tests {
 
         charmander1.level_up(4);
         assert_eq!(charmander1.get_health(), 111); // +20
-        assert_eq!(charmander1.get_attack(), 54);  // +12
+        assert_eq!(charmander1.get_attack(), 54); // +12
         assert_eq!(charmander1.get_defense(), 49); // +26
 
         Charmander::fight(&mut charmander1, &mut charmander2);
         assert_eq!(charmander1.get_health(), 111); // no damage taken
-        assert_eq!(charmander2.get_health(), 70);  // 54 - 33 = 21 damage taken
+        assert_eq!(charmander2.get_health(), 70); // 54 - 33 = 21 damage taken
     }
 }
 

@@ -4,7 +4,7 @@
 
 # Poke Lab
 
-The goal of this homework is to make sure that you Rust's Structs and Enums,
+The goal of this homework is to make sure that you understand Rust's Structs and Enums,
 semantically known as Algebraic Data Types.
 
 In this homework, you will be implementing two data types:
@@ -12,11 +12,12 @@ In this homework, you will be implementing two data types:
 
 This will be the first homework where you have to start writing code,
 so this may take a little longer than the last homework.
-However, if you are spending _significantly_ more than 1 hour on this, please let us know!
+If you are spending _significantly_ more than 1 hour on this, please let us know!
 
-For this homework, we recommend using the markdown-generated writeup. You can either get it from
-the website, or generate it directly on your computer with `cargo doc --open`.
-This allows you to follow hyperlinks to get to documentation on specific types and methods.
+For this homework, you should use the markdown-generated writeup. You can either get it from
+our website, or generate it directly on your computer with `cargo doc --open`.
+Having this form of documentation allows you to follow hyperlinks
+to get to documentation on specific types and methods.
 
 
 

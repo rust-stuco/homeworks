@@ -17,8 +17,11 @@
 //! Eevee, and several methods that can retrieve and modify these stats. We also have an
 //! [`EvolvedEevee`] type that can be one of Vaporeon, Flareon, and Leafeon.
 //!
-//! An [`Eevee`] can `evolve` into an [`EvolvedEevee`], and an [`EvolvedEevee`] can `devolve`
-//! back into an [`Eevee`]. Go to the documentation for each of these types to learn more.
+//! An [`Eevee`] can [`evolve`](Eevee::evolve) into an [`EvolvedEevee`],
+//! and an [`EvolvedEevee`] can [`devolve`](EvolvedEevee::devolve)
+//! back into an [`Eevee`].
+//!
+//! See the documentation below for each of these types to learn more!
 
 /// This type represents a basic [`Eevee`] pokemon. It has a level, as well as health,
 /// attack, and defense stats.
@@ -36,7 +39,8 @@
 /// we will _need_ to have them if we want to share behavior among types.
 #[derive(Debug, PartialEq, Eq)]
 pub struct Eevee {
-    /// For this homework, [`level`](Eevee::level) doesn't actually represent anything important.
+    /// For this part of the homework,
+    /// [`level`](Eevee::level) doesn't actually represent anything important.
     pub level: u8,
     pub health: u16,
     pub attack: u16,
@@ -118,7 +122,7 @@ impl Eevee {
     /// assert_eq!(new_eevee.health, 90); // 30 - 20 = 10 damage taken
     /// ```
     ///
-    /// This function should panic with the message "Eevee fainted!" if it takes more damage
+    /// This function should panic with the message `"Eevee fainted!"` if it takes more damage
     /// than it has health. In other words, it should faint when it reaches 0 health.
     pub fn take_damage(&mut self, damage: u16) {
         if self.defense >= damage {
@@ -134,7 +138,7 @@ impl Eevee {
     /// Given an Elemental Stone, evolve the Eevee into an [`EvolvedEevee`].
     ///
     /// If given a stone that an Eevee cannot use to evolve, this function should
-    /// panic with the message "Encountered a weird rock...".
+    /// panic with the message `"Encountered a weird rock..."`.
     ///
     /// ```
     /// # use pokelab_ref::pokemon::eevee::*;
