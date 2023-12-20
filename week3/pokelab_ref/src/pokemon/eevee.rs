@@ -21,6 +21,13 @@
 //! and an [`EvolvedEevee`] can [`devolve`](EvolvedEevee::devolve)
 //! back into an [`Eevee`].
 //!
+//! You will need to implement all 3 of the methods on [`Eevee`]:
+//! [`new`](Eevee::new), [`take_damage`](Eevee::take_damage), and [`evolve`](Eevee::evolve).
+//!
+//! You will also need to implement 2 more methods on [`EvolvedEevee`]:
+//! [`take_damage`](EvolvedEevee::take_damage) and [`devolve`](EvolvedEevee::devolve).
+//! The remaining methods on [`EvolvedEevee`] have been implemented for you.
+//!
 //! See the documentation below for each of these types to learn more!
 
 /// This type represents a basic [`Eevee`] pokemon. It has a level, as well as health,
