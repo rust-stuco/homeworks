@@ -33,17 +33,23 @@
 /// This type represents a basic [`Eevee`] pokemon. It has a level, as well as health,
 /// attack, and defense stats.
 ///
-/// Something to note is that while it is possible to implement getters and setters for struct
-/// fields as if they were objects in OOP-paradigm languages, it is generally unnecessary for Rust.
-/// It can even get you into trouble with the borrow checker when dealing
-/// with fields that are references (we may talk about this when we get to _lifetimes_ in week 7).
+/// You will need to implement all 3 of the methods on [`Eevee`]:
+/// [`new`](Eevee::new), [`take_damage`](Eevee::take_damage), and [`evolve`](Eevee::evolve).
+/// Try to do these in order!
 ///
-/// Marking a field as `pub`, coupled with the borrow checker, will give you very similar
-/// semantics as to normal getters and setters.
+/// ---
 ///
-/// There are, of course, places where you _do_ want these.
-/// And when we talk about traits in week 5,
-/// we will _need_ to have them if we want to share behavior among types.
+/// _Something to note is that while it is possible to implement getters and setters for struct_
+/// _fields as if they were objects in OOP-paradigm languages, it is generally unnecessary for Rust._
+/// _It can even get you into trouble with the borrow checker when dealing_
+/// _with fields that are references (we may talk about this when we get to _lifetimes_ in week 7)._
+///
+/// _Marking a field as `pub`, coupled with the borrow checker, will give you very similar_
+/// _semantics as to normal getters and setters._
+///
+/// _There are, of course, places where you _do_ want these._
+/// _And when we talk about traits in week 5,_
+/// _we will **need** to have them if we want to share behavior among types._
 #[derive(Debug, PartialEq, Eq)]
 pub struct Eevee {
     /// For this part of the homework,
@@ -76,6 +82,16 @@ pub enum ElementalStone {
 /// An [`EvolvedEevee`] contains an inner [`Eevee`] as well as a secondary attribute value.
 /// This attribute value changes one of the inner [`Eevee`]'s base stats depending on which
 /// of the 3 types the [`EvolvedEevee`] is.
+///
+/// You will need to implement 2 more methods on [`EvolvedEevee`]:
+/// [`take_damage`](EvolvedEevee::take_damage) and [`devolve`](EvolvedEevee::devolve).
+/// The remaining methods on [`EvolvedEevee`] have been implemented for you.
+///
+/// You may actually want to implement [`devolve`](EvolvedEevee::devolve) first since you
+/// likely just implemented [`Eevee::evolve`]. They may or may not have similar implementations...
+///
+/// Once you get to [`EvolvedEevee::take_damage`], make sure you read the documentation for
+/// the case work that you'll need to implement!
 #[derive(Debug, PartialEq, Eq)]
 pub enum EvolvedEevee {
     /// The secondary attribute for `Vaporeon` is added to the base health.
