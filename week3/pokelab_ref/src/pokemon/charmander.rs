@@ -11,7 +11,7 @@
 //!  - `attack: usize`
 //!  - `defense: usize`
 //!
-//! All of these fields should be _private_.
+//! All of these fields should be _private_ (not accessible outside of the struct).
 //!
 //! ---
 //!
@@ -31,9 +31,6 @@
 //! - [`get_defense`](Charmander::get_defense): This method will return the defense value of the
 //! [`Charmander`] struct.
 //!
-//! For some of these methods, you may have to do some extra work to determine the value to return.
-//! **Make sure to read the specification in either the comments in the code or on this writeup!**
-//!
 //! ---
 //!
 //! We also want [`Charmander`]s to battle with each other.
@@ -41,9 +38,16 @@
 //! [`attack`](Charmander::attack) and [`fight`](Charmander::fight).
 //! Click on these hyperlinks or read the doc comments to see the specification for these methods!
 //!
-//! _Note that this pokemon is **completely** different from the_
+//! For some of these methods, you may have to do some extra work to determine the value to return.
+//! **Make sure to read the specification in either the comments in the code or on this writeup!**
+//!
+//! _Note that this pokemon is **completely** separate from the_
 //! _[`Eevee`](crate::pokemon::eevee::Eevee)_
 //! _pokemon that you will implement in the next part, so make sure not to mix them up!_
+//!
+//! Once you have finished this section (and passed all the tests),
+//! you can follow hyperlinks or click this [`eevee`](crate::pokemon::eevee) link
+//! to get to part 2 of this homework!
 pub struct Charmander {
     name: String,
     level: usize,
@@ -53,6 +57,10 @@ pub struct Charmander {
 }
 
 /// Implement the Charmander struct here.
+///
+/// Once you have finished this section (and passed all the tests),
+/// you can follow hyperlinks or click this [`eevee`](crate::pokemon::eevee) link
+/// to get to part 2 of this homework!
 impl Charmander {
     /// Takes in a `name` as a `String` and creates a new [`Charmander`]
     /// struct with the following default values:

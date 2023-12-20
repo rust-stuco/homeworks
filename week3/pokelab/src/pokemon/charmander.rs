@@ -44,11 +44,20 @@
 //! _Note that this pokemon is **completely** separate from the_
 //! _[`Eevee`](crate::pokemon::eevee::Eevee)_
 //! _pokemon that you will implement in the next part, so make sure not to mix them up!_
+//!
+//! Once you have finished this section (and passed all the tests),
+//! you can follow hyperlinks or click this [`eevee`](crate::pokemon::eevee) link
+//! to get to part 2 of this homework!
 pub struct Charmander {
+    // Change me with the fields that Charmander needs!
     _placeholder: (),
 }
 
 /// Implement the Charmander struct here.
+///
+/// Once you have finished this section (and passed all the tests),
+/// you can follow hyperlinks or click this [`eevee`](crate::pokemon::eevee) link
+/// to get to part 2 of this homework!
 impl Charmander {
     /// Takes in a `name` as a `String` and creates a new [`Charmander`]
     /// struct with the following default values:
