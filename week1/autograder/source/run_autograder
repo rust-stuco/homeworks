@@ -1,0 +1,9 @@
+#!/usr/bin/env bash
+
+echo "Cargo location: $(cargo --version)"
+
+cp -r /autograder/submission/. /autograder/source/primerlab/src
+
+cd /autograder/source
+
+python3 run_tests.py
