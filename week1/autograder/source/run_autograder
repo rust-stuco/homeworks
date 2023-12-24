@@ -1,6 +1,6 @@
 #!/usr/bin/env bash
 
-# Copy student's submission code into the test crate
+# Copy student's submission into the test crate
 cp -r /autograder/submission/src/. /autograder/source/primerlab/src
 
 # Run test suite

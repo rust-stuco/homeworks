@@ -1,37 +1,31 @@
-import subprocess, os
+import subprocess
 import unittest
 from gradescope_utils.autograder_utils.decorators import weight
-
-
-def contains_error(output):
-    return "error" in output or "test result: FAILED" in output
-
-
-def run_command(cmd):
-    test = subprocess.Popen(
-        cmd, shell=True, stdout=subprocess.PIPE, stderr=subprocess.STDOUT
-    )
-    output = test.stdout.read().strip().lower().decode()
-    return output
 
 
 class PrimerLabTest(unittest.TestCase):
     def run_cargo_test(self, test_name, cmd):
         print(f"Testing {test_name}...")
-        output = run_command(cmd)
+        # Runs `cargo test` in a subprocess
+        test = subprocess.Popen(
+            cmd, shell=True, stdout=subprocess.PIPE, stderr=subprocess.STDOUT
+        )
+        # Capture the output of the subprocess test
+        output = test.stdout.read().strip().lower().decode()
+        # Show student the output of the test
         print(output)
-
-        if contains_error(output):
+        # Check for any errors in output
+        if "error" in output or "test result: FAILED" in output:
             self.assertTrue(False)
 
     @weight(48)
     def test_compiles(self):
-        """Testing Compilation of Exercises"""
+        """Testing compilation of exercises"""
         self.run_cargo_test("compilation", "cargo test exercises::")
 
     @weight(2)
     def test_it_works(self):
-        """Testing Compilation of Functions"""
+        """Testing compilation of functions"""
         self.run_cargo_test("it_works", "cargo test it_works")
 
     @weight(12)
