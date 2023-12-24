@@ -1,23 +1,21 @@
+# Based on Gradescope's base image
 FROM gradescope/autograder-base
 
+# Add our source files to our image
 ADD source /autograder/source
 
+# Place run_autograder in parent directory so Gradescope can execute it
 RUN cp /autograder/source/run_autograder /autograder/run_autograder
 
 # Ensure that scripts are Unix-friendly and executable
 RUN dos2unix /autograder/run_autograder
 RUN chmod +x /autograder/run_autograder
 
-# Do whatever setup was needed in setup.sh, including installing apt packages
-# Cleans up the apt cache afterwards in the same step to keep the image small
-# RUN apt-get update && \
-#     apt-get clean && rm -rf /var/lib/apt/lists/* /tmp/* /var/tmp/*
-
 # Install Gradescope utilities for Python
-RUN pip3 install -r /autograder/source/requirements.txt
+RUN pip3 install gradescope-utils
 
-# Set up nightly version of Rust
-RUN curl https://sh.rustup.rs -sSf | sh -s -- --default-toolchain nightly -y
+# Set up Rust
+RUN curl https://sh.rustup.rs -sSf | sh -s -- --default-toolchain stable -y
 
 # Add .cargo/bin to PATH
 ENV PATH="/root/.cargo/bin:${PATH}"

@@ -1,9 +1,8 @@
 #!/usr/bin/env bash
 
-echo "Cargo location: $(cargo --version)"
+# Copy student's submission code into the test crate
+cp -r /autograder/submission/src/. /autograder/source/primerlab/src
 
-cp -r /autograder/submission/. /autograder/source/primerlab/src
-
+# Run test suite
 cd /autograder/source
-
 python3 run_tests.py
