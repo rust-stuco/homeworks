@@ -13,7 +13,7 @@ def verify_output_warnings(output):
 
 class PrimerLabTest(unittest.TestCase):
     def run_cargo_test(self, cmd, verify=verify_output_errors):
-        # Runs `cargo test` in a subprocess
+        # Runs given shell command in a subprocess
         test = subprocess.Popen(
             cmd, shell=True, stdout=subprocess.PIPE, stderr=subprocess.STDOUT
         )
