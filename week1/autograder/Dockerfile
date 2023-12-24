@@ -11,6 +11,9 @@ RUN cp /autograder/source/run_autograder /autograder/run_autograder
 RUN dos2unix /autograder/run_autograder
 RUN chmod +x /autograder/run_autograder
 
+# Install apt packages (not necessary for this assignment)
+# RUN apt-get update
+
 # Install Gradescope utilities for Python
 RUN pip3 install gradescope-utils
 
@@ -19,3 +22,6 @@ RUN curl https://sh.rustup.rs -sSf | sh -s -- --default-toolchain stable -y
 
 # Add .cargo/bin to PATH
 ENV PATH="/root/.cargo/bin:${PATH}"
+
+# Clean apt cache (also not necessary for this assignment)
+# RUN apt-get clean && rm -rf /var/lib/apt/lists/* /tmp/* /var/tmp/*
