@@ -30,7 +30,7 @@ class PrimerLabTest(unittest.TestCase):
     @number(0.0)
     @weight(0)
     def test_clippy(self):
-        """Testing lints"""
+        """Testing clippy"""
         self.run_cargo_test("cargo clippy", verify_output_warnings)
 
     @number(1.0)
