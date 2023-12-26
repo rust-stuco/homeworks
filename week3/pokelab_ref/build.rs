@@ -3,14 +3,10 @@ use std::process::Command;
 /// Add all patterns here
 const PATTERNS: [&str; 2] = ["src/pokemon/charmander.rs", "src/pokemon/eevee.rs"];
 
-/// Output tar handin file
-const HANDIN: &str = "handin.tar";
-
 fn main() {
-    Command::new("tar")
-        .arg("-cvf")
-        .arg(HANDIN)
+    Command::new("zip")
+        .arg("handin.zip")
         .args(PATTERNS)
         .output()
-        .expect("Unable to tar handin files");
+        .expect("Unable to zip handin files");
 }
