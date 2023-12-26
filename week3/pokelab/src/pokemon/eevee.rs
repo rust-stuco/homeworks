@@ -82,6 +82,16 @@ pub enum ElementalStone {
 /// An [`EvolvedEevee`] contains an inner [`Eevee`] as well as a secondary attribute value.
 /// This attribute value changes one of the inner [`Eevee`]'s base stats depending on which
 /// of the 3 types the [`EvolvedEevee`] is.
+///
+/// You will need to implement 2 more methods on [`EvolvedEevee`]:
+/// [`take_damage`](EvolvedEevee::take_damage) and [`devolve`](EvolvedEevee::devolve).
+/// The remaining methods on [`EvolvedEevee`] have been implemented for you.
+///
+/// You may actually want to implement [`devolve`](EvolvedEevee::devolve) first since you
+/// likely just implemented [`Eevee::evolve`]. They may or may not have similar implementations...
+///
+/// Once you get to [`EvolvedEevee::take_damage`], make sure you read the documentation for
+/// the case work that you'll need to implement!
 #[derive(Debug, PartialEq, Eq)]
 pub enum EvolvedEevee {
     /// The secondary attribute for `Vaporeon` is added to the base health.
@@ -102,7 +112,7 @@ impl Eevee {
     /// _Note: We 0-level because we're programmers_ 😎
     ///
     /// ```
-    /// # use pokelab_ref::pokemon::eevee::*;
+    /// # use pokelab::pokemon::eevee::*;
     /// #
     /// let new_eevee = Eevee::new();
     /// assert_eq!(new_eevee.level, 0);
@@ -111,18 +121,13 @@ impl Eevee {
     /// assert_eq!(new_eevee.defense, 20);
     /// ```
     pub fn new() -> Self {
-        Self {
-            level: 0,
-            health: 100,
-            attack: 55,
-            defense: 20,
-        }
+        todo!()
     }
 
     /// Deals `damage` amount of damage to the Eevee's health.
     ///
     /// ```
-    /// # use pokelab_ref::pokemon::eevee::*;
+    /// # use pokelab::pokemon::eevee::*;
     /// #
     /// let mut new_eevee = Eevee::new();
     /// assert_eq!(new_eevee.health, 100);
@@ -138,14 +143,7 @@ impl Eevee {
     /// This function should panic with the message `"Eevee fainted!"` if it takes more damage
     /// than it has health. In other words, it should faint when it reaches 0 health.
     pub fn take_damage(&mut self, damage: u16) {
-        if self.defense >= damage {
-            return;
-        }
-        let damage_taken = damage - self.defense;
-        if self.health <= damage_taken {
-            panic!("Eevee fainted!");
-        }
-        self.health -= damage_taken;
+        todo!()
     }
 
     /// Given an Elemental Stone, evolve the Eevee into an [`EvolvedEevee`].
@@ -154,7 +152,7 @@ impl Eevee {
     /// panic with the message `"Encountered a weird rock..."`.
     ///
     /// ```
-    /// # use pokelab_ref::pokemon::eevee::*;
+    /// # use pokelab::pokemon::eevee::*;
     /// #
     /// let mut new_eevee = Eevee::new();
     ///
@@ -162,12 +160,7 @@ impl Eevee {
     /// assert!(matches!(vaporeon, EvolvedEevee::Vaporeon(_, _)));
     /// ```
     pub fn evolve(self, evolution: ElementalStone) -> EvolvedEevee {
-        match evolution {
-            ElementalStone::HydroStone => EvolvedEevee::Vaporeon(self, 0),
-            ElementalStone::PyroStone => EvolvedEevee::Flareon(self, 0),
-            ElementalStone::MossyStone => EvolvedEevee::Leafeon(self, 0),
-            _ => panic!("Encountered a weird rock..."),
-        }
+        todo!()
     }
 }
 
@@ -234,7 +227,7 @@ impl EvolvedEevee {
     /// It's also fine to just panic with the same message, `"Eevee fainted!"`.
     ///
     /// ```
-    /// # use pokelab_ref::pokemon::eevee::*;
+    /// # use pokelab::pokemon::eevee::*;
     /// #
     /// let mut flareon = Eevee::new().evolve(ElementalStone::PyroStone);
     /// flareon.take_damage(40);
@@ -253,23 +246,7 @@ impl EvolvedEevee {
     /// assert_eq!(leafeon.get_health(), 100);
     /// ```
     pub fn take_damage(&mut self, damage: u16) {
-        match self {
-            EvolvedEevee::Vaporeon(base, extra_health) => {
-                if damage < *extra_health {
-                    *extra_health -= damage;
-                } else {
-                    base.take_damage(damage - *extra_health);
-                    *extra_health = 0;
-                }
-            }
-            EvolvedEevee::Flareon(base, _) => base.take_damage(damage),
-            EvolvedEevee::Leafeon(base, extra_defense) => {
-                // Only need to take inner damage if it exceeds our extra defense
-                if damage > *extra_defense {
-                    base.take_damage(damage - *extra_defense);
-                }
-            }
-        }
+        todo!()
     }
 
     /// Devolves an [`EvolvedEevee`] into an [`Eevee`].
@@ -277,7 +254,7 @@ impl EvolvedEevee {
     /// Note that base stats like health should not change even after devolving.
     ///
     /// ```
-    /// # use pokelab_ref::pokemon::eevee::*;
+    /// # use pokelab::pokemon::eevee::*;
     /// #
     /// let leafeon = Eevee::new().evolve(ElementalStone::MossyStone);
     /// assert!(matches!(leafeon, EvolvedEevee::Leafeon(_, _)));
@@ -285,10 +262,6 @@ impl EvolvedEevee {
     /// let back_to_eevee: Eevee = leafeon.devolve();
     /// ```
     pub fn devolve(self) -> Eevee {
-        match self {
-            EvolvedEevee::Vaporeon(base, _) => base,
-            EvolvedEevee::Flareon(base, _) => base,
-            EvolvedEevee::Leafeon(base, _) => base,
-        }
+        todo!()
     }
 }
