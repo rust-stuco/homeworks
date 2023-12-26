@@ -13,7 +13,7 @@ pub fn add(left: usize, right: usize) -> usize {
 /// # Example
 ///
 /// ```
-/// use primerlab_refsol::functions::is_prime;
+/// use primerlab_ref::functions::is_prime;
 ///
 /// let test_prime = 2;
 /// assert!(is_prime(test_prime));
@@ -47,7 +47,7 @@ pub fn is_prime(n: usize) -> bool {
 /// # Example
 ///
 /// ```
-/// use primerlab_refsol::functions::nth_prime;
+/// use primerlab_ref::functions::nth_prime;
 ///
 /// let n = 4;
 /// assert_eq!(nth_prime(n), 11);
@@ -76,7 +76,7 @@ pub fn nth_prime(n: usize) -> usize {
 /// # Example
 ///
 /// ```
-/// use primerlab_refsol::functions::gcd;
+/// use primerlab_ref::functions::gcd;
 ///
 /// let first_num = 60;
 /// let second_num = 24;
@@ -102,7 +102,7 @@ pub fn gcd(x: usize, y: usize) -> usize {
 /// # Example
 ///
 /// ```
-/// use primerlab_refsol::functions::fib;
+/// use primerlab_ref::functions::fib;
 ///
 /// assert_eq!(fib(2), 1);
 /// assert_eq!(fib(4), 3);

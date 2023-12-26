@@ -37,7 +37,7 @@ Make sure that both of those commands execute successfully,
 and that they have relatively recent dates.
 If the dates are not recent, you can update `rustup` by running `rustup update`.
 
-If you want a local version of the writeup, you can generate it with `cargo doc`.
+If you want a local version of this writeup, you can generate it with `cargo doc`.
 Once you have `cargo` installed, run `cargo doc --open` in this directory to generate documentation
 for this homework.
 
@@ -98,6 +98,7 @@ with the name of the test instead of `it_works`.
 
 
 # Submission
+
 We will try to create a `handin.tar` automatically for you,
 **but you will need to have `tar` already installed**.
 
@@ -105,16 +106,8 @@ If you _do not_ have `tar` installed on your system,
 install `tar` on your machine or use the CMU Linux SSH machines.
 If you need help with this, please reach out to us!
 
-You can also submit manually.
-If `tar` is not installed, a `submit.sh` file should be created with the following inside it
-(you can run this manually if you want):
-
-```
-tar -cvf handin.tar src/exercises/fixme*.rs src/functions.rs
-```
-
-If you _do_ have `tar` already installed, we will create the `handin.tar` automatically for you
-(_take a peek into `build.rs` if you're interested in how!_).
+Once you have `tar` installed, we will create the `handin.tar` automatically for you
+(_take a peek into `build.rs` if you're interested in how this works!_).
 
 Once you have the `handin.tar`, submit it to Gradescope.
 
@@ -136,9 +129,6 @@ Remember that all formal questions should be asked on Piazza.
 
 We would like to reiterate that you should let us know if you spent
 anywhere in significant excess of an hour on this homework.
-
-These assignments are being deployed for the first time,
-and we are very open to feedback regarding the length and difficulty.
 
 In addition, Rust has a notoriously steep learning curve,
 so if you find yourself not understanding the concepts,
