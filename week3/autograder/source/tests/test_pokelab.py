@@ -8,7 +8,7 @@ def verify_output_errors(output):
 
 
 def verify_output_warnings(output):
-    return "warning" not in output
+    return "warning" not in output and verify_output_errors(output)
 
 
 class PokeLabTest(unittest.TestCase):
