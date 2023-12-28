@@ -11,7 +11,7 @@ def verify_output_warnings(output):
     return "warning" not in output and verify_output_errors(output)
 
 
-class PrimerLabTest(unittest.TestCase):
+class PokeLabTest(unittest.TestCase):
     def run_cargo_test(self, cmd, verify=verify_output_errors):
         # Runs given shell command in a subprocess
         test = subprocess.Popen(
@@ -34,37 +34,25 @@ class PrimerLabTest(unittest.TestCase):
         self.run_cargo_test("cargo clippy", verify_output_warnings)
 
     @number(1.0)
-    @weight(48)
-    def test_compiles(self):
-        """Testing compilation of exercises"""
-        self.run_cargo_test("cargo test exercises::")
+    @weight(5)
+    def test_charmander_doc(self):
+        """Testing charmander doc tests"""
+        self.run_cargo_test("cargo test charmander --doc")
 
     @number(1.1)
-    @weight(2)
-    def test_it_works(self):
-        """Testing compilation of functions"""
-        self.run_cargo_test("cargo test it_works")
+    @weight(25)
+    def test_charmander(self):
+        """Testing charmander tests"""
+        self.run_cargo_test("cargo test charmander")
 
     @number(2.0)
-    @weight(12)
-    def test_is_prime(self):
-        """Testing is_prime"""
-        self.run_cargo_test("cargo test is_prime && cargo test random_primes")
+    @weight(25)
+    def test_eevee_doc(self):
+        """Testing eevee doc tests"""
+        self.run_cargo_test("cargo test eevee --doc")
 
     @number(2.1)
-    @weight(16)
-    def test_nth_prime(self):
-        """Testing nth_prime"""
-        self.run_cargo_test("cargo test --release nth_prime")
-
-    @number(2.2)
-    @weight(11)
-    def test_gcd(self):
-        """Testing gcd"""
-        self.run_cargo_test("cargo test gcd")
-
-    @number(2.3)
-    @weight(11)
-    def test_fib(self):
-        """Testing fib"""
-        self.run_cargo_test("cargo test fib")
+    @weight(45)
+    def test_eevee(self):
+        """Testing eevee tests"""
+        self.run_cargo_test("cargo test eevee")
