@@ -6,12 +6,12 @@ fn wait_for_me_to_speak() {
 
     let word = first_word(&s);
 
-    s.clear();
-
     println!("the first word is: {}", word);
+
+    s.clear();
 }
 
-#[test]
+#[cfg(test)]
 fn first_word(s: &str) -> &str {
     &s[..1]
 }

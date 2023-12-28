@@ -8,5 +8,5 @@ fn my_favorite_color() {
 
 #[cfg(test)]
 fn current_favorite_color() -> String {
-    "blue"
+    "blue".to_string()
 }

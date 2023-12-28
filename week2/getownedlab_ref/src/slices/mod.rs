@@ -5,5 +5,5 @@
 // Make sure you read ALL of the error messages! They contain VERY useful information.
 
 pub mod slices1;
-// pub mod slices2;
-// pub mod slices3;
+pub mod slices2;
+pub mod slices3;

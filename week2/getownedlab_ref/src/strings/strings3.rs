@@ -22,14 +22,14 @@ fn am_i_str_or_string() {
     string(String::new());
 
     // Replace all of the `todo!()`s with `string_slice` or `string`!
-    todo!("blue");
-    todo!("red".to_string());
-    todo!(String::from("hi"));
-    todo!("rust is fun!".to_owned());
-    todo!("nice weather".into());
-    todo!(format!("Interpolation {}", "Station"));
-    todo!(&String::from("abc")[0..1]);
-    todo!("  hello there ".trim());
-    todo!("Happy Monday!".to_string().replace("Mon", "Tues"));
-    todo!("mY sHiFt KeY iS sTiCkY".to_lowercase());
+    string_slice("blue");
+    string("red".to_string());
+    string(String::from("hi"));
+    string("rust is fun!".to_owned());
+    string("nice weather".into());
+    string(format!("Interpolation {}", "Station"));
+    string_slice(&String::from("abc")[0..1]);
+    string_slice("  hello there ".trim());
+    string("Happy Monday!".to_string().replace("Mon", "Tues"));
+    string("mY sHiFt KeY iS sTiCkY".to_lowercase());
 }
