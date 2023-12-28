@@ -7,11 +7,14 @@ ADD source /autograder/source
 # Place run_autograder in parent directory so Gradescope can execute it
 RUN cp /autograder/source/run_autograder /autograder/run_autograder
 
+# Ensure that scripts are Unix-friendly and executable
+RUN chmod +x /autograder/run_autograder
+
 # Install Gradescope utilities for Python
 RUN pip3 install gradescope-utils
 
 # Set up Rust
-RUN curl https://sh.rustup.rs -sSf | sh -s -- -y
+RUN curl https://sh.rustup.rs -sSf | sh -s -- --default-toolchain stable -y
 
 # Add .cargo/bin to PATH
 ENV PATH="/root/.cargo/bin:${PATH}"
