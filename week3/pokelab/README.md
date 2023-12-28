@@ -35,17 +35,28 @@ Click this hyperlink to go to the writeup for [`Eevee`](pokemon::eevee)!
 
 # Submission
 
-We will try to create a `handin.tar` automatically for you,
-**but you will need to have `tar` already installed**.
 
-If you _do not_ have `tar` installed on your system,
-install `tar` on your machine or use the CMU Linux SSH machines.
+### Unix
+
+If you are on a unix system, we will try to create a `handin.zip` automatically for you,
+**but you will need to have `zip` already installed**.
+
+If you _do not_ have `zip` installed on your system,
+install `zip` on your machine or use the CMU Linux SSH machines.
 If you need help with this, please reach out to us!
 
-Once you have `tar` installed, we will create the `handin.tar` automatically for you
+Once you have `zip` installed, we will create the `handin.zip` automatically for you
 (_take a peek into `build.rs` if you're interested in how this works!_).
 
-Once you have the `handin.tar`, submit it to Gradescope.
+Once you have the `handin.zip` file, submit it to Gradescope.
+
+
+### Windows
+
+If you are on a windows system, you can zip the `src/` folder manually
+and upload that to Gradescope.
+
+Note that you don't _need_ to name it `handin.zip`, you can name it whatever you'd like.
 
 
 

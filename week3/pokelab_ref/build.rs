@@ -1,13 +1,14 @@
 use std::process::Command;
 
-/// Add all patterns here
-const PATTERNS: [&str; 2] = ["src/pokemon/charmander.rs", "src/pokemon/eevee.rs"];
-
 fn main() {
-    Command::new("zip")
-        .arg("-r")
-        .arg("handin.zip")
-        .args(PATTERNS)
-        .output()
-        .expect("Unable to zip handin files");
+    if cfg!(unix) {
+        Command::new("zip")
+            .arg("-r")
+            .arg("handin.zip")
+            .arg("src/")
+            .output()
+            .expect("Unable to zip handin files");
+    }
+
+    println!("cargo:rerun-if-changed=handin.zip");
 }
