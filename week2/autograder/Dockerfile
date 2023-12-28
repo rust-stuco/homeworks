@@ -11,7 +11,7 @@ RUN cp /autograder/source/run_autograder /autograder/run_autograder
 RUN pip3 install gradescope-utils
 
 # Set up Rust
-RUN curl https://sh.rustup.rs -sSf | sh -s -- --default-toolchain stable -y
+RUN curl https://sh.rustup.rs -sSf | sh -s -- -y
 
 # Add .cargo/bin to PATH
 ENV PATH="/root/.cargo/bin:${PATH}"
