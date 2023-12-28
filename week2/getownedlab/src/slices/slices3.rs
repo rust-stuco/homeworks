@@ -11,7 +11,7 @@ fn wait_for_me_to_speak() {
     println!("the first word is: {}", word);
 }
 
-#[test]
+#[cfg(test)]
 fn first_word(s: &str) -> &str {
     &s[..1]
 }

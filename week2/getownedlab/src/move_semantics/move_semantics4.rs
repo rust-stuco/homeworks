@@ -1,5 +1,6 @@
 /// Make me compile by ONLY reordering the lines in `main()`,
 /// but without adding, changing or removing any of them.
+/// Hint: You only need to reorder 1 line.
 
 #[test]
 fn get_in_line() {

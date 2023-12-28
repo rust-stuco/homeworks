@@ -1,5 +1,6 @@
 /// Make me compile!
 /// Hint: What does the compiler tell you?
+/// You also might want to remove something to get rid of the warning.
 
 #[test]
 fn youre_different() {
