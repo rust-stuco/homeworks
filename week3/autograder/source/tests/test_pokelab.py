@@ -55,13 +55,13 @@ def run_cmd(cmd):
     return output
 
 
-class PrimerLabTest(unittest.TestCase):
+class PokeLabTest(unittest.TestCase):
     def __init__(self, *args, **kwargs):
         super().__init__(*args, **kwargs)
 
         # Need to cd into crate root here,
         # for some reason it initializes before the os.chdir in run_tests.py
-        os.chdir("/autograder/source/primerlab")
+        os.chdir("/autograder/source/pokelab")
 
         self.clippy_output = run_cmd("cargo clippy")
         self.passed_clippy = verify_output_warnings(self.clippy_output)
@@ -77,32 +77,22 @@ class PrimerLabTest(unittest.TestCase):
                 "Please fix the lints above to receive credit for this assignment:\n"
             )
 
-    @cargo_test(1.0, 48)
+    @cargo_test(1.0, 5)
     def test_charmander_doc(self):
-        """Testing compilation of exercises"""
-        return "cargo test exercises::"
+        """Testing charmander doc tests"""
+        return "cargo test charmander --doc"
 
-    @cargo_test(1.1, 2)
-    def test_it_works(self):
-        """Testing compilation of functions"""
-        return "cargo test it_works"
+    @cargo_test(1.1, 25)
+    def test_charmander(self):
+        """Testing charmander"""
+        return "cargo test charmander"
 
-    @cargo_test(2.0, 12)
-    def test_is_prime(self):
-        """Testing is_prime"""
-        return "cargo test is_prime && cargo test random_primes"
+    @cargo_test(2.0, 25)
+    def test_eevee_doc(self):
+        """Testing eevee doc tests"""
+        return "cargo test eevee --doc"
 
-    @cargo_test(2.1, 16)
-    def test_nth_prime(self):
-        """Testing nth_prime"""
-        return "cargo test --release nth_prime"
-
-    @cargo_test(2.2, 11)
-    def test_gcd(self):
-        """Testing gcd"""
-        return "cargo test gcd"
-
-    @cargo_test(2.3, 11)
-    def test_fib(self):
-        """Testing fib"""
-        return "cargo test fib"
+    @cargo_test(2.1, 45)
+    def test_eevee(self):
+        """Testing eevee"""
+        return "cargo test eevee"

@@ -1,47 +1,35 @@
-# Rust StuCo S24 Homeworks
-
-_All homeworks are due the week after they are assigned, unless you use late days._
-_You have 7 late days to use whenever you need._
+### 98-008: Intro to the Rust Programming Language
 
 
 
-# Homeworks
+# Poke Lab
 
-We've' tried to calibrate each of the homeworks to take around an hour.
-If you find yourself spending much more than an hour on these, please let us know!
-This is the first time these assignments have been handed out,
-and we are very open to feedback regarding the length and difficulty.
+The goal of this homework is to make sure that you understand Rust's Structs and Enums,
+semantically known as Algebraic Data Types.
+
+In this homework, you will be implementing two data types:
+[`Charmander`](pokemon::charmander) and [`Eevee`](pokemon::eevee).
+
+This will be the first homework where you have to start writing code,
+so this may take a little longer than the last homework.
+If you are spending _significantly_ more than 1 hour on this, please let us know!
+
+For this homework, you should use the markdown-generated writeup. You can either get it from
+our website, or generate it directly on your computer with `cargo doc --open`.
+Having this form of documentation allows you to follow hyperlinks
+to get to documentation on specific types and methods.
 
 
 
-# Setup
+# Part 1: Charmander
 
-Make sure you have Rust installed. You should have installed Rust through `rustup`.
-To confirm, run:
+Click this hyperlink to go to the writeup for [`Charmander`](pokemon::charmander)!
 
-```sh
-$ rustup --version
-rustup 1.26.0 (2023-11-14)
-$ cargo --version
-cargo 1.74.0 (ecb9851af 2023-10-18)
-```
 
-Make sure that both of those commands execute successfully,
-and that they have relatively recent dates.
-If the dates are not recent, you can update `rustup` by running `rustup update`.
 
-If you want a local version of this writeup, you can generate it with `cargo doc`.
-Once you have `cargo` installed, run `cargo doc --open` in this directory to generate documentation
-for this homework.
+# Part 2: Eevee
 
-```sh
-$ cargo doc --open
-Documenting primerlab v0.1.0 (<path>/primerlab)
-   Finished dev [unoptimized + debuginfo] target(s) in 0.11s
-    Opening <path>/primerlab/target/doc/primerlab/index.html
-```
-
-Either way, a version of this writeup will be up on our website!
+Click this hyperlink to go to the writeup for [`Eevee`](pokemon::eevee)!
 
 
 
