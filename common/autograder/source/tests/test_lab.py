@@ -55,13 +55,13 @@ def run_cmd(cmd):
     return output
 
 
-class PokeLabTest(unittest.TestCase):
+class ???LabTest(unittest.TestCase):
     def __init__(self, *args, **kwargs):
         super().__init__(*args, **kwargs)
 
         # Need to cd into crate root here,
         # for some reason it initializes before the os.chdir in run_tests.py
-        os.chdir("/autograder/source/pokelab")
+        os.chdir("/autograder/source/???lab")
 
         self.clippy_output = run_cmd("cargo clippy")
         self.passed_clippy = verify_output_warnings(self.clippy_output)
@@ -77,22 +77,7 @@ class PokeLabTest(unittest.TestCase):
                 "Please fix the lints above to receive credit for this assignment:\n"
             )
 
-    @cargo_test(1.0, 5)
+    @cargo_test(1.0, 100)
     def test_charmander_doc(self):
-        """Testing charmander doc tests"""
-        return "cargo test charmander --doc"
-
-    @cargo_test(1.1, 25)
-    def test_charmander(self):
-        """Testing charmander"""
-        return "cargo test charmander"
-
-    @cargo_test(2.0, 25)
-    def test_eevee_doc(self):
-        """Testing eevee doc tests"""
-        return "cargo test eevee --doc"
-
-    @cargo_test(2.1, 45)
-    def test_eevee(self):
-        """Testing eevee"""
-        return "cargo test eevee"
+        """Testing all tests"""
+        return "cargo test"
