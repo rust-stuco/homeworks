@@ -78,6 +78,6 @@ class ???LabTest(unittest.TestCase):
             )
 
     @cargo_test(1.0, 100)
-    def test_charmander_doc(self):
+    def test_all_tests(self):
         """Testing all tests"""
         return "cargo test"
