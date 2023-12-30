@@ -79,15 +79,15 @@ class GetOwnedLabTest(unittest.TestCase):
 
     @cargo_test(1.0, 20)
     def test_slices(self):
-        """Testing all tests"""
+        """Testing slices"""
         return "cargo test slices"
 
     @cargo_test(2.0, 35)
     def test_all_tests(self):
-        """Testing all tests"""
+        """Testing move semantics"""
         return "cargo test move_semantics"
 
     @cargo_test(3.0, 45)
     def test_strings(self):
-        """Testing Strings"""
+        """Testing strings"""
         return "cargo test strings"
