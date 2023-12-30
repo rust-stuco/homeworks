@@ -27,7 +27,7 @@ where
     /// A new empty `MultiSet` with 0 total elements:
     ///
     /// ```
-    /// use maplab_ref::multiset::MultiSet;
+    /// use multilab_ref::multiset::MultiSet;
     ///
     /// let multiset: MultiSet<char> = MultiSet::new();
     /// assert_eq!(0, multiset.len());
@@ -52,7 +52,7 @@ where
     /// Insert `5` into a new `MultiSet`:
     ///
     /// ```
-    /// use maplab_ref::multiset::MultiSet;
+    /// use multilab_ref::multiset::MultiSet;
     ///
     /// let mut multiset: MultiSet<i32> = MultiSet::new();
     /// assert_eq!(0, multiset.count(&5));
@@ -72,7 +72,7 @@ where
     /// Remove `5` from a new `MultiSet`:
     ///
     /// ```
-    /// # use maplab_ref::multiset::MultiSet;
+    /// # use multilab_ref::multiset::MultiSet;
     /// #
     /// let mut multiset: MultiSet<i32> = MultiSet::new();
     /// multiset.insert(5);
@@ -101,7 +101,7 @@ where
     /// # Examples
     ///
     /// ```
-    /// # use maplab_ref::multiset::MultiSet;
+    /// # use multilab_ref::multiset::MultiSet;
     /// #
     /// let mut multiset: MultiSet<u8> = MultiSet::new();
     /// multiset.insert(0);
