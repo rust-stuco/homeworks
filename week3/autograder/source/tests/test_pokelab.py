@@ -1,6 +1,40 @@
-import subprocess
+import os, subprocess
 import unittest
-from gradescope_utils.autograder_utils.decorators import weight, number
+from functools import wraps
+from gradescope_utils.autograder_utils.decorators import weight, number, partial_credit
+
+
+# Main decorator for gradescope tests
+def cargo_test(test_num, weight):
+    def cargo_test_wrapper(func):
+        @number(test_num)
+        @partial_credit(weight)
+        @wraps(func)
+        def test(self, set_score=None):
+            if not self.passed_clippy:
+                set_score(0)
+                print(
+                    "Detected warnings and/or errors in cargo clippy output! "
+                    "Setting score to 0 and moving on to tests:\n"
+                )
+            else:
+                print("cargo clippy succeeded, moving on to tests:\n")
+
+            # Run the command and show student the output
+            cmd = func(self)
+            print(f"Running `{cmd}`...\n")
+            output = run_cmd(cmd)
+            print(output)
+
+            # Check for any errors in output
+            if not verify_output_errors(output):
+                self.fail(
+                    "Error detected! Please review the above to see what went wrong."
+                )
+
+        return test
+
+    return cargo_test_wrapper
 
 
 def verify_output_errors(output):
@@ -11,48 +45,54 @@ def verify_output_warnings(output):
     return "warning" not in output and verify_output_errors(output)
 
 
+# Runs given shell command in a subprocess
+def run_cmd(cmd):
+    test = subprocess.Popen(
+        cmd, shell=True, stdout=subprocess.PIPE, stderr=subprocess.STDOUT
+    )
+    # Capture the output of the subprocess command
+    output = test.stdout.read().strip().lower().decode()
+    return output
+
+
 class PokeLabTest(unittest.TestCase):
-    def run_cargo_test(self, cmd, verify=verify_output_errors):
-        # Runs given shell command in a subprocess
-        test = subprocess.Popen(
-            cmd, shell=True, stdout=subprocess.PIPE, stderr=subprocess.STDOUT
-        )
+    def __init__(self, *args, **kwargs):
+        super().__init__(*args, **kwargs)
 
-        # Capture the output of the subprocess command
-        output = test.stdout.read().strip().lower().decode()
-        # Show student the output of the test
-        print(output)
+        # Need to cd into crate root here,
+        # for some reason it initializes before the os.chdir in run_tests.py
+        os.chdir("/autograder/source/pokelab")
 
-        # Check for any errors in output
-        if not verify(output):
-            self.fail("Error detected! Please review the above to see what went wrong.")
+        self.clippy_output = run_cmd("cargo clippy")
+        self.passed_clippy = verify_output_warnings(self.clippy_output)
 
     @number(0.0)
     @weight(0)
-    def test_clippy(self):
-        """Testing clippy"""
-        self.run_cargo_test("cargo clippy", verify_output_warnings)
+    def test_clippy_check(self):
+        """Testing cargo clippy"""
+        print(self.clippy_output)
+        if not self.passed_clippy:
+            self.fail(
+                "Detected warnings and/or errors in cargo clippy output!\n"
+                "Please fix the lints above to receive credit for this assignment:\n"
+            )
 
-    @number(1.0)
-    @weight(5)
+    @cargo_test(1.0, 5)
     def test_charmander_doc(self):
         """Testing charmander doc tests"""
-        self.run_cargo_test("cargo test charmander --doc")
+        return "cargo test charmander --doc"
 
-    @number(1.1)
-    @weight(25)
+    @cargo_test(1.1, 25)
     def test_charmander(self):
-        """Testing charmander tests"""
-        self.run_cargo_test("cargo test charmander")
+        """Testing charmander"""
+        return "cargo test charmander"
 
-    @number(2.0)
-    @weight(25)
+    @cargo_test(2.0, 25)
     def test_eevee_doc(self):
         """Testing eevee doc tests"""
-        self.run_cargo_test("cargo test eevee --doc")
+        return "cargo test eevee --doc"
 
-    @number(2.1)
-    @weight(45)
+    @cargo_test(2.1, 45)
     def test_eevee(self):
-        """Testing eevee tests"""
-        self.run_cargo_test("cargo test eevee")
+        """Testing eevee"""
+        return "cargo test eevee"
