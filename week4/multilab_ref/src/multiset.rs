@@ -7,7 +7,6 @@ pub struct MultiSet<K: Eq + Hash> {
     size: usize,
 }
 
-#[allow(clippy::new_without_default)]
 impl<K> MultiSet<K>
 where
     K: Eq + Hash,
@@ -18,6 +17,11 @@ where
             inner: HashMap::new(),
             size: 0,
         }
+    }
+
+    /// TODO examples
+    pub fn is_empty(&self) -> bool {
+        self.size == 0
     }
 
     /// Counts all the elements, including each duplicate.
@@ -113,5 +117,14 @@ where
     /// ```
     pub fn count(&self, value: &K) -> usize {
         self.inner.get(value).map_or(0, |x| *x)
+    }
+}
+
+impl<K> Default for MultiSet<K>
+where
+    K: Eq + Hash,
+{
+    fn default() -> Self {
+        Self::new()
     }
 }
