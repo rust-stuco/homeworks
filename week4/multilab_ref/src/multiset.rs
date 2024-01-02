@@ -1,7 +1,29 @@
+//! A hash-based multiset that can store elements of type `K`.
+//!
+//! It efficiently tracks the multiplicity of each element, allowing for duplicates.
+
 use std::collections::HashMap;
 use std::hash::Hash;
 
-/// A hash-based multiset.
+/// A hash-based multiset implementation in Rust.
+///
+/// Multisets, also known as bags, are collections that allow for duplicate elements.
+/// This implementation utilizes a [`HashMap`] internally to efficiently
+/// track the count of each element.
+///
+/// # Examples
+///
+/// ```
+/// # use multilab_ref::multiset::MultiSet;
+/// #
+/// let mut words = MultiSet::new();
+/// words.insert("hello");
+/// words.insert("world");
+/// words.insert("hello");
+///
+/// assert_eq!(words.count(&"hello"), 2);  // "hello" appears twice
+/// assert_eq!(words.count(&"world"), 1);
+/// ```
 pub struct MultiSet<K: Eq + Hash> {
     inner: HashMap<K, usize>,
     size: usize,
@@ -11,7 +33,7 @@ impl<K> MultiSet<K>
 where
     K: Eq + Hash,
 {
-    /// Creates a new empty `MultiSet`.
+    /// Creates a new empty [`MultiSet`].
     pub fn new() -> Self {
         Self {
             inner: HashMap::new(),
@@ -19,7 +41,18 @@ where
         }
     }
 
-    /// TODO examples
+    /// Checks if a [`MultiSet`] is empty.
+    ///
+    /// # Examples
+    ///
+    /// A new empty [`MultiSet`] with 0 total elements:
+    ///
+    /// ```
+    /// # use multilab_ref::multiset::MultiSet;
+    /// #
+    /// let multiset: MultiSet<char> = MultiSet::new();
+    /// assert_eq!(0, multiset.len());
+    /// ```
     pub fn is_empty(&self) -> bool {
         self.size == 0
     }
@@ -28,23 +61,36 @@ where
     ///
     /// # Examples
     ///
-    /// A new empty `MultiSet` with 0 total elements:
+    /// A [`MultiSet`] after insering 1, 2, and 1 has 3 total elements:
     ///
     /// ```
-    /// use multilab_ref::multiset::MultiSet;
-    ///
-    /// let multiset: MultiSet<char> = MultiSet::new();
-    /// assert_eq!(0, multiset.len());
+    /// # use multilab_ref::multiset::MultiSet;
+    /// #
+    /// let mut multiset = MultiSet::new();
+    /// multiset.insert(1);
+    /// multiset.insert(2);
+    /// multiset.insert(1);
+    /// assert_eq!(multiset.len(), 3);
     /// ```
-    ///
-    /// A `MultiSet` from `vec![1,1,2]` has 3 total elements:
-    ///
-    /// TODO example
     pub fn len(&self) -> usize {
         self.size
     }
 
-    /// TODO documentation and example
+    /// Checks if a given value is in the [`MultiSet`].
+    ///
+    /// # Examples
+    ///
+    /// ```
+    /// # use multilab_ref::multiset::MultiSet;
+    /// #
+    /// let mut multiset = MultiSet::new();
+    /// multiset.insert(1);
+    /// multiset.insert(2);
+    /// multiset.insert(1);
+    /// assert!(multiset.contains(&1));
+    /// assert!(multiset.contains(&2));
+    /// assert!(!multiset.contains(&3));
+    /// ```
     pub fn contains(&self, value: &K) -> bool {
         self.inner.contains_key(value)
     }
@@ -53,7 +99,7 @@ where
     ///
     /// # Examples
     ///
-    /// Insert `5` into a new `MultiSet`:
+    /// Insert `5` into a new [`MultiSet`]:
     ///
     /// ```
     /// use multilab_ref::multiset::MultiSet;
@@ -68,12 +114,14 @@ where
         *self.inner.entry(value).or_insert(0) += 1;
     }
 
-    /// Remove an element. Removal of a nonexistent element
-    /// has no effect.
+    /// Removes an element.
+    ///
+    /// If the element does not exist in the [`MultiSet`],
+    /// returns false. Otherwise, it removes and returns true.
     ///
     /// # Examples
     ///
-    /// Remove `5` from a new `MultiSet`:
+    /// Remove `5` from a new [`MultiSet`]:
     ///
     /// ```
     /// # use multilab_ref::multiset::MultiSet;
@@ -95,12 +143,13 @@ where
                 } else {
                     *count -= 1;
                 }
+                self.size -= 1;
                 true
             }
         }
     }
 
-    /// Counts the occurrences of `val`.
+    /// Counts the occurrences of `value`.
     ///
     /// # Examples
     ///
