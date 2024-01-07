@@ -46,7 +46,7 @@ pub struct TweetReader {
 impl TweetReader {
     /// Creates a new [`TweetReader`].
     ///
-    /// file_path - is the path to the text message that will be read
+    /// This method takes in a `file_path`, which is the path to the text file that will be read.
     /// The file should be in the following format:
     ///
     /// ```text
