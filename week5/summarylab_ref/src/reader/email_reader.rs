@@ -76,7 +76,8 @@ impl EmailReader {
     /// The standard library does not, however, know if the file contains the correct format
     /// of an email we are expecting.
     /// So you will have to create your own error with an error kind
-    /// [`InvalidData`](std::io::ErrorKind::InvalidData).
+    /// [`InvalidData`](std::io::ErrorKind::InvalidData) and the message
+    /// `"File is not in the correct format"`.
     /// See [`std::io::Error::new`] for more details on how to do this.
     pub fn parse(file_path: String) -> Result<EmailReader, io::Error> {
         let file = File::open(file_path)?;
@@ -103,7 +104,7 @@ impl EmailReader {
             if components.len() != 2 {
                 return Err(io::Error::new(
                     io::ErrorKind::InvalidData,
-                    "File is not in correct format",
+                    "File is not in the correct format",
                 ));
             }
 
@@ -117,7 +118,7 @@ impl EmailReader {
                 _ => {
                     return Err(io::Error::new(
                         io::ErrorKind::InvalidData,
-                        "File is not in correct format",
+                        "File is not in the correct format",
                     ))
                 }
             }

@@ -30,7 +30,10 @@
 
 use crate::Summary;
 use std::fs::File;
-use std::io::{BufRead, BufReader};
+use std::{
+    io,
+    io::{BufRead, BufReader},
+};
 
 /// TweetReader is a struct that represents a tweet.
 pub struct TweetReader {
@@ -45,22 +48,26 @@ impl TweetReader {
     ///
     /// file_path - is the path to the text message that will be read
     /// The file should be in the following format:
+    ///
+    /// ```text
     /// @{username}
     /// "{content}"
+    /// {"reply"|"retweet"}
+    /// ```
     ///
-    /// Content can span multiple lines. Content will be surrounded by quotes.
-    /// If the tweet is a reply, the word "reply" will be on a new line after content
-    /// If the tweet is a retweet, the word "retweet" will be on a new line after content or reply
+    /// Note that content can span multiple lines, and will always be surrounded by double quotes.
     ///
-    /// Use the use std::fs and std::io to read the file
-    /// and get the sender, receiver, subject and message
+    /// If the tweet is a reply, the word `"reply"` will be on a new line after the content,
+    /// and if the tweet is also a retweet, the word "retweet"
+    /// will be on a new line after content (and after `"reply"` if it is there too).
     ///
-    /// If the file does not exist, panic with the message "File not found"
-    /// If the file is not in the correct format, panic with the message
-    /// "File is not in correct format".
-    /// If no message is found, assume the message is "".
+    /// You're going to want to do the exact same thing as you did for
+    /// [`EmailReader`](crate::reader::email_reader::EmailReader) with how you handle errors.
+    /// Refer to the documentation for that struct's version of
+    /// [`parse`](crate::reader::email_reader::EmailReader::parse).
     pub fn parse(file_path: String) -> Result<TweetReader, std::io::Error> {
-        let file = File::open(file_path).expect("File not found");
+        let file = File::open(file_path)?;
+
         // Create a buffered reader to read the file line by line
         let reader = BufReader::new(file);
 
@@ -82,7 +89,10 @@ impl TweetReader {
                         content.push_str(&line[..index]);
                         break;
                     } else {
-                        panic!("File is not in correct format");
+                        return Err(io::Error::new(
+                            io::ErrorKind::InvalidData,
+                            "File is not in the correct format",
+                        ));
                     }
                 }
                 None => content.push_str(&line),
@@ -98,7 +108,10 @@ impl TweetReader {
             } else if line == "retweet" {
                 retweet = true;
             } else {
-                panic!("File is not in correct format");
+                return Err(io::Error::new(
+                    io::ErrorKind::InvalidData,
+                    "File is not in the correct format",
+                ));
             }
         }
 
