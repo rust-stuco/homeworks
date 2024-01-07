@@ -1,4 +1,4 @@
-use primerlab::functions::is_prime;
+use primerlab_ref::functions::is_prime;
 use std::io;
 
 /// The main function is our entrypoint, just like in C.
