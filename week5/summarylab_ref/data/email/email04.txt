@@ -1,0 +1,4 @@
+Subject: Advice
+From: David
+Hey have you read the Rust book yet? It has a great section on traits and error handling!
+To: Ben
