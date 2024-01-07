@@ -1,3 +1,13 @@
+### 98-008: Intro to the Rust Programming Language
+
+
+
+# Summary Lab
+
+TODO goals and expectations.
+
+
+
 # Setup
 
 Make sure you have Rust installed. You should have installed Rust through `rustup`.
@@ -30,15 +40,17 @@ Either way, a version of this writeup will be up on our website!
 
 
 
-# Part 1: TODO
+# Part 1: Emails
 
-Click this hyperlink to go to the writeup for [`TODO`](todo)!
+Click this hyperlink to go to the writeup for
+[`email_reader`](crate::reader::email_reader)!
 
 
 
-# Part 2: TODO
+# Part 2: Tweets
 
-Click this hyperlink to go to the writeup for [`TODO`](todo)!
+Click this hyperlink to go to the writeup for
+[`tweet_reader`](crate::reader::tweet_reader)!
 
 
 

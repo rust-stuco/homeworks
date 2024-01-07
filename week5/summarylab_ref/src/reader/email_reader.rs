@@ -1,4 +1,5 @@
 //! This module contains the [`EmailReader`] type, as well as its method implementations.
+//!
 //! The [`EmailReader`] struct will model an email message.
 //! [`EmailReader`] should have the following attributes:
 //!  - `subject: String`
@@ -11,22 +12,26 @@
 //! ---
 //!
 //! Once you've added the fields to the struct, implement the following methods:
-//! - [`parse`](EmailReader::parse): This method will take in a file path and create a new [`EmailReader`] based on the file.
+//! - [`parse`](EmailReader::parse): This method will take in a file path and
+//! create a new [`EmailReader`] based on the file.
 //!
 //! ---
 //!
 //! We also want [`EmailReader`]s to be able to summarize themselves.
-//! We'll implement the following methods
-//! [`summarize`](Summary::summarize), [`get_info`](Summary::get_info), and [`msg_len`](Summary::msg_len).
+//! We'll want to implement the following methods
+//! [`msg_len`](Summary::msg_len), [`summarize`](Summary::summarize),
+//! and [`get_info`](Summary::get_info),
 //!
-//! [`summarize`](Summary::summarize) should return a string that contains `"<sender>: message"`.
+//! - [`msg_len`](Summary::msg_len) should return the length of the message.
+//! - [`summarize`](Summary::summarize) should return a string that contains `"<sender>: message"`.
+//! - [`get_info`](Summary::get_info) should return a string that contains
+//! `"{subject}\nFrom: {sender}, To: {receiver}"`.
 //!
-//! [`get_info`](Summary::get_info) should return a string that contains `"<subject>\n From: <sender>, To: <receiver>"`.
-//!
-//! [`msg_len`](Summary::msg_len) should return the length of the message.
-//!
+//! Since we'll probably need to do this again 😉, instead of implementing all three methods
+//! in the main `impl` block, we'll instead implement the trait [`Summary`]
+//! that already has these 3 methods defined for us!
 
-use crate::summarize::Summary;
+use crate::Summary;
 use std::fs::File;
 use std::io::{BufRead, BufReader};
 
@@ -44,16 +49,17 @@ impl EmailReader {
     ///
     /// The file should be in the following format:
     ///
-    /// Subject: \<subject\>\
-    /// From: \<sender\>\
-    /// \<message\>\
-    /// To: \<receiver\>
+    /// Subject: {subject}
+    /// From: {sender}
+    /// {message}
+    /// To: {receiver}
     ///
     /// Use the `std::fs` and `std::io` libraries to read the file
     /// and get the sender, receiver, subject and message
     ///
     /// If the file does not exist, panic with the message "File not found"
-    /// If the file is not in the correct format, panic with the message "File is not in correct format"
+    /// If the file is not in the correct format,
+    /// panic with the message "File is not in correct format"
     /// If no message is found, assume the message is ""
     pub fn parse(file_path: String) -> Result<EmailReader, std::io::Error> {
         let file = File::open(file_path).expect("File not found");
@@ -102,15 +108,15 @@ impl EmailReader {
 }
 
 impl Summary for EmailReader {
+    fn msg_len(&self) -> usize {
+        self.message.len()
+    }
+
     fn summarize(&self) -> String {
         format!("{}: {}", self.from, self.message)
     }
 
     fn get_info(&self) -> String {
-        format!("{}\n From: {}, To {}", self.subject, self.from, self.to)
-    }
-
-    fn msg_len(&self) -> usize {
-        self.message.len()
+        format!("{}\nFrom: {}, To {}", self.subject, self.from, self.to)
     }
 }
