@@ -33,9 +33,12 @@
 
 use crate::Summary;
 use std::fs::File;
-use std::io::{BufRead, BufReader};
+use std::{
+    io,
+    io::{BufRead, BufReader},
+};
 
-/// EmailReader is a struct that represents an email message.
+/// A struct that represents an email message.
 pub struct EmailReader {
     subject: String,
     from: String,
@@ -44,25 +47,39 @@ pub struct EmailReader {
 }
 
 impl EmailReader {
-    /// Creates a new EmailReader
-    /// `file_path` - is the path to the text message that will be read.
+    /// Creates a new [`EmailReader`].
+    ///
+    /// This method takes in a `file_path`, which is the path to the text file that will be read.
     ///
     /// The file should be in the following format:
     ///
+    /// ```text
     /// Subject: {subject}
     /// From: {sender}
     /// {message}
     /// To: {receiver}
+    /// ```
     ///
-    /// Use the `std::fs` and `std::io` libraries to read the file
-    /// and get the sender, receiver, subject and message
+    /// If no message is found, assume the message is `""`.
     ///
-    /// If the file does not exist, panic with the message "File not found"
-    /// If the file is not in the correct format,
-    /// panic with the message "File is not in correct format"
-    /// If no message is found, assume the message is ""
-    pub fn parse(file_path: String) -> Result<EmailReader, std::io::Error> {
-        let file = File::open(file_path).expect("File not found");
+    /// ---
+    ///
+    /// This function returns a [`Result<EmailReader, std::io::Error>`].
+    /// Here are the cases you will need to handle:
+    /// - The file does not exist or we cannot read it
+    /// - The file is not in the correct format
+    ///
+    /// You should be able to leverage the standard library to deal with opening a file and
+    /// returning a [`std::io::Error`] if something goes wrong pretty easily.
+    /// Take a look at [`std::fs::File`]!
+    ///
+    /// The standard library does not, however, know if the file contains the correct format
+    /// of an email we are expecting.
+    /// So you will have to create your own error with an error kind
+    /// [`InvalidData`](std::io::ErrorKind::InvalidData).
+    /// See [`std::io::Error::new`] for more details on how to do this.
+    pub fn parse(file_path: String) -> Result<EmailReader, io::Error> {
+        let file = File::open(file_path)?;
 
         let mut from = String::new();
         let mut message = String::from("");
@@ -84,7 +101,10 @@ impl EmailReader {
             }
 
             if components.len() != 2 {
-                panic!("File is not in correct format");
+                return Err(io::Error::new(
+                    io::ErrorKind::InvalidData,
+                    "File is not in correct format",
+                ));
             }
 
             let title = components[0];
@@ -94,7 +114,12 @@ impl EmailReader {
                 "Subject" => subject = content.to_string(),
                 "From" => from = content.to_string(),
                 "To" => to = content.to_string(),
-                _ => panic!("File is not in correct format"),
+                _ => {
+                    return Err(io::Error::new(
+                        io::ErrorKind::InvalidData,
+                        "File is not in correct format",
+                    ))
+                }
             }
         }
 
