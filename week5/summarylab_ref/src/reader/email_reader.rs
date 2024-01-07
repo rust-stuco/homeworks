@@ -1,11 +1,11 @@
-use crate::summarize::Summary;
+use crate::Summary;
 use std::fs::File;
 use std::io::{BufRead, BufReader};
 
 /// EmailReader is a struct that represents an email message.
 /// It implements the Summary trait as well as the following methods:
 /// `new(file_path: String) -> Result<EmailReader, std::io::Error>` - creates a new EmailReader from file
-struct EmailReader {
+pub struct EmailReader {
     subject: String,
     from: String,
     to: String,
@@ -26,7 +26,7 @@ impl EmailReader {
     /// If the file does not exist, panic with the message "File not found"
     /// If the file is not in the correct format, panic with the message "File is not in correct format"
     /// If no message is found, assume the message is ""
-    fn new(file_path: String) -> Result<EmailReader, std::io::Error> {
+    pub fn new(file_path: String) -> Result<EmailReader, std::io::Error> {
         let file = File::open(file_path).expect("File not found");
 
         let mut from = String::new();
