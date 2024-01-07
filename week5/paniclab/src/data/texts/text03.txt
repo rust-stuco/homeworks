@@ -1,3 +1,0 @@
-From: Connor
-Message: Failure is not an Option, it's a Result<T>
-To: Ben
