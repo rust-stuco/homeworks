@@ -1,41 +1,7 @@
-//! This module contains the [`TweetReader`] type, as well as its method implementations.
-//!
-//! The [`TweetReader`] struct will model a tweet.
-//! [`TweetReader`] should have the following attributes:
-//! - `username: String`
-//! - `content: String`
-//! - `reply: bool`
-//! - `retweet: bool`
-//!
-//! All of these fields should be _private_ (not accessible outside of the struct).
-//!
-//! ---
-//!
-//! Once you've added the fields to the struct, implement the following methods:
-//! - [`parse`](TweetReader::parse): This method will take in a file path and
-//! create a new [`TweetReader`] based on the file.
-//!
-//! ---
-//!
-//! We also want [`TweetReader`]s to be able to summarize themselves.
-//! We'll implement the following methods
-//! [`msg_len`](Summary::msg_len), [`summarize`](Summary::summarize),
-//! and [`get_info`](Summary::get_info),
-//!
-//! - [`msg_len`](Summary::msg_len) should return the length of the message.
-//! - [`summarize`](Summary::summarize) should return a string that
-//! contains `"@<username>: <content>"`.
-//! - [`get_info`](Summary::get_info) should return a string that contains
-//! `"Tweet from @<username> "`. with (reply) or (retweet) appended.
-
 use crate::Summary;
-use std::fs::File;
-use std::{
-    io,
-    io::{BufRead, BufReader},
-};
+use std::io;
 
-/// TweetReader is a struct that represents a tweet.
+/// A struct that represents a tweet.
 pub struct TweetReader {
     username: String,
     content: String,
@@ -44,38 +10,45 @@ pub struct TweetReader {
 }
 
 impl TweetReader {
-    /// Creates a new [`TweetReader`].
+    /// Creates a new [`TweetReader`] given a path to a file.
     ///
-    /// This method takes in a `file_path`, which is the path to the text file that will be read.
-    /// The file should be in the following format:
+    /// Internally, reads a file to a [`String`],
+    /// and then calls [`TweetReader::parse`] on that [`String`].
+    pub fn new(file_path: String) -> Result<Self, io::Error> {
+        let file_str = crate::read_file(file_path)?;
+        Self::parse(file_str)
+    }
+
+    /// Creates a new [`TweetReader`] from a `String` of data.
+    ///
+    /// This method takes in a `file_str`, which is a `String` containing the same data
+    /// as a file.
+    /// The file / `String` should be in the following format:
     ///
     /// ```text
     /// @{username}
     /// "{content}"
-    /// {"reply"|"retweet"}
+    /// {?"reply"}
+    /// {?"retweet"}
     /// ```
     ///
     /// Note that content can span multiple lines, and will always be surrounded by double quotes.
     ///
     /// If the tweet is a reply, the word `"reply"` will be on a new line after the content,
-    /// and if the tweet is also a retweet, the word "retweet"
+    /// and if the tweet is also a retweet, the word `"retweet"`
     /// will be on a new line after content (and after `"reply"` if it is there too).
     ///
     /// You're going to want to do the exact same thing as you did for
     /// [`EmailReader`](crate::reader::email_reader::EmailReader) with how you handle errors.
-    /// Refer to the documentation for that struct's version of
+    /// Refer to the documentation for
+    /// [`EmailReader`](crate::reader::email_reader::EmailReader)'s version of
     /// [`parse`](crate::reader::email_reader::EmailReader::parse).
-    pub fn parse(file_path: String) -> Result<TweetReader, std::io::Error> {
-        let file = File::open(file_path)?;
-
-        // Create a buffered reader to read the file line by line
-        let reader = BufReader::new(file);
-
-        let mut lines = reader.lines().map(|line| line.unwrap());
+    pub fn parse(file_str: String) -> Result<TweetReader, std::io::Error> {
+        let mut lines = file_str.lines();
 
         let username = lines.next().unwrap()[1..].to_string();
 
-        let mut content = lines.next().unwrap();
+        let mut content = lines.next().unwrap().to_string();
         if content.starts_with('\"') {
             content = content[1..].to_string();
         }
@@ -95,7 +68,7 @@ impl TweetReader {
                         ));
                     }
                 }
-                None => content.push_str(&line),
+                None => content.push_str(line),
             }
         }
 
