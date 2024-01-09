@@ -1,13 +1,10 @@
-//! A hash-based multiset that can store elements of type `K`.
-//!
-//! It efficiently tracks the multiplicity of each element, allowing for duplicates.
-
 use std::collections::HashMap;
 use std::hash::Hash;
 
-/// A hash-based multiset implementation in Rust.
+/// A multiset that can store elements of type `K`.
 ///
 /// Multisets, also known as bags, are collections that allow for duplicate elements.
+/// This type efficiently tracks the multiplicity of each element.
 ///
 /// # Examples
 ///
@@ -22,6 +19,16 @@ use std::hash::Hash;
 /// assert_eq!(words.count(&"hello"), 2);  // "hello" appears twice
 /// assert_eq!(words.count(&"world"), 1);
 /// ```
+///
+/// ### `Eq + Hash`
+/// For now, ignore the `Eq + Hash` annotation next to the generic. These are _traits_, and
+/// we will talk about them next week. This annotation is saying that we must be able to
+/// check equality between two values of type `K`, and that `K` must have some
+/// hash method that allows us to hash an element of type `K`.
+/// _This may or may not be useful for the inner data structure that you choose..._
+///
+/// This shouldn't have any effect your implementation,
+/// but if you run into trouble with this, please let us know!
 pub struct MultiSet<K: Eq + Hash> {
     inner: HashMap<K, usize>,
     size: usize,

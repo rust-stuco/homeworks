@@ -1,5 +1,3 @@
-//! A multimap that associates keys with multiple values.
-
 use std::collections::HashMap;
 use std::hash::Hash;
 
@@ -8,14 +6,14 @@ use std::hash::Hash;
 /// This structure is similar to a [`HashMap`], but it allows multiple values to be
 /// associated with a single key, instead of the usual one-to-one mapping.
 /// It is implemented using a [`HashMap`] where each
-/// value is a Vec of the associated values.
+/// value is a [`Vec`] of the associated values.
 ///
 /// Note that unlike [`MultiSet`](crate::multiset::MultiSet), it is fine to expose the
-/// inner hash table here because we are not storing any other metadata like `size`.
+/// inner hash table here because we are not storing any other metadata
+/// (in the previous section, you probably had more than one field tracking data).
 /// This means that an outsider can't mess up our data structure by breaking any invariants.
-///
 /// So this type is really just a wrapper around the inner data structure
-/// that provides useful methods.
+/// that provides some useful methods.
 ///
 /// # Examples
 ///
@@ -30,6 +28,9 @@ use std::hash::Hash;
 /// assert_eq!(multimap.get_values(&1).unwrap(), &["hello", "world"]);
 /// assert_eq!(multimap.get_values(&2).unwrap(), &["foo"]);
 /// ```
+///
+/// ### `Eq + Hash`
+/// See the note in the documentation for [`MultiSet`](crate::multiset::MultiSet).
 #[derive(Debug)]
 pub struct MultiMap<K: Hash + Eq, V: Eq> {
     /// The internal [`HashMap`] storing the key-value associations.
