@@ -20,6 +20,11 @@ use std::hash::Hash;
 /// assert_eq!(words.count(&"world"), 1);
 /// ```
 ///
+/// You will need to decide what private fields your type should have. We would recommend
+/// looking at the [`std::collections`] module and see if there are any collections there that
+/// could be helpful for this problem!
+/// Once you have an idea, replace the `_replace_me` with your own fields!
+///
 /// ### `Eq + Hash`
 /// For now, ignore the `Eq + Hash` annotation next to the generic. These are _traits_, and
 /// we will talk about them next week. This annotation is saying that we must be able to
