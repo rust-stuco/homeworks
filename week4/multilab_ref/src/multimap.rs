@@ -165,3 +165,13 @@ impl<K: Hash + Eq, V: Eq> MultiMap<K, V> {
         self.inner.get_mut(key)
     }
 }
+
+impl<K, V> Default for MultiMap<K, V>
+where
+    K: Eq + Hash,
+    V: Eq,
+{
+    fn default() -> Self {
+        Self::new()
+    }
+}
