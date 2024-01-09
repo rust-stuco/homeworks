@@ -8,8 +8,6 @@ use std::hash::Hash;
 /// A hash-based multiset implementation in Rust.
 ///
 /// Multisets, also known as bags, are collections that allow for duplicate elements.
-/// This implementation utilizes a [`HashMap`] internally to efficiently
-/// track the count of each element.
 ///
 /// # Examples
 ///
