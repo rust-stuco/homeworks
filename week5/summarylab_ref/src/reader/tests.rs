@@ -4,91 +4,88 @@ mod email_tests {
     use crate::{Reader, Summary};
 
     #[test]
-    fn test_basic_email() {
-        let s = "Subject: Party Time
+    fn test_basic_and_empty_emails() {
+        let basic_email = "Subject: Party Time
 From: Jake
 To: David
 Just finished my work. Time for a break!";
-        let result = EmailReader::parse(s.to_string()).unwrap();
+        let empty_email = "";
 
-        assert_eq!(result.msg_len(), 40);
+        let basic_reader = EmailReader::parse(basic_email.to_string()).unwrap();
+        assert_eq!(basic_reader.msg_len(), 40);
         assert_eq!(
-            result.summarize(),
+            basic_reader.summarize(),
             "Jake: Just finished my work. Time for a break!"
         );
-        assert_eq!(result.get_info(), "Party Time\nFrom: Jake, To: David");
-    }
+        assert_eq!(basic_reader.get_info(), "Party Time\nFrom: Jake, To: David");
 
-    #[test]
-    fn test_empty_email() {
-        let s = "";
-        let result = EmailReader::parse(s.to_string());
-        assert!(result.is_err());
+        let empty_result = EmailReader::parse(empty_email.to_string());
+        assert!(empty_result.is_err());
         assert_eq!(
-            result.as_ref().unwrap_err().kind(),
+            empty_result.as_ref().unwrap_err().kind(),
             std::io::ErrorKind::InvalidData
         );
     }
 
     #[test]
-    fn test_missing_fields() {
-        let s = "Subject: Test Email
+    fn test_malformed_emails() {
+        let missing_fields = "Subject: Test Email
 To: Recipient";
-        let result = EmailReader::parse(s.to_string());
-        assert!(result.is_err());
-        assert_eq!(
-            result.as_ref().unwrap_err().kind(),
-            std::io::ErrorKind::InvalidData
+        let empty_subject = "Subject: \nFrom: sender\nTo: recipient\n";
+        let empty_sender = "Subject: Test\nFrom: \nTo: recipient\n";
+        let empty_recipient = "Subject: Test\nFrom: sender\nTo: ";
+
+        for email in [missing_fields, empty_subject, empty_sender, empty_recipient].iter() {
+            let result = EmailReader::parse(email.to_string());
+            assert!(result.is_err());
+            assert_eq!(
+                result.as_ref().unwrap_err().kind(),
+                std::io::ErrorKind::InvalidData
+            );
+            assert_eq!(
+                result.as_ref().unwrap_err().to_string(),
+                "File is not in the correct format"
+            );
+        }
+    }
+
+    fn generate_long_email() -> String {
+        let subject = "Long Message Subject";
+        let sender = "LongSenderName@example.com";
+        let recipient = "LongRecipientName@example.org";
+
+        // Generate a very long message, exceeding typical lengths
+        let mut message = String::new();
+        for _ in 0..1000 {
+            message.push_str("This is a sentence in the very long message. ");
+        }
+
+        let email_str = format!(
+            "Subject: {}\nFrom: {}\nTo: {}\n{}",
+            subject, sender, recipient, message
         );
-        assert_eq!(
-            result.as_ref().unwrap_err().to_string(),
-            "File is not in the correct format"
-        );
+
+        email_str
     }
 
     #[test]
-    fn test_summarize_short() {
-        let s = "Subject: Meeting Reschedule
+    fn test_summaries() {
+        let short_email = "Subject: Meeting Reschedule
 From: Executive Team
 To: Department Heads
 Please note the change in meeting schedule...";
-        let reader = EmailReader::parse(s.to_string()).unwrap();
-        let summary = reader.summarize();
+        let long_email = generate_long_email();
+
+        let short_reader = EmailReader::parse(short_email.to_string()).unwrap();
+        let summary = short_reader.summarize();
         assert!(summary.starts_with("Executive Team: "));
-        assert!(reader.get_info().contains("Meeting Reschedule"));
-    }
+        assert!(short_reader.get_info().contains("Meeting Reschedule"));
 
-    #[test]
-    fn test_empty_subject() {
-        let email_str = "Subject: \nFrom: sender\nTo: recipient\n";
-        let result = EmailReader::parse(email_str.to_string());
-        assert!(result.is_err());
-        assert_eq!(
-            result.as_ref().unwrap_err().kind(),
-            std::io::ErrorKind::InvalidData
-        );
-    }
-
-    #[test]
-    fn test_empty_sender() {
-        let email_str = "Subject: Test\nFrom: \nTo: recipient\n";
-        let result = EmailReader::parse(email_str.to_string());
-        assert!(result.is_err());
-        assert_eq!(
-            result.as_ref().unwrap_err().kind(),
-            std::io::ErrorKind::InvalidData
-        );
-    }
-
-    #[test]
-    fn test_empty_recipient() {
-        let email_str = "Subject: Test\nFrom: sender\nTo: ";
-        let result = EmailReader::parse(email_str.to_string());
-        assert!(result.is_err());
-        assert_eq!(
-            result.as_ref().unwrap_err().kind(),
-            std::io::ErrorKind::InvalidData
-        );
+        let long_reader = EmailReader::parse(long_email).unwrap();
+        let summary = long_reader.summarize();
+        assert_eq!(summary.len(), 280);
+        assert!(summary.contains("LongSenderName@example.com"));
+        assert!(summary.contains("This is a sentence in the very long message. "));
     }
 
     #[test]
