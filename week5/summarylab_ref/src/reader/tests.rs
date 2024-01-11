@@ -76,7 +76,10 @@ Please note the change in meeting schedule...";
         let result = EmailReader::parse(email_str.to_string());
         assert!(result.is_err());
         // Assuming InvalidData is the appropriate error kind for missing fields
-        assert_eq!(result.as_ref().unwrap_err().kind(), std::io::ErrorKind::InvalidData);
+        assert_eq!(
+            result.as_ref().unwrap_err().kind(),
+            std::io::ErrorKind::InvalidData
+        );
     }
 
     #[test]
@@ -84,7 +87,10 @@ Please note the change in meeting schedule...";
         let email_str = "Subject: Test\nFrom: \nTo: recipient\n";
         let result = EmailReader::parse(email_str.to_string());
         assert!(result.is_err());
-        assert_eq!(result.as_ref().unwrap_err().kind(), std::io::ErrorKind::InvalidData);
+        assert_eq!(
+            result.as_ref().unwrap_err().kind(),
+            std::io::ErrorKind::InvalidData
+        );
     }
 
     #[test]
@@ -92,7 +98,10 @@ Please note the change in meeting schedule...";
         let email_str = "Subject: Test\nFrom: sender\nTo: ";
         let result = EmailReader::parse(email_str.to_string());
         assert!(result.is_err());
-        assert_eq!(result.as_ref().unwrap_err().kind(), std::io::ErrorKind::InvalidData);
+        assert_eq!(
+            result.as_ref().unwrap_err().kind(),
+            std::io::ErrorKind::InvalidData
+        );
     }
 
     #[test]
