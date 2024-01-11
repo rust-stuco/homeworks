@@ -3,7 +3,7 @@ use std::io;
 
 /// A struct that represents a tweet.
 ///
-/// The file / `String` should be in the following format:
+/// The file / [`String`] should be in the following format:
 ///
 /// ```text
 /// @{username}
@@ -34,9 +34,9 @@ enum TweetType {
 }
 
 impl Reader for TweetReader {
-    /// Creates a new [`TweetReader`] from a `String` of data.
+    /// Creates a new [`TweetReader`] from a [`String`] of data.
     ///
-    /// This method takes in a `file_str`, which is a `String` containing the same data
+    /// This method takes in a `file_str`, which is a [`String`] containing the same data
     /// as a file.
     ///
     /// You're going to want to do the exact same thing as you did for
@@ -46,6 +46,13 @@ impl Reader for TweetReader {
     /// [`parse`](crate::reader::email_reader::EmailReader::parse).
     fn parse(file_str: String) -> Result<TweetReader, std::io::Error> {
         let lines: Vec<&str> = file_str.lines().collect();
+
+        if lines.len() < 2 {
+            return Err(io::Error::new(
+                io::ErrorKind::InvalidData,
+                "File is not in the correct format",
+            ));
+        }
 
         let username_line = lines[0];
         if !username_line.starts_with('@') {
@@ -66,23 +73,31 @@ impl Reader for TweetReader {
         }
 
         let mut content = lines[1][1..].to_string();
+        content.push('\n');
 
         let mut line_num = 2;
-        while !content.ends_with('\"') && line_num < lines.len() {
+        while !content.ends_with("\"\n") && line_num < lines.len() {
             content.push_str(lines[line_num]);
             content.push('\n');
             line_num += 1;
         }
 
         // Should only be 0 or 1 lines left
-        if line_num != lines.len() - 1 || line_num != lines.len() {
+        if line_num != lines.len() - 1 && line_num != lines.len() {
             return Err(io::Error::new(
                 io::ErrorKind::InvalidData,
                 "File is not in the correct format",
             ));
         }
 
-        content.pop(); // remove the last quote from the string
+        if !content.ends_with("\"\n") {
+            return Err(io::Error::new(
+                io::ErrorKind::InvalidData,
+                "File is not in the correct format",
+            ));
+        }
+        content.pop(); // remove the extra newline
+        content.pop(); // remove the last quote
 
         let state = if line_num == lines.len() - 1 {
             if lines[line_num] == "reply" {
@@ -110,6 +125,7 @@ impl Reader for TweetReader {
 impl Summary for TweetReader {
     /// Returns the length of the content in the tweet (not the full tweet).
     fn msg_len(&self) -> usize {
+        println!("{:?}", self.content);
         self.content.len()
     }
 
