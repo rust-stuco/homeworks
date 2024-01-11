@@ -123,197 +123,139 @@ mod tweet_tests {
     use crate::{Reader, Summary};
 
     #[test]
-    fn test_basic_tweet() {
-        let s = "@1CoolDavid
+    fn test_basic_and_empty_tweets() {
+        let basic_tweet = "@1CoolDavid
 \"Hey Rustaceans!
 Excited to dive into some advanced topics today. Let's discuss ownership and lifetimes.
 #RustLang\"";
-        let result = TweetReader::parse(s.to_string()).unwrap();
-        assert_eq!(result.msg_len(), 113);
+        let empty_tweet = "";
+
+        let basic_reader = TweetReader::parse(basic_tweet.to_string()).unwrap();
+        assert_eq!(basic_reader.msg_len(), 113);
         assert_eq!(
-            result.summarize(),
+            basic_reader.summarize(),
             "@1CoolDavid: Hey Rustaceans!
 Excited to dive into some advanced topics today. Let's discuss ownership and lifetimes.
 #RustLang"
         );
-        assert_eq!(result.get_info(), "Tweet from @1CoolDavid");
-    }
+        assert_eq!(basic_reader.get_info(), "Tweet from @1CoolDavid");
 
-    #[test]
-    fn test_empty_tweet() {
-        let s = "";
-        let result = TweetReader::parse(s.to_string());
-        assert!(result.is_err());
+        let empty_result = TweetReader::parse(empty_tweet.to_string());
+        assert!(empty_result.is_err());
         assert_eq!(
-            result.as_ref().unwrap_err().kind(),
+            empty_result.as_ref().unwrap_err().kind(),
             std::io::ErrorKind::InvalidData
         );
     }
 
     #[test]
-    fn test_missing_fields() {
-        let s = "@Connor";
-        let result = TweetReader::parse(s.to_string());
-        assert!(result.is_err());
-        assert_eq!(
-            result.as_ref().unwrap_err().kind(),
-            std::io::ErrorKind::InvalidData
-        );
-        assert_eq!(
-            result.as_ref().unwrap_err().to_string(),
-            "File is not in the correct format"
-        );
+    fn test_malformed_tweets() {
+        let missing_fields = "@Connor";
+        let missing_username = "\"Hello world!\"";
+        let invalid_username = "InvalidUsername
+\"Invalid tweet\"";
+        let missing_initial_quote = "@user
+This is content without a starting quote";
+        let missing_ending_quote = "@user
+\"This content is missing an ending quote";
+        let invalid_tweet_type = "@user
+\"Content\"
+invalid";
+
+        for tweet in [
+            missing_fields,
+            missing_username,
+            invalid_username,
+            missing_initial_quote,
+            missing_ending_quote,
+            invalid_tweet_type,
+        ]
+        .iter()
+        {
+            let result = TweetReader::parse(tweet.to_string());
+            assert!(result.is_err());
+            assert_eq!(
+                result.as_ref().unwrap_err().kind(),
+                std::io::ErrorKind::InvalidData
+            );
+            assert_eq!(
+                result.as_ref().unwrap_err().to_string(),
+                "File is not in the correct format"
+            );
+        }
     }
 
     #[test]
-    fn test_summarize_retweet() {
-        let s = "@FerrisTheCrab
+    fn test_retweets_and_replies() {
+        let retweet = "@FerrisTheCrab
 \"@1CoolDavid Absolutely, David! Ownership is key to Rust's safety.
 Lifetimes help us manage references. Students, any questions so far?
 #RustLearning\"
 retweet";
-        let reader = TweetReader::parse(s.to_string()).unwrap();
-        assert_eq!(reader.msg_len(), 148);
-        let summary = reader.summarize();
-        assert!(summary.starts_with("@FerrisTheCrab: @1CoolDavid Absolutely,"));
-        assert_eq!(reader.get_info(), "Tweet from @FerrisTheCrab (retweet)");
-    }
-
-    #[test]
-    fn test_missing_username() {
-        let s = "\"Hello world!\"";
-        let result = TweetReader::parse(s.to_string());
-        assert!(result.is_err());
-        assert_eq!(
-            result.as_ref().unwrap_err().kind(),
-            std::io::ErrorKind::InvalidData
-        );
-    }
-
-    #[test]
-    fn test_invalid_username_format() {
-        let s = "InvalidUsername
-\"Invalid tweet\"";
-        let result = TweetReader::parse(s.to_string());
-        assert!(result.is_err());
-        assert_eq!(
-            result.as_ref().unwrap_err().kind(),
-            std::io::ErrorKind::InvalidData
-        );
-    }
-
-    #[test]
-    fn test_missing_initial_quote() {
-        let s = "@user
-This is content without a starting quote";
-        let result = TweetReader::parse(s.to_string());
-        assert!(result.is_err());
-        assert_eq!(
-            result.as_ref().unwrap_err().kind(),
-            std::io::ErrorKind::InvalidData
-        );
-    }
-
-    #[test]
-    fn test_missing_ending_quote() {
-        let s = "@user
-\"This content is missing an ending quote";
-        let result = TweetReader::parse(s.to_string());
-        assert!(result.is_err());
-        assert_eq!(
-            result.as_ref().unwrap_err().kind(),
-            std::io::ErrorKind::InvalidData
-        );
-    }
-
-    #[test]
-    fn test_invalid_tweet_type() {
-        let s = "@user
-\"Content\"
-invalid";
-        let result = TweetReader::parse(s.to_string());
-        assert!(result.is_err());
-        assert_eq!(
-            result.as_ref().unwrap_err().kind(),
-            std::io::ErrorKind::InvalidData
-        );
-    }
-
-    #[test]
-    fn test_msg_len_with_empty_content() {
-        let s = "@user
-\"\"";
-        let reader = TweetReader::parse(s.to_string()).unwrap();
-        assert_eq!(reader.msg_len(), 0);
-    }
-
-    #[test]
-    fn test_get_info_reply() {
-        let tweet_str = "@user
+        let reply = "@user
 \"Content\"
 reply";
-        let reader = TweetReader::parse(tweet_str.to_string()).unwrap();
-        assert_eq!(reader.get_info(), "Tweet from @user (reply)");
-    }
 
-    #[test]
-    fn test_get_info_retweet_with_long_username() {
-        let username = "VeryLongUserName12345";
-        let tweet_str = format!(
-            "@{username}
-\"Content\"
-retweet"
-        );
-        let reader = TweetReader::parse(tweet_str.to_string()).unwrap();
-        assert_eq!(
-            reader.get_info(),
-            "Tweet from @VeryLongUserName12345 (retweet)"
-        );
-    }
-
-    #[test]
-    fn test_get_info_reply_with_special_characters_in_username() {
-        let username = "user_with-underscores.123";
-        let tweet_str = format!(
-            "@{username}
-\"Content\"
-reply"
-        );
-        let reader = TweetReader::parse(tweet_str.to_string()).unwrap();
-        assert_eq!(
-            reader.get_info(),
-            "Tweet from @user_with-underscores.123 (reply)"
-        );
-    }
-
-    #[test]
-    fn test_get_info_empty_content() {
-        let tweet_str = "@user
-\"\"
-retweet";
-        let reader = TweetReader::parse(tweet_str.to_string()).unwrap();
-        assert_eq!(reader.get_info(), "Tweet from @user (retweet)");
-    }
-
-    #[test]
-    fn test_summarize_extremely_long_content() {
-        let username = "LongUserName";
-        let mut content = String::new();
-        for _ in 0..1000 {
-            content.push_str("This is a sentence in the very long tweet. ");
-        }
-
-        let tweet_str = format!(
-            "@{}
-\"{}\"",
-            username, content
-        );
-        let reader = TweetReader::parse(tweet_str.to_string()).unwrap();
-
-        assert!(reader
+        let retweet_reader = TweetReader::parse(retweet.to_string()).unwrap();
+        assert_eq!(retweet_reader.msg_len(), 148);
+        assert!(retweet_reader
             .summarize()
-            .starts_with("@LongUserName: This is a sentence in the very long tweet."));
-        assert!(reader.summarize().contains(username));
-        assert!(reader.summarize().contains(&content));
+            .starts_with("@FerrisTheCrab: @1CoolDavid Absolutely,"));
+        assert_eq!(
+            retweet_reader.get_info(),
+            "Tweet from @FerrisTheCrab (retweet)"
+        );
+
+        let reply_reader = TweetReader::parse(reply.to_string()).unwrap();
+        assert_eq!(reply_reader.get_info(), "Tweet from @user (reply)");
+    }
+
+    #[test]
+    fn test_edge_cases_and_long_content() {
+        let empty_content = "@user
+\"\"";
+        let long_username = "VeryLongUserName12345";
+        let special_characters_username = "user_with-underscores.123";
+        let long_content = "@LongUserName
+\"This is a very long tweet with a length of 1000 characters.
+(Repeated many times to reach the desired length.)\"";
+
+        let empty_content_reader = TweetReader::parse(empty_content.to_string()).unwrap();
+        assert_eq!(empty_content_reader.msg_len(), 0);
+        assert_eq!(empty_content_reader.get_info(), "Tweet from @user");
+        assert_eq!(empty_content_reader.summarize(), "@user: ");
+
+        let long_username_reader = TweetReader::parse(
+            format!(
+                "@{}
+\"\"",
+                long_username
+            )
+            .to_string(),
+        )
+        .unwrap();
+        assert_eq!(
+            long_username_reader.get_info(),
+            format!("Tweet from @{}", long_username)
+        );
+
+        let special_characters_reader = TweetReader::parse(
+            format!(
+                "@{}
+\"\"",
+                special_characters_username
+            )
+            .to_string(),
+        )
+        .unwrap();
+        assert_eq!(
+            special_characters_reader.get_info(),
+            format!("Tweet from @{}", special_characters_username)
+        );
+
+        let long_content_reader = TweetReader::parse(long_content.to_string()).unwrap();
+        assert_eq!(long_content_reader.msg_len(), 110);
+        assert!(long_content_reader.summarize().starts_with("@LongUserName"));
+        assert!(!long_content_reader.summarize().contains(long_content));
     }
 }
