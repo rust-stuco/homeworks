@@ -2,6 +2,7 @@ use crate::Summary;
 use std::io;
 
 /// A struct that represents an email message.
+#[derive(Debug)]
 pub struct EmailReader {
     subject: String,
     from: String,
@@ -29,11 +30,12 @@ impl EmailReader {
     /// ```text
     /// Subject: {subject}
     /// From: {sender}
-    /// {message}
     /// To: {receiver}
+    /// {message}
     /// ```
     ///
-    /// If no message is found, assume the message is `""`.
+    /// The message can span multiple lines. If no message is found, assume the message is `""`.
+    /// The subject, sender, and receiver, however, cannot be empty strings.
     ///
     /// ---
     ///
@@ -57,43 +59,62 @@ impl EmailReader {
     /// See [`std::io::Error::new`] for more details on how to do this.
     pub fn parse(file_str: String) -> Result<EmailReader, io::Error> {
         let mut from = String::new();
-        let mut message = String::from("");
         let mut to = String::new();
         let mut subject = String::new();
 
-        // Iterate over each line in the file
-        for (num, line) in file_str.lines().enumerate() {
-            let line = line.to_string();
+        let lines: Vec<&str> = file_str.lines().collect();
 
-            let components = line.split(": ").collect::<Vec<&str>>();
+        if lines.len() < 3 {
+            return Err(io::Error::new(
+                io::ErrorKind::InvalidData,
+                "File is not in the correct format",
+            ));
+        }
 
-            if num == 2 && components.len() == 1 {
-                message = line;
-                continue;
-            }
-
-            if components.len() != 2 {
+        {
+            let subject_line: Vec<&str> = lines[0].split(": ").collect();
+            if subject_line.len() != 2 || subject_line[0] != "Subject" || subject_line[1].is_empty()
+            {
                 return Err(io::Error::new(
                     io::ErrorKind::InvalidData,
                     "File is not in the correct format",
                 ));
             }
-
-            let title = components[0];
-            let content = components[1];
-
-            match title {
-                "Subject" => subject = content.to_string(),
-                "From" => from = content.to_string(),
-                "To" => to = content.to_string(),
-                _ => {
-                    return Err(io::Error::new(
-                        io::ErrorKind::InvalidData,
-                        "File is not in the correct format",
-                    ))
-                }
-            }
+            subject.push_str(subject_line[1]);
         }
+
+        {
+            let from_line: Vec<&str> = lines[1].split(": ").collect();
+            if from_line.len() != 2 || from_line[0] != "From" || from_line[1].is_empty() {
+                return Err(io::Error::new(
+                    io::ErrorKind::InvalidData,
+                    "File is not in the correct format",
+                ));
+            }
+            from.push_str(from_line[1]);
+        }
+
+        {
+            let to_line: Vec<&str> = lines[2].split(": ").collect();
+            if to_line.len() != 2 || to_line[0] != "To" || to_line[1].is_empty() {
+                return Err(io::Error::new(
+                    io::ErrorKind::InvalidData,
+                    "File is not in the correct format",
+                ));
+            }
+            to.push_str(to_line[1]);
+        }
+
+        if lines.len() == 3 {
+            return Ok(EmailReader {
+                subject,
+                from,
+                to,
+                message: "".to_string(),
+            });
+        }
+
+        let message = lines[3..].join("\n");
 
         Ok(EmailReader {
             subject,
@@ -114,6 +135,6 @@ impl Summary for EmailReader {
     }
 
     fn get_info(&self) -> String {
-        format!("{}\nFrom: {}, To {}", self.subject, self.from, self.to)
+        format!("{}\nFrom: {}, To: {}", self.subject, self.from, self.to)
     }
 }
