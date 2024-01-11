@@ -2,6 +2,7 @@ use crate::Summary;
 use std::io;
 
 /// A struct that represents a tweet.
+#[derive(Debug)]
 pub struct TweetReader {
     username: String,
     content: String,
