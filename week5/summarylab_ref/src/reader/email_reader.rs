@@ -64,39 +64,32 @@ impl Reader for EmailReader {
         let mut sender = String::new();
         let mut receiver = String::new();
 
-        {
-            let subject_line: Vec<&str> = lines[0].split(": ").collect();
-            if subject_line.len() != 2 || subject_line[0] != "Subject" || subject_line[1].is_empty()
-            {
-                return Err(io::Error::new(
-                    io::ErrorKind::InvalidData,
-                    "File is not in the correct format",
-                ));
-            }
-            subject.push_str(subject_line[1]);
+        let subject_line: Vec<&str> = lines[0].split(": ").collect();
+        if subject_line.len() != 2 || subject_line[0] != "Subject" || subject_line[1].is_empty() {
+            return Err(io::Error::new(
+                io::ErrorKind::InvalidData,
+                "File is not in the correct format",
+            ));
         }
+        subject.push_str(subject_line[1]);
 
-        {
-            let sender_line: Vec<&str> = lines[1].split(": ").collect();
-            if sender_line.len() != 2 || sender_line[0] != "From" || sender_line[1].is_empty() {
-                return Err(io::Error::new(
-                    io::ErrorKind::InvalidData,
-                    "File is not in the correct format",
-                ));
-            }
-            sender.push_str(sender_line[1]);
+        let sender_line: Vec<&str> = lines[1].split(": ").collect();
+        if sender_line.len() != 2 || sender_line[0] != "From" || sender_line[1].is_empty() {
+            return Err(io::Error::new(
+                io::ErrorKind::InvalidData,
+                "File is not in the correct format",
+            ));
         }
+        sender.push_str(sender_line[1]);
 
-        {
-            let receiver_line: Vec<&str> = lines[2].split(": ").collect();
-            if receiver_line.len() != 2 || receiver_line[0] != "To" || receiver_line[1].is_empty() {
-                return Err(io::Error::new(
-                    io::ErrorKind::InvalidData,
-                    "File is not in the correct format",
-                ));
-            }
-            receiver.push_str(receiver_line[1]);
+        let receiver_line: Vec<&str> = lines[2].split(": ").collect();
+        if receiver_line.len() != 2 || receiver_line[0] != "To" || receiver_line[1].is_empty() {
+            return Err(io::Error::new(
+                io::ErrorKind::InvalidData,
+                "File is not in the correct format",
+            ));
         }
+        receiver.push_str(receiver_line[1]);
 
         if lines.len() == 3 {
             return Ok(EmailReader {
