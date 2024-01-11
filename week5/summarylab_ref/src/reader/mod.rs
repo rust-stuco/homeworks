@@ -65,3 +65,6 @@ pub mod email_reader;
 ///
 /// See the type documentation for [`TweetReader`](tweet_reader::TweetReader) for more details.
 pub mod tweet_reader;
+
+#[cfg(test)]
+pub mod tests;
