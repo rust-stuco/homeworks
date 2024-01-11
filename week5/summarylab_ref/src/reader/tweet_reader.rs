@@ -20,8 +20,7 @@ impl Reader for TweetReader {
     /// ```text
     /// @{username}
     /// "{content}"
-    /// {?"reply"}
-    /// {?"retweet"}
+    /// {"" | "reply" | "retweet"}
     /// ```
     ///
     /// Note that content can span multiple lines, and will always be surrounded by double quotes.
@@ -99,9 +98,7 @@ impl Summary for TweetReader {
     }
 
     fn get_info(&self) -> String {
-        if self.reply && self.retweet {
-            format!("Tweet from @{} (reply, retweet)", self.username)
-        } else if self.reply {
+        if self.reply {
             format!("Tweet from @{} (reply)", self.username)
         } else if self.retweet {
             format!("Tweet from @{} (retweet)", self.username)

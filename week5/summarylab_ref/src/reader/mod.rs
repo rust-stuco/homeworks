@@ -33,13 +33,16 @@ pub mod email_reader;
 /// as well as its method implementations.
 ///
 /// The [`TweetReader`](tweet_reader::TweetReader) struct will model a tweet.
-/// [`TweetReader`](tweet_reader::TweetReader) should have the following attributes:
+/// [`TweetReader`](tweet_reader::TweetReader) should have at minimum the following attributes:
 /// - `username: String`
 /// - `content: String`
-/// - `reply: bool`
-/// - `retweet: bool`
 ///
-/// All of these fields should be _private_ (not accessible outside of the struct).
+/// A Tweet can also either be a retweet or a reply, on top of being a normal tweet.
+/// It is up to you how you want to represent this type of state. You could have two booleans
+/// that tell you if it is a retweet or a reply, but make sure that they aren't both true.
+/// If only there was a way to _enumerate_ the types of states we could be in...
+///
+/// Again, all of these fields should be _private_ (not accessible outside of the struct).
 ///
 /// ---
 ///
@@ -49,11 +52,12 @@ pub mod email_reader;
 /// - [`parse`](crate::Reader::parse): This method will take in a [`String`] that was
 /// read from a file and create a new [`TweetReader`](tweet_reader::TweetReader)
 /// based on that file
+///
 /// - [`msg_len`](crate::Summary::msg_len) should return the length of the content
 /// - [`summarize`](crate::Summary::summarize) should return a string that
-/// contains `"@<username>: <content>"`
+/// contains `"@{username}: {content}"`
 /// - [`get_info`](crate::Summary::get_info) should return a string that contains
-/// `"Tweet from @<username> "`. with (reply) or (retweet) appended
+/// `"Tweet from @{username}"`. with (reply) or (retweet) appended if applicable
 ///
 /// See the type documentation for [`TweetReader`](tweet_reader::TweetReader) for more details.
 pub mod tweet_reader;
