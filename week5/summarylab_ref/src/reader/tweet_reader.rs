@@ -1,4 +1,4 @@
-use crate::Summary;
+use crate::{Reader, Summary};
 use std::io;
 
 /// A struct that represents a tweet.
@@ -10,16 +10,7 @@ pub struct TweetReader {
     retweet: bool,
 }
 
-impl TweetReader {
-    /// Creates a new [`TweetReader`] given a path to a file.
-    ///
-    /// Internally, reads a file to a [`String`],
-    /// and then calls [`TweetReader::parse`] on that [`String`].
-    pub fn new(file_path: String) -> Result<Self, io::Error> {
-        let file_str = crate::read_file(file_path)?;
-        Self::parse(file_str)
-    }
-
+impl Reader for TweetReader {
     /// Creates a new [`TweetReader`] from a `String` of data.
     ///
     /// This method takes in a `file_str`, which is a `String` containing the same data
@@ -29,8 +20,7 @@ impl TweetReader {
     /// ```text
     /// @{username}
     /// "{content}"
-    /// {?"reply"}
-    /// {?"retweet"}
+    /// {"" | "reply" | "retweet"}
     /// ```
     ///
     /// Note that content can span multiple lines, and will always be surrounded by double quotes.
@@ -44,7 +34,7 @@ impl TweetReader {
     /// Refer to the documentation for
     /// [`EmailReader`](crate::reader::email_reader::EmailReader)'s version of
     /// [`parse`](crate::reader::email_reader::EmailReader::parse).
-    pub fn parse(file_str: String) -> Result<TweetReader, std::io::Error> {
+    fn parse(file_str: String) -> Result<TweetReader, std::io::Error> {
         let mut lines = file_str.lines();
 
         let username = lines.next().unwrap()[1..].to_string();
@@ -108,9 +98,7 @@ impl Summary for TweetReader {
     }
 
     fn get_info(&self) -> String {
-        if self.reply && self.retweet {
-            format!("Tweet from @{} (reply, retweet)", self.username)
-        } else if self.reply {
+        if self.reply {
             format!("Tweet from @{} (reply)", self.username)
         } else if self.retweet {
             format!("Tweet from @{} (retweet)", self.username)

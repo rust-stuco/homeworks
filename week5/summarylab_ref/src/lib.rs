@@ -6,6 +6,26 @@ use std::{
     io::{BufReader, Read},
 };
 
+pub trait Reader
+where
+    Self: Sized,
+{
+    /// Creates a new [`Reader`] given a path to a file.
+    ///
+    /// Internally, reads a file to a [`String`],
+    /// and then calls [`Reader::parse`] on that [`String`].
+    fn new(file_path: String) -> Result<Self, io::Error> {
+        let file = File::open(file_path)?;
+        let mut reader = BufReader::new(file);
+        let mut file_str = String::new();
+        reader.read_to_string(&mut file_str)?;
+        Self::parse(file_str)
+    }
+
+    /// Creates a new [`Reader`] from a [`String`] of data.
+    fn parse(file_str: String) -> Result<Self, io::Error>;
+}
+
 /// A trait that shares methods of summarizing text like emails and tweets.
 pub trait Summary {
     fn msg_len(&self) -> usize;
@@ -13,15 +33,6 @@ pub trait Summary {
     fn summarize(&self) -> String;
 
     fn get_info(&self) -> String;
-}
-
-/// Given a file path, returns a [`String`] with the contents of the file.
-pub fn read_file(file_path: String) -> Result<String, io::Error> {
-    let file = File::open(file_path)?;
-    let mut reader = BufReader::new(file);
-    let mut file_str = String::new();
-    reader.read_to_string(&mut file_str)?;
-    Ok(file_str)
 }
 
 pub mod reader;
