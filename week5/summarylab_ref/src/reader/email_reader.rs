@@ -133,6 +133,9 @@ impl Summary for EmailReader {
 
     /// Returns a [`String`] that is equivalent to `"{subject}\nFrom: {sender}, To: {receiver}"`.
     fn get_info(&self) -> String {
-        format!("{}\nFrom: {}, To: {}", self.subject, self.sender, self.receiver)
+        format!(
+            "{}\nFrom: {}, To: {}",
+            self.subject, self.sender, self.receiver
+        )
     }
 }
