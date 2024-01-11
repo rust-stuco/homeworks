@@ -124,12 +124,14 @@ impl Summary for EmailReader {
         self.message.len()
     }
 
-    /// Returns a [`String`] that is equivalent to `"{sender}: {message}"`.
+    /// Returns a [`String`] that is equivalent to `"{sender}: {message}"`. Maximum 280 characters.
     fn summarize(&self) -> String {
-        format!("{}: {}", self.sender, self.message)
+        let mut result = format!("{}: {}", self.sender, self.message);
+        result.truncate(280);
+        result
     }
 
-    /// Returns a [`String`] that is equivalent to "{subject}\nFrom: {sender}, To: {receiver}"`.
+    /// Returns a [`String`] that is equivalent to `"{subject}\nFrom: {sender}, To: {receiver}"`.
     fn get_info(&self) -> String {
         format!("{}\nFrom: {}, To: {}", self.subject, self.sender, self.receiver)
     }

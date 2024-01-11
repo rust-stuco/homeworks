@@ -122,8 +122,9 @@ Please note the change in meeting schedule...";
 
         let reader = EmailReader::parse(email_str.to_string()).unwrap();
         let summary = reader.summarize();
+        assert_eq!(summary.len(), 280);
 
         assert!(summary.contains(sender));
-        assert!(summary.contains(&message));
+        assert!(summary.contains("This is a sentence in the very long message. "));
     }
 }
