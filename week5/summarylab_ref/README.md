@@ -38,9 +38,15 @@ there is no `main` function to call them. If you're up to the challenge,
 create a command line tool that allows you to read in a tweet or an email from the `data` folder
 and summarize what is reads.
 
+You can decide what flags to pass in for specific outputs. And if you'd like, you can
+take a look at the [clap](https://docs.rs/clap/latest/clap/index.html) third-party crate
+to help you!
+
 To reiterate: Only do this if you have ample time to spare and you want to get better at Rust!
 This is not a trivial task.
 We also don't have an autograder set up for this, so you'll mostly be on your own.
+If you do decide to do this, we'll manually grade it ourselves to determine how many points
+you will receive.
 
 
 
