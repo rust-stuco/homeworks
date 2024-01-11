@@ -58,10 +58,6 @@ impl EmailReader {
     /// `"File is not in the correct format"`.
     /// See [`std::io::Error::new`] for more details on how to do this.
     pub fn parse(file_str: String) -> Result<EmailReader, io::Error> {
-        let mut from = String::new();
-        let mut to = String::new();
-        let mut subject = String::new();
-
         let lines: Vec<&str> = file_str.lines().collect();
 
         if lines.len() < 3 {
@@ -70,6 +66,10 @@ impl EmailReader {
                 "File is not in the correct format",
             ));
         }
+
+        let mut from = String::new();
+        let mut to = String::new();
+        let mut subject = String::new();
 
         {
             let subject_line: Vec<&str> = lines[0].split(": ").collect();
