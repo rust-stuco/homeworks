@@ -1,7 +1,7 @@
 #[cfg(test)]
 mod email_tests {
     use crate::reader::email_reader::EmailReader;
-    use crate::Summary;
+    use crate::{Reader, Summary};
 
     #[test]
     fn test_basic_email() {

@@ -2,34 +2,29 @@
 /// as well as its method implementations.
 ///
 /// The [`EmailReader`](email_reader::EmailReader) struct will model an email message.
-/// [`EmailReader`](email_reader::EmailReader) should have the following attributes:
+/// [`EmailReader`](email_reader::EmailReader) should have the attributes similar to these:
 ///  - `subject: String`
-///  - `from: String`
-///  - `to: String`
+///  - `sender: String`
+///  - `receiver: String`
 ///  - `message: String`
 ///
 /// All of these fields should be _private_ (not accessible outside of the struct).
 ///
 /// ---
 ///
-/// Once you've added the fields to the struct, implement the following method:
-/// - [`parse`](email_reader::EmailReader::parse): This method will take in a [`String`] that was
+/// Once you've added the fields to the struct, implement the [`Reader`](crate::Reader) trait:
+/// - [`parse`](crate::Reader::parse): This method will take in a [`String`] that was
 /// read from a file and create a new [`EmailReader`](email_reader::EmailReader)
-/// based on that file.
+/// based on that file. See the documentation on [`EmailReader`](email_reader::EmailReader)
+/// for more details about how the files should be formatted
 ///
 /// We also want [`EmailReader`](email_reader::EmailReader)s to be able to summarize themselves.
-/// We'll want to implement the following methods
-/// [`msg_len`](crate::Summary::msg_len), [`summarize`](crate::Summary::summarize),
-/// and [`get_info`](crate::Summary::get_info),
+/// We'll want to implement the [`Summary`](crate::Summary) trait:
 /// - [`msg_len`](crate::Summary::msg_len) should return the length of the message
 /// - [`summarize`](crate::Summary::summarize) should return a string
-/// that contains `"<sender>: message"`
+/// that contains `"{sender}: message"`
 /// - [`get_info`](crate::Summary::get_info) should return a string that contains
 /// `"{subject}\nFrom: {sender}, To: {receiver}"`
-///
-/// Since we'll probably need to do this again 😉, instead of implementing all three methods
-/// in the main `impl` block, we'll instead implement the trait [`Summary`](crate::Summary)
-/// that already has these 3 methods defined for us!
 ///
 /// See the type documentation for [`EmailReader`](email_reader::EmailReader) for more details.
 pub mod email_reader;
@@ -48,20 +43,17 @@ pub mod email_reader;
 ///
 /// ---
 ///
-/// Once you've added the fields to the struct, implement the following method:
-/// - [`parse`](tweet_reader::TweetReader::parse): This method will take in a [`String`] that was
-/// read from a file and create a new [`TweetReader`](tweet_reader::TweetReader)
-/// based on that file.
+/// We'll want to implement both [`Reader`](crate::Reader) and [`Summary`](crate::Summary)
+/// for this type as well.
 ///
-/// We also want [`TweetReader`](tweet_reader::TweetReader)s to be able to summarize themselves.
-/// We'll implement the following methods
-/// [`msg_len`](crate::Summary::msg_len), [`summarize`](crate::Summary::summarize),
-/// and [`get_info`](crate::Summary::get_info),
-/// - [`msg_len`](crate::Summary::msg_len) should return the length of the message.
+/// - [`parse`](crate::Reader::parse): This method will take in a [`String`] that was
+/// read from a file and create a new [`TweetReader`](tweet_reader::TweetReader)
+/// based on that file
+/// - [`msg_len`](crate::Summary::msg_len) should return the length of the content
 /// - [`summarize`](crate::Summary::summarize) should return a string that
-/// contains `"@<username>: <content>"`.
+/// contains `"@<username>: <content>"`
 /// - [`get_info`](crate::Summary::get_info) should return a string that contains
-/// `"Tweet from @<username> "`. with (reply) or (retweet) appended.
+/// `"Tweet from @<username> "`. with (reply) or (retweet) appended
 ///
 /// See the type documentation for [`TweetReader`](tweet_reader::TweetReader) for more details.
 pub mod tweet_reader;
