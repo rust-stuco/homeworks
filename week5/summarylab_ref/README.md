@@ -4,7 +4,40 @@
 
 # Summary Lab
 
-TODO goals and expectations.
+The goal of this homework is to make sure you understand error handling and the `?` operator,
+as well as traits and how to implement them. While these are the main topics for this week,
+this homework will also heavily test your fluency with Rust's [`String`] and its methods.
+
+You will be implementing two traits on two different types. The two traits are
+[`Reader`](crate::Reader) and [`Summary`](crate::Summary), and the two types
+are [`EmailReader`](crate::reader::email_reader::EmailReader) and
+[`TweetReader`](crate::reader::tweet_reader::TweetReader).
+
+Since string parsing is a bit tricky (especially in Rust), you will get `60` points for completing
+the implementation for [`EmailReader`](crate::reader::email_reader::EmailReader)
+and `80` points for completing the implementation for
+[`TweetReader`](crate::reader::tweet_reader::TweetReader).
+
+If you find yourself spending more than an hour on this assignment, please let us know!
+This assignment is harder than the previous homeworks,
+so there is no shame if you can't complete it in under an hour.
+
+That being said, if you have time and you're up to the challenge,
+we still encourage you to try and pass all of the test cases for practice!
+
+### Additional Challenge
+
+Another thing you can do is turn this crate into a binary that _actually_
+reads from the file system.
+
+Right now, the `new` functions on each of the readers never actually get called because
+there is no `main` function to call them. If you're up to the challenge,
+create a command line tool that allows you to read in a tweet or an email from the `data` folder
+and summarize what is reads.
+
+To reiterate: Only do this if you have ample time to spare and you want to get better at Rust!
+This is not a trivial task.
+We also don't have an autograder set up for this, so you'll mostly be on your own.
 
 
 
