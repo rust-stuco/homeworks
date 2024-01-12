@@ -34,6 +34,9 @@ we still encourage you to try and pass all of the test cases for practice!
 
 Click this hyperlink to go to the writeup for
 [`email_reader`](crate::reader::email_reader)!
+This is a link to the _module_ that contains high-level documentation for the
+[`EmailReader`](crate::reader::email_reader::EmailReader) struct you will need to implement.
+Please read the module documentation first, and then go to the type documentation.
 
 
 
@@ -41,15 +44,18 @@ Click this hyperlink to go to the writeup for
 
 Click this hyperlink to go to the writeup for
 [`tweet_reader`](crate::reader::tweet_reader)!
+This is a link to the _module_ that contains high-level documentation for the
+[`TweetReader`](crate::reader::tweet_reader::TweetReader) struct you will need to implement.
+Please read the module documentation first, and then go to the type documentation.
 
 
 
-### Command Line Tool Challenge
+# Challenge: Command Line Tool
 
 Another thing you can do is turn this crate into a binary that _actually_
 reads from the file system.
 
-Right now, the `new` functions on each of the readers never actually get called because
+Right now, the `new` functions on all of the readers never actually get called because
 there is no `main` function to call them. If you're up to the challenge,
 create a command line tool that allows you to read in a tweet or an email from the `data` folder
 and summarize what is reads.

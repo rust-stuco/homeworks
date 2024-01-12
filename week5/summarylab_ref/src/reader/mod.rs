@@ -26,7 +26,8 @@
 /// - [`get_info`](crate::Summary::get_info) should return a string that contains
 /// `"{subject}\nFrom: {sender}, To: {receiver}"`
 ///
-/// See the type documentation for [`EmailReader`](email_reader::EmailReader) for more details.
+/// See the type documentation for [`EmailReader`](email_reader::EmailReader)
+/// by clicking the hyperlink for more details.
 pub mod email_reader;
 
 /// This module contains the [`TweetReader`](tweet_reader::TweetReader) type,
@@ -63,7 +64,8 @@ pub mod email_reader;
 /// - [`get_info`](crate::Summary::get_info) should return a string that contains
 /// `"Tweet from @{username}"` with `"(reply)"` or `"(retweet)"` appended if applicable
 ///
-/// See the type documentation for [`TweetReader`](tweet_reader::TweetReader) for more details.
+/// See the type documentation for [`TweetReader`](tweet_reader::TweetReader)
+/// by clicking the hyperlink for more details.
 pub mod tweet_reader;
 
 #[cfg(test)]
