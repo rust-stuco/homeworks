@@ -13,12 +13,15 @@ You will be implementing two traits on two different types. The two traits are
 are [`EmailReader`](crate::reader::email_reader::EmailReader) and
 [`TweetReader`](crate::reader::tweet_reader::TweetReader).
 
-Since string parsing is a bit tricky (especially in Rust), you will get `70` points for completing
+Since string parsing is a bit tricky (especially in Rust), you will get `100` points for completing
 the implementation for [`EmailReader`](crate::reader::email_reader::EmailReader)
-and `80` points for completing the implementation for
+and `50` points for completing the implementation for
 [`TweetReader`](crate::reader::tweet_reader::TweetReader).
+This means you only need to do the first part for full credit, and the second part is
+extra credit!
 
-If you find yourself spending more than an hour on this assignment, please let us know!
+If you find yourself spending more than an hour on the first part of the assignment,
+please let us know!
 This assignment is harder than the previous homeworks,
 so there is no shame if you can't complete it in under an hour.
 
