@@ -8,13 +8,6 @@ use std::hash::Hash;
 /// It is implemented using a [`HashMap`] where each
 /// value is a [`Vec`] of the associated values.
 ///
-/// Note that unlike [`MultiSet`](crate::multiset::MultiSet), it is fine to expose the
-/// inner hash table here because we are not storing any other metadata
-/// (in the previous section, you probably had more than one field tracking data).
-/// This means that an outsider can't mess up our data structure by breaking any invariants.
-/// So this type is really just a wrapper around the inner data structure
-/// that provides some useful methods.
-///
 /// # Examples
 ///
 /// ```rust
@@ -31,6 +24,17 @@ use std::hash::Hash;
 ///
 /// ### `Eq + Hash`
 /// See the note in the documentation for [`MultiSet`](crate::multiset::MultiSet).
+///
+/// ### Public Field
+///
+/// Note that unlike [`MultiSet`](crate::multiset::MultiSet), it is fine to expose the
+/// inner hash table here because we are not storing any other metadata
+/// (in the previous section, you probably had more than one field tracking data).
+/// This means that an outsider can't mess up our data structure by breaking any invariants.
+/// So this type is really just a wrapper around the inner data structure
+/// that provides some useful methods.
+///
+/// Also, we wanted to expose it to help with our test cases 😊.
 #[derive(Debug)]
 pub struct MultiMap<K: Hash + Eq, V: Eq> {
     /// The internal [`HashMap`] storing the key-value associations.

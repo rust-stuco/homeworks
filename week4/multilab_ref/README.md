@@ -7,8 +7,10 @@
 The goal of this homework is to make sure you are comfortable with some of the
 generic collection types in the [`std::collections`] module.
 
-You will implement two data structures that track multiplicity on top of their normal operations.
-The first will be a [`MultiSet`](crate::multiset::MultiSet), or a set that can have duplicates.
+You will implement two data structures that track multiplicity (the number of times
+elements appear) on top of their normal operations.
+The first will be a [`MultiSet`](crate::multiset::MultiSet),
+which is a set that can have duplicates.
 The second will be a [`MultiMap`](crate::multimap::MultiMap), which is a map that maps keys
 to any number of values.
 
@@ -16,11 +18,10 @@ For [`MultiSet`](crate::multiset::MultiSet), we have not provided what types the
 _We recommend that you use one of the collection types provided in the_
 _[`std::collections`] module to help you build these new types._
 
-This homework is a bit more straightforward than the previous homeworks, so we will be providing
-less detail than before on implementation details. Instead, you should read the documentation
-and implement the data structure and methods so that they follow the documentation.
-
-**You will receive full points as long as you pass all of the test cases.**
+We would like you think a bit more about your own code than previous homeworks,
+so we will be providing less detail than before on implementation details.
+Instead, you should read the documentation and implement the data structure
+and methods so that they follow the documentation and pass all the test cases.
 
 
 
