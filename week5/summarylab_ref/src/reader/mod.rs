@@ -12,14 +12,16 @@
 ///
 /// ---
 ///
-/// Once you've added the fields to the struct, implement the [`Reader`](crate::Reader) trait:
+/// Once you've added the fields to the struct, implement the [`Reader`](crate::Reader) trait
+/// that has been defined for you in `src/lib.rs`:
 /// - [`parse`](crate::Reader::parse): This method will take in a [`String`] that was
 /// read from a file and create a new [`EmailReader`](email_reader::EmailReader)
 /// based on that file (see the documentation on [`EmailReader`](email_reader::EmailReader)
 /// for more details about how the files should be formatted)
 ///
 /// We also want [`EmailReader`](email_reader::EmailReader)s to be able to summarize themselves.
-/// We'll want to implement the [`Summary`](crate::Summary) trait:
+/// We'll want to implement the [`Summary`](crate::Summary) trait, which is also defined
+/// in `src/lib.rs`:
 /// - [`msg_len`](crate::Summary::msg_len) should return the length of the message
 /// - [`summarize`](crate::Summary::summarize) should return a string
 /// that contains `"{sender}: {message}"`, but with a maximum of 280 characters
@@ -52,7 +54,7 @@ pub mod email_reader;
 /// ---
 ///
 /// We'll want to implement both [`Reader`](crate::Reader) and [`Summary`](crate::Summary)
-/// for this type as well.
+/// for this type as well, both located in `src/lib.rs`.
 ///
 /// - [`parse`](crate::Reader::parse): This method will take in a [`String`] that was
 /// read from a file and create a new [`TweetReader`](tweet_reader::TweetReader)
