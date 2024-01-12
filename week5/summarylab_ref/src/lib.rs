@@ -6,6 +6,13 @@ use std::{
     io::{BufReader, Read},
 };
 
+/// For now, ignore the `Self: Sized` annotation on this trait.
+/// If you are interested, you can take a look at
+/// [this](https://github.com/pretzelhammer/rust-blog/blob/master/posts/sizedness-in-rust.md#sized-trait)
+/// blog.
+/// The high-level reasoning is that Rust must be able to determine the size of
+/// a return type at compile time. We'll talk more about this when we talk about
+/// Trait Objects in week 9!
 pub trait Reader
 where
     Self: Sized,
