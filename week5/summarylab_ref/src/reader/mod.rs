@@ -13,20 +13,13 @@
 /// ---
 ///
 /// Once you've added the fields to the struct, implement the [`Reader`](crate::Reader) trait
-/// that has been defined for you in `src/lib.rs`:
-/// - [`parse`](crate::Reader::parse): This method will take in a [`String`] that was
-/// read from a file and create a new [`EmailReader`](email_reader::EmailReader)
-/// based on that file (see the documentation on [`EmailReader`](email_reader::EmailReader)
-/// for more details about how the files should be formatted)
+/// that has been defined for you in `src/lib.rs` by implementing the
+/// [`parse`](crate::Reader::parse) method. Refer to the documentation for more details.
 ///
 /// We also want [`EmailReader`](email_reader::EmailReader)s to be able to summarize themselves.
 /// We'll want to implement the [`Summary`](crate::Summary) trait, which is also defined
-/// in `src/lib.rs`:
-/// - [`msg_len`](crate::Summary::msg_len) should return the length of the message
-/// - [`summarize`](crate::Summary::summarize) should return a string
-/// of the form `"{sender}: {message}"`, but with a maximum of 280 characters (truncate)
-/// - [`get_info`](crate::Summary::get_info) should return a string of the form
-/// `"{subject}\nFrom: {sender}, To: {receiver}"`
+/// in `src/lib.rs`, which has the [`msg_len`](crate::Summary::msg_len),
+/// [`summarize`](crate::Summary::summarize), and [`get_info`](crate::Summary::get_info) methods.
 ///
 /// See the type documentation for [`EmailReader`](email_reader::EmailReader)
 /// by clicking the hyperlink for more details.
@@ -55,16 +48,9 @@ pub mod email_reader;
 ///
 /// We'll want to implement both [`Reader`](crate::Reader) and [`Summary`](crate::Summary)
 /// for this type as well, both located in `src/lib.rs`.
-///
-/// - [`parse`](crate::Reader::parse): This method will take in a [`String`] that was
-/// read from a file and create a new [`TweetReader`](tweet_reader::TweetReader)
-/// based on that file
-///
-/// - [`msg_len`](crate::Summary::msg_len) should return the length of the content
-/// - [`summarize`](crate::Summary::summarize) should return a string of the form
-/// `"@{username}: {content}"`
-/// - [`get_info`](crate::Summary::get_info) should return a string of the form
-/// `"Tweet from @{username}"` with `"(reply)"` or `"(retweet)"` appended if applicable
+/// That means we want to implement the [`parse`](crate::Reader::parse),
+/// [`msg_len`](crate::Summary::msg_len), [`summarize`](crate::Summary::summarize),
+/// and [`get_info`](crate::Summary::get_info) methods.
 ///
 /// See the type documentation for [`TweetReader`](tweet_reader::TweetReader)
 /// by clicking the hyperlink for more details.
