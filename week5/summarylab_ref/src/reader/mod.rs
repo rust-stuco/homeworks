@@ -24,8 +24,8 @@
 /// in `src/lib.rs`:
 /// - [`msg_len`](crate::Summary::msg_len) should return the length of the message
 /// - [`summarize`](crate::Summary::summarize) should return a string
-/// that contains `"{sender}: {message}"`, but with a maximum of 280 characters
-/// - [`get_info`](crate::Summary::get_info) should return a string that contains
+/// of the form `"{sender}: {message}"`, but with a maximum of 280 characters (truncate)
+/// - [`get_info`](crate::Summary::get_info) should return a string of the form
 /// `"{subject}\nFrom: {sender}, To: {receiver}"`
 ///
 /// See the type documentation for [`EmailReader`](email_reader::EmailReader)
@@ -61,9 +61,9 @@ pub mod email_reader;
 /// based on that file
 ///
 /// - [`msg_len`](crate::Summary::msg_len) should return the length of the content
-/// - [`summarize`](crate::Summary::summarize) should return a string that
-/// contains `"@{username}: {content}"`
-/// - [`get_info`](crate::Summary::get_info) should return a string that contains
+/// - [`summarize`](crate::Summary::summarize) should return a string of the form
+/// `"@{username}: {content}"`
+/// - [`get_info`](crate::Summary::get_info) should return a string of the form
 /// `"Tweet from @{username}"` with `"(reply)"` or `"(retweet)"` appended if applicable
 ///
 /// See the type documentation for [`TweetReader`](tweet_reader::TweetReader)

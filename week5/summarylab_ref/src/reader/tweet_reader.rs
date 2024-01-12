@@ -137,7 +137,8 @@ impl Summary for TweetReader {
     /// Returns a string equivalent to
     /// `"Tweet from @{username}"`. with (reply) or (retweet) appended if applicable.
     ///
-    /// For example, if @ferris made a retweet, this would return `"Tweet from @ferris (retweet)"`.
+    /// For example, if `@ferris` made a retweet,
+    /// this would return `"Tweet from @ferris (retweet)"`.
     fn get_info(&self) -> String {
         let mut result = format!("Tweet from @{}", self.username);
         match self.state {
