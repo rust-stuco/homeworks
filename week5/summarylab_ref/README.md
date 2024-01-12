@@ -28,6 +28,22 @@ that is already `50%` of your grade (and you need `60%` to pass)!
 That being said, if you have the time,
 we still encourage you to try and pass all of the test cases for practice!
 
+
+
+# Part 1: Emails
+
+Click this hyperlink to go to the writeup for
+[`email_reader`](crate::reader::email_reader)!
+
+
+
+# Part 2: Tweets
+
+Click this hyperlink to go to the writeup for
+[`tweet_reader`](crate::reader::tweet_reader)!
+
+
+
 ### Command Line Tool Challenge
 
 Another thing you can do is turn this crate into a binary that _actually_
@@ -47,52 +63,6 @@ This is not a trivial task.
 We also don't have an autograder set up for this, so you'll mostly be on your own.
 If you do decide to do this, we'll manually grade it ourselves to determine how many points
 you will receive.
-
-
-
-# Setup
-
-Make sure you have Rust installed. You should have installed Rust through `rustup`.
-To confirm, run:
-
-```sh
-$ rustup --version
-rustup 1.26.0 (2023-11-14)
-$ cargo --version
-cargo 1.74.0 (ecb9851af 2023-10-18)
-```
-
-Make sure that both of those commands execute successfully,
-and that they have relatively recent dates.
-If the dates are not recent, you can update `rustup` by running `rustup update`.
-
-If you want a local version of this writeup, you can generate it with `cargo doc`.
-Once you have `cargo` installed, run `cargo doc --open` in this directory to generate documentation
-for this homework.
-
-```sh
-$ cargo doc --open
-Documenting primerlab v0.1.0 (<path>/primerlab)
-   Finished dev [unoptimized + debuginfo] target(s) in 0.11s
-    Opening <path>/primerlab/target/doc/primerlab/index.html
-```
-
-Either way, a version of this writeup will be up on our website!
-
-
-
-
-# Part 1: Emails
-
-Click this hyperlink to go to the writeup for
-[`email_reader`](crate::reader::email_reader)!
-
-
-
-# Part 2: Tweets
-
-Click this hyperlink to go to the writeup for
-[`tweet_reader`](crate::reader::tweet_reader)!
 
 
 
