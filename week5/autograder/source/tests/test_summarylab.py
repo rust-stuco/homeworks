@@ -77,7 +77,42 @@ class SummaryLabTest(unittest.TestCase):
                 "Please fix the lints above to receive credit for this assignment:\n"
             )
 
-    @cargo_test(1.0, 100)
-    def test_all_tests(self):
-        """Testing all tests"""
-        return "cargo test"
+    @cargo_test(1.0, 25)
+    def test_email_basic(self):
+        """Testing Emails Basic"""
+        return "cargo test test_basic_and_empty_emails"
+
+    @cargo_test(1.1, 25)
+    def test_email_malformed(self):
+        """Testing Emails Malformed"""
+        return "cargo test test_malformed_emails"
+
+    @cargo_test(1.2, 25)
+    def test_email_summary(self):
+        """Testing Emails Summary"""
+        return "cargo test test_summaries"
+
+    @cargo_test(1.3, 25)
+    def test_email_long(self):
+        """Testing Emails Long"""
+        return "cargo test test_summarize_extremely_long_message"
+
+    @cargo_test(2.0, 10)
+    def test_tweet_basic(self):
+        """Testing Tweets Basic"""
+        return "cargo test test_basic_and_empty_tweets"
+
+    @cargo_test(2.1, 10)
+    def test_tweet_malformed(self):
+        """Testing Tweets Malformed"""
+        return "cargo test test_malformed_tweets"
+
+    @cargo_test(2.2, 10)
+    def test_tweet_re(self):
+        """Testing Retweets and Replies"""
+        return "cargo test test_retweets_and_replies"
+
+    @cargo_test(2.3, 20)
+    def test_tweet_long(self):
+        """Testing Tweets Long"""
+        return "cargo test test_edge_cases_and_long_content"
