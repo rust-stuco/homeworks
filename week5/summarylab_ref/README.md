@@ -70,8 +70,8 @@ to help you!
 To reiterate: Only do this if you have ample time to spare and you want to get better at Rust!
 This is not a trivial task.
 We also don't have an autograder set up for this, so you'll mostly be on your own.
-If you do decide to do this, we'll manually grade it ourselves to determine how many points
-you will receive.
+If you do decide to do this, let us know that you did and we'll
+manually grade it ourselves to determine how many points you will receive.
 
 
 
@@ -107,10 +107,10 @@ Note that you don't _need_ to name it `handin.zip`, you can name it whatever you
 In general, feel free to discuss homeworks with other students!
 As long as you do not copy someone else's work, any communication is fair game.
 
-Try to discuss on the course Discord or Piazza so that
+All formal questions should be asked on Piazza. Try to discuss on Piazza so that
 other students can see your questions and answers as well!
 
-Remember that all formal questions should be asked on Piazza.
+You can also discuss on Discord, but try to keep any technical questions on Piazza.
 
 
 
