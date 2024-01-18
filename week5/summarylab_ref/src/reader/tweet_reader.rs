@@ -1,3 +1,5 @@
+#![allow(unused_variables, unused_imports)]
+
 use crate::{Reader, Summary};
 use std::io;
 
