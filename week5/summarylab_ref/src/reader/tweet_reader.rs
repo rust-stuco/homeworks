@@ -47,6 +47,7 @@ impl Reader for TweetReader {
     /// [`EmailReader`](crate::reader::email_reader::EmailReader)'s version of
     /// [`parse`](crate::reader::email_reader::EmailReader::parse).
     fn parse(file_str: String) -> Result<TweetReader, std::io::Error> {
+        // lines is a vector of all the newline-separated lines as &str from the file_str
         let lines: Vec<&str> = file_str.lines().collect();
 
         if lines.len() < 2 {

@@ -51,6 +51,7 @@ impl Reader for EmailReader {
     /// `"File is not in the correct format"`.
     /// See [`std::io::Error::new`] for more details on how to do this.
     fn parse(file_str: String) -> Result<EmailReader, io::Error> {
+        // lines is a vector of all the newline-separated lines as &str from the file_str
         let lines: Vec<&str> = file_str.lines().collect();
 
         if lines.len() < 3 {
