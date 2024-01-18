@@ -24,6 +24,8 @@ If you find yourself spending more than an hour on the first part of the assignm
 please let us know!
 This assignment is harder than the previous homeworks,
 so there is no shame if you can't complete it in under an hour.
+We may give partial credit to honest attempts at the end of the semester,
+even if you don't pass any test cases.
 
 Also, remember that there are plenty of points to be earned, and if you show up to every lecture,
 that is already `50%` of your grade (and you need `60%` to pass)!
@@ -55,23 +57,44 @@ Please read the module documentation first, and then go to the type documentatio
 
 # Challenge: Command Line Tool
 
-Another thing you can do is turn this crate into a binary that _actually_
+As a sneak peek, for the next homework
+we're going to ask you to implement the same command line tool as the one explained in the book
+[Chapter 12](https://doc.rust-lang.org/book/ch12-00-an-io-project.html).
+Since the book walks you through exactly how to do it,
+it will be much more straightforward compared to this homework.
+
+**_If you have ample time to spare_, and you want to get better at Rust,**
+**here is a challenge you can do now instead of next week's homework:**
+
+Instead of just running preset tests, you can turn this crate into a binary that _actually_
 reads from the file system.
 
-Right now, the `new` functions on all of the readers never actually get called because
-there is no `main` function to call them. If you're up to the challenge,
+Right now, the `new` functions on all of the `Reader`s never actually get called because
+there is no `main` function to call them. If you're up to the challenge (and you have time),
 create a command line tool that allows you to read in a tweet or an email from the `data` folder
-and summarize what is reads.
+(either through a pipe or specifying a file) that outputs a summary of what it reads.
 
 You can decide what flags to pass in for specific outputs. And if you'd like, you can
 take a look at the [clap](https://docs.rs/clap/latest/clap/index.html) third-party crate
 to help you!
 
+We don't have an autograder set up for this, so you'll mostly be on your own.
+We will still expect you to write your own test cases and have generally good documentation.
+
+If you do decide to do this challenge, let us know that you did and we'll
+manually grade it ourselves to determine how many points you will receive
+(the maximum points we would probably be willing to give out is double that of a normal homework).
+
 To reiterate: Only do this if you have ample time to spare and you want to get better at Rust!
-This is not a trivial task.
-We also don't have an autograder set up for this, so you'll mostly be on your own.
-If you do decide to do this, let us know that you did and we'll
-manually grade it ourselves to determine how many points you will receive.
+**This is not a trivial task.**
+
+**If you decide to do this challenge, you can skip next week's homework.**
+Or rather, you can turn this in next week in place of the official next homework.
+It would still be a good idea to read through
+[Chapter 12](https://doc.rust-lang.org/book/ch12-00-an-io-project.html) since we will
+expect you to write your own test cases and have a way to parse command line arguments.
+You can turn this in 2 weeks after this is released, in place of the next homework.
+You'll still have to turn in the first 2 parts of this homework on time, though.
 
 
 
