@@ -2,34 +2,38 @@
 
 
 
-# Poke Lab
+# Multi Lab
 
-The goal of this homework is to make sure that you understand Rust's Structs and Enums,
-semantically known as Algebraic Data Types.
+The goal of this homework is to make sure you are comfortable with some of the
+generic collection types in the [`std::collections`] module.
 
-In this homework, you will be implementing two data types:
-[`Charmander`](pokemon::charmander) and [`Eevee`](pokemon::eevee).
+You will implement two data structures that track multiplicity (the number of times
+elements appear) on top of their normal operations.
+The first will be a [`MultiSet`](crate::multiset::MultiSet),
+which is a set that can have duplicates.
+The second will be a [`MultiMap`](crate::multimap::MultiMap), which is a map that maps keys
+to any number of values.
 
-This will be the first homework where you have to start writing code,
-so this may take a little longer than the last homework.
-If you are spending _significantly_ more than 1 hour on this, please let us know!
+For [`MultiSet`](crate::multiset::MultiSet), we have not provided what types the fields should be.
+_We recommend that you use one of the collection types provided in the_
+_[`std::collections`] module to help you build these new types._
 
-For this homework, you should use the markdown-generated writeup. You can either get it from
-our website, or generate it directly on your computer with `cargo doc --open`.
-Having this form of documentation allows you to follow hyperlinks
-to get to documentation on specific types and methods.
-
-
-
-# Part 1: Charmander
-
-Click this hyperlink to go to the writeup for [`Charmander`](pokemon::charmander)!
+We would like you think a bit more about your own code than previous homeworks,
+so we will be providing less detail than before on implementation details.
+Instead, you should read the documentation and implement the data structure
+and methods so that they follow the documentation and pass all the test cases.
 
 
 
-# Part 2: Eevee
+# Part 1: `MultiSet`
 
-Click this hyperlink to go to the writeup for [`Eevee`](pokemon::eevee)!
+Click this hyperlink to go to the documentation for [`MultiSet`](crate::multiset::MultiSet)!
+
+
+
+# Part 2: `MultiMap`
+
+Click this hyperlink to go to the documentation for [`MultiMap`](crate::multimap::MultiMap)!
 
 
 
