@@ -125,7 +125,6 @@ impl Reader for TweetReader {
 impl Summary for TweetReader {
     /// Returns the length of the content in the tweet (not the full tweet).
     fn msg_len(&self) -> usize {
-        println!("{:?}", self.content);
         self.content.len()
     }
 
