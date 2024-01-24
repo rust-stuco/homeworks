@@ -12,6 +12,7 @@ fn vec_in_a_box() {
 }
 
 // `fill_vec()` no longer takes `vec: Vec<i32>` as argument - don't change this!
+#[cfg(test)]
 fn fill_vec() -> Vec<i32> {
     // Instead, let's create and fill the Vec in here - how do you do that?
     let mut vec = vec;
