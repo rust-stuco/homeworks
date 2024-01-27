@@ -38,24 +38,18 @@ we still encourage you to try and pass all of the test cases for practice!
 # Part 1: Emails
 
 Click this hyperlink to go to the writeup for
-[`email_reader`](crate::reader::email_reader)!
-This is a link to the _module_ that contains high-level documentation for the
-[`EmailReader`](crate::reader::email_reader::EmailReader) struct you will need to implement.
-Please read the module documentation first, and then go to the type documentation.
+[`EmailReader`](crate::reader::email_reader::EmailReader)!
 
 
 
-# Part 2: Tweets
+# Part 2: Tweets (Bonus)
 
 Click this hyperlink to go to the writeup for
-[`tweet_reader`](crate::reader::tweet_reader)!
-This is a link to the _module_ that contains high-level documentation for the
-[`TweetReader`](crate::reader::tweet_reader::TweetReader) struct you will need to implement.
-Please read the module documentation first, and then go to the type documentation.
+[`TweetReader`](crate::reader::tweet_reader::TweetReader)!
 
 
 
-# Challenge: Command Line Tool
+# Challenge: Command Line Tool (Bonus)
 
 As a sneak peek, for the next homework
 we're going to ask you to implement the same command line tool as the one explained in the book
@@ -83,18 +77,16 @@ We will still expect you to write your own test cases and have generally good do
 
 If you do decide to do this challenge, let us know that you did and we'll
 manually grade it ourselves to determine how many points you will receive
-(the maximum points we would probably be willing to give out is double that of a normal homework).
+(the maximum points we would probably be willing to give out is triple that of a normal homework).
 
 To reiterate: Only do this if you have ample time to spare and you want to get better at Rust!
 **This is not a trivial task.**
 
-**If you decide to do this challenge, you can skip next week's homework.**
-Or rather, you can turn this in next week in place of the official next homework.
+**If you decide to do this challenge, you can skip next week’s homework**, or rather,
+you can turn this in next week in place of the official next homework.
 It would still be a good idea to read through
-[Chapter 12](https://doc.rust-lang.org/book/ch12-00-an-io-project.html) since we will
-expect you to write your own test cases and have a way to parse command line arguments.
-You can turn this in 2 weeks after this is released, in place of the next homework.
-You'll still have to turn in the first 2 parts of this homework on time, though.
+[Chapter 12](https://doc.rust-lang.org/book/ch12-00-an-io-project.html)
+since you should know how to write your own test cases and parse command line arguments.
 
 
 

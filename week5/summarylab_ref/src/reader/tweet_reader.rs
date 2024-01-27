@@ -5,6 +5,24 @@ use std::io;
 
 /// A struct that represents a tweet.
 ///
+/// The [`TweetReader`] struct will model a tweet.
+/// [`TweetReader`] should have _at minimum_ the following attributes:
+/// - `username: String`
+/// - `content: String`
+///
+/// **A Tweet can also either be a retweet or a reply, on top of being a normal tweet.**
+///
+/// It is up to you how you want to represent this type of state. You could have two booleans
+/// that tell you if it is a retweet or a reply, but make sure that they aren't both true.
+/// If only there was a way to _enumerate_ the types of states we could be in...
+///
+/// _If you choose to create some new type, make sure to annotate it with `#[derive(Debug)]`_
+/// _so you can easily debug it later._
+///
+/// Again, all of these fields should be _private_ (not accessible outside of the struct).
+///
+/// ---
+///
 /// The file / [`String`] should be in the following format:
 ///
 /// ```text
@@ -21,6 +39,15 @@ use std::io;
 /// will be on a new line after the content.
 ///
 /// For this assignment, a Tweet can only be one of a normal tweet, a reply, or a retweet.
+///
+/// ---
+///
+/// Just like with [`EmailReader`](crate::reader::email_reader::EmailReader),
+/// we'll want to implement both [`Reader`] and [`Summary`](
+/// for this type as well, both located in `src/lib.rs`.
+/// That means we want to implement the [`parse`](Reader::parse),
+/// [`msg_len`](Summary::msg_len), [`summarize`](Summary::summarize),
+/// and [`get_info`](Summary::get_info) methods.
 #[derive(Debug)]
 pub struct TweetReader {
     username: String,

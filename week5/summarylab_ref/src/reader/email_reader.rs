@@ -3,7 +3,18 @@ use std::io;
 
 /// A struct that represents an email message.
 ///
-/// The file / [`String`] should be in the following format:
+/// The [`EmailReader`] struct will model an email message.
+/// [`EmailReader`] should have the attributes similar to these:
+///  - `subject: String`
+///  - `sender: String`
+///  - `receiver: String`
+///  - `message: String`
+///
+/// All of these fields should be _private_ (not accessible outside of the struct).
+///
+/// ---
+///
+/// The file / [`String`] that the [`EmailReader`] reads should be in the following format:
 ///
 /// ```text
 /// Subject: {subject}
@@ -14,6 +25,17 @@ use std::io;
 ///
 /// The message can span multiple lines. If no message is found, assume the message is `""`.
 /// The subject, sender, and receiver, however, cannot be empty strings.
+///
+/// ---
+///
+/// Once you've added the fields to the struct, implement the [`Reader`] trait
+/// that has been defined for you in `src/lib.rs` by implementing the
+/// [`parse`](Reader::parse) method. Refer to the documentation for more details.
+///
+/// We also want [`EmailReader`]s to be able to summarize themselves.
+/// We'll want to implement the [`Summary`] trait, which is also defined
+/// in `src/lib.rs`, which has the [`msg_len`](Summary::msg_len),
+/// [`summarize`](Summary::summarize), and [`get_info`](Summary::get_info) methods.
 #[derive(Debug)]
 pub struct EmailReader {
     subject: String,
