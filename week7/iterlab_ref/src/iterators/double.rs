@@ -1,21 +1,24 @@
+use super::interleave::Interleave;
+
 pub struct Double<I> {
-    _phantom: std::marker::PhantomData<I>,
+    interleave: Interleave<I, I>,
 }
 
 impl<I> Double<I>
 where
-    I: Iterator,
+    I: Iterator + Clone,
 {
     pub fn new(iter: I) -> Self {
-        todo!()
+        Self {
+            interleave: Interleave::new(iter.clone(), iter),
+        }
     }
 }
-
 
 impl<I: Iterator + Clone> Iterator for Double<I> {
     type Item = <I as Iterator>::Item;
 
     fn next(&mut self) -> Option<<I as Iterator>::Item> {
-        todo!()
+        self.interleave.next()
     }
 }
