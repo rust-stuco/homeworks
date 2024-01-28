@@ -216,3 +216,47 @@ mod interleave_tests {
         assert_eq!(interleaved.next(), None);
     }
 }
+
+mod double_tests {
+    use super::super::double::*;
+
+    #[test]
+    fn double_values() {
+        {
+            let numbers = [1, 2, 3];
+            let mut doubled = Double::new(numbers.iter().cloned());
+
+            assert_eq!(doubled.next(), Some(1));
+            assert_eq!(doubled.next(), Some(1));
+            assert_eq!(doubled.next(), Some(2));
+            assert_eq!(doubled.next(), Some(2));
+            assert_eq!(doubled.next(), Some(3));
+            assert_eq!(doubled.next(), Some(3));
+        }
+
+        {
+            let mut doubled = Double::new(std::iter::repeat(42));
+
+            for _ in 0..10 {
+                assert_eq!(doubled.next(), Some(42));
+                assert_eq!(doubled.next(), Some(42));
+            }
+        }
+    }
+    #[test]
+    fn single_element_iterator() {
+        let single_iter = vec![1].into_iter();
+        let mut doubled = Double::new(single_iter.clone());
+        let mut redoubled = Double::new(doubled.clone());
+
+        assert_eq!(doubled.next(), Some(1));
+        assert_eq!(doubled.next(), Some(1));
+        assert_eq!(doubled.next(), None);
+
+        assert_eq!(redoubled.next(), Some(1));
+        assert_eq!(redoubled.next(), Some(1));
+        assert_eq!(redoubled.next(), Some(1));
+        assert_eq!(redoubled.next(), Some(1));
+        assert_eq!(redoubled.next(), None);
+    }
+}

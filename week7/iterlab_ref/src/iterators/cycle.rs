@@ -1,4 +1,5 @@
-pub struct Cycle<I> {
+#[derive(Clone)]
+pub struct Cycle<I: Clone> {
     original: I,
     iter: I,
 }

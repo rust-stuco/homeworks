@@ -1,3 +1,4 @@
+#[derive(Clone)]
 pub struct Interleave<I, J> {
     first_iter: I,
     second_iter: J,

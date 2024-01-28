@@ -1,5 +1,6 @@
 use super::interleave::Interleave;
 
+#[derive(Clone)]
 pub struct Double<I> {
     interleave: Interleave<I, I>,
 }
