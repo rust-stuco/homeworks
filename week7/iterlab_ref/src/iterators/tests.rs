@@ -132,3 +132,87 @@ mod cycle_tests {
         assert_eq!(cycle.next(), Some(6));
     }
 }
+
+mod interleave_tests {
+    use super::super::interleave::*;
+
+    #[test]
+    fn basic_interleaving() {
+        let numbers1 = [1, 3, 5];
+        let numbers2 = [2, 4, 6];
+        let mut interleaved = Interleave::new(numbers1.iter().cloned(), numbers2.iter().cloned());
+
+        assert_eq!(interleaved.next(), Some(1));
+        assert_eq!(interleaved.next(), Some(2));
+        assert_eq!(interleaved.next(), Some(3));
+        assert_eq!(interleaved.next(), Some(4));
+        assert_eq!(interleaved.next(), Some(5));
+        assert_eq!(interleaved.next(), Some(6));
+    }
+
+    #[test]
+    fn empty_iterators() {
+        let empty_vec: Vec<()> = vec![];
+        let empty1 = empty_vec.iter().cloned();
+        let empty2 = empty_vec.iter().cloned();
+        let mut interleaved = Interleave::new(empty1, empty2);
+
+        assert_eq!(interleaved.next(), None); // Should always yield None
+    }
+
+    #[test]
+    fn one_empty_iterator() {
+        let numbers = [1, 2, 3];
+        let empty_vec: Vec<i32> = vec![];
+        let empty = empty_vec.iter().cloned();
+        let mut interleaved = Interleave::new(numbers.iter().cloned(), empty);
+
+        assert_eq!(interleaved.next(), Some(1));
+        assert_eq!(interleaved.next(), Some(2));
+        assert_eq!(interleaved.next(), Some(3));
+        assert_eq!(interleaved.next(), None);
+    }
+
+    #[test]
+    fn different_length_iterators() {
+        let numbers1 = [1, 2];
+        let numbers2 = [3, 4, 5];
+        let mut interleaved = Interleave::new(numbers1.iter().cloned(), numbers2.iter().cloned());
+
+        assert_eq!(interleaved.next(), Some(1));
+        assert_eq!(interleaved.next(), Some(3));
+        assert_eq!(interleaved.next(), Some(2));
+        assert_eq!(interleaved.next(), Some(4));
+        assert_eq!(interleaved.next(), Some(5));
+        assert_eq!(interleaved.next(), None);
+    }
+
+    #[test]
+    fn partially_consumed_iterators() {
+        let numbers1 = [1, 2, 3];
+        let mut original_iter1 = numbers1.iter().cloned();
+        assert_eq!(original_iter1.next(), Some(1)); // Consume one item
+
+        let numbers2 = [4, 5, 6];
+        let mut interleaved = Interleave::new(original_iter1, numbers2.iter().cloned());
+
+        assert_eq!(interleaved.next(), Some(2)); // Starts from the remaining items
+        assert_eq!(interleaved.next(), Some(4));
+        assert_eq!(interleaved.next(), Some(3));
+        assert_eq!(interleaved.next(), Some(5));
+        assert_eq!(interleaved.next(), Some(6));
+    }
+
+    #[test]
+    fn large_iterators() {
+        let numbers1: Vec<i32> = (1..1001).step_by(2).collect();
+        let numbers2: Vec<i32> = (2..1002).step_by(2).collect();
+        let mut interleaved = Interleave::new(numbers1.iter().cloned(), numbers2.iter().cloned());
+
+        for i in 1..1001 {
+            assert_eq!(interleaved.next(), Some(i));
+        }
+
+        assert_eq!(interleaved.next(), None);
+    }
+}

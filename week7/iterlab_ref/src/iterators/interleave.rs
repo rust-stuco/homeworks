@@ -27,7 +27,8 @@ where
 
     fn next(&mut self) -> Option<<I as Iterator>::Item> {
         self.switch = !self.switch;
-        if self.switch {
+
+        if !self.switch {
             match self.first_iter.next() {
                 None => self.second_iter.next(),
                 r => r,
