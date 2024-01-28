@@ -1,0 +1,4 @@
+@1CoolDavid
+"Hey Rustaceans!
+Excited to dive into some advanced topics today. Let's discuss ownership and lifetimes.
+#RustLang"

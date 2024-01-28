@@ -1,0 +1,6 @@
+@FerrisTheCrab
+"@1CoolDavid @BenOwadFanAccount Absolutely, David!
+Exploring examples helps students grasp concepts better.
+How about sharing a code snippet to illustrate trait bounds, @BenOwadFanAccount?
+#CodeInRust"
+reply

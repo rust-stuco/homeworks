@@ -1,0 +1,5 @@
+@1CoolDavid
+"@BenOwadFanAccount Excellent suggestion! Traits are the heart of Rust's polymorphism.
+Let's delve into some examples to solidify the concept.
+#RustExploration"
+retweet
