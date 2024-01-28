@@ -1,2 +1,1 @@
-pub mod filter_map;
-pub mod iterator;
+pub mod iterators;
