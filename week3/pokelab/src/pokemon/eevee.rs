@@ -151,6 +151,8 @@ impl Eevee {
     /// If given a stone that an Eevee cannot use to evolve, this function should
     /// panic with the message `"Encountered a weird rock..."`.
     ///
+    /// For now, you can set the secondary attribute on the [`EvolvedEeve`] to 0.
+    ///
     /// ```
     /// # use pokelab::pokemon::eevee::*;
     /// #
