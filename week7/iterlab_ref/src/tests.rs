@@ -1,5 +1,5 @@
 mod cycle_tests {
-    use super::super::cycle::*;
+    use crate::iterators::cycle::*;
 
     #[test]
     fn basic_cycling() {
@@ -134,7 +134,7 @@ mod cycle_tests {
 }
 
 mod interleave_tests {
-    use super::super::interleave::*;
+    use crate::iterators::interleave::*;
 
     #[test]
     fn basic_interleaving() {
@@ -218,7 +218,7 @@ mod interleave_tests {
 }
 
 mod double_tests {
-    use super::super::double::*;
+    use crate::iterators::double::*;
 
     #[test]
     fn double_values() {
