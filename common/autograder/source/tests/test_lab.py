@@ -74,7 +74,7 @@ class ???LabTest(unittest.TestCase):
         if not self.passed_clippy:
             self.fail(
                 "Detected warnings and/or errors in cargo clippy output!\n"
-                "Please fix the lints above to receive credit for this assignment:\n"
+                "Please fix the lints above to receive credit for this assignment\n"
             )
 
     @cargo_test(1.0, 100)
