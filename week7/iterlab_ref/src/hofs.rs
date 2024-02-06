@@ -143,13 +143,18 @@ pub mod fib_fun {
     /// assert_eq!(vec![0, 4, 8, 48], read_the_docs(6));
     /// ```
     ///
+    /// ---
+    ///
     /// This time we will not give you any constraints on how to
     /// implement this function.
     ///
     /// However, you will probably find it a lot easier
     /// to use iterators and dot chaining than to use a bunch of `for` loops.
-    /// Our reference solution is 9 short lines,
-    /// and it can definitely be made shorter!
+    /// You may even want to reuse some of the code you
+    /// wrote for previous parts...
+    ///
+    /// Note that our reference solution is 6 short lines
+    /// (which means we have at least 5 chained methods)!
     ///
     /// ---
     ///
@@ -161,10 +166,7 @@ pub mod fib_fun {
     /// ```
     pub fn read_the_docs(n: usize) -> Vec<usize> {
         (0..n)
-            .map(|i| {
-                let total: usize = Fibonacci::new(0, 1).take(i + 1).sum();
-                total * total
-            })
+            .map(|i| sum_fib_range(0, i + 1).pow(2))
             .filter(|&s| s % 2 == 0 || s % 3 == 0)
             .enumerate()
             .map(|(j, x)| if j == 0 { 0 } else { x / j })
