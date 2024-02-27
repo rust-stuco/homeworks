@@ -10,15 +10,18 @@
 //!
 //! # Fibonacci
 //!
-//! Implement the Fibonacci sequence as an iterator! This is mainly a warmup for the next 3 parts.
+//! Implement the [`Fibonacci`](fibonacci::Fibonacci) sequence as an iterator!
+//!
+//! This is mainly a warmup for the next 3 parts.
 //!
 //!
 //! # Cycle
 //!
-//! Implement an iterator that takes in another iterator, and instead of exhausting the input
-//! iterator when it reaches its last element, cycle back to the first element that was output.
+//! Implement an iterator that takes as input another iterator, and instead of exhausting the input
+//! iterator when it reaches its last element, cycle back to the first element.
 //!
-//! You'll need to figure out what information we need to keep track of to implement this iterator.
+//! You'll need to figure out what information we need to keep track of to implement this iterator,
+//! and store it in [`Cycle`](cycle::Cycle).
 //!
 //! You'll also have to figure out what the associated type should be. What output type makes sense
 //! for this new iterator given the input iterator?
@@ -32,7 +35,7 @@
 //! Note that we require the two input iterators to have the same associated `Item` type.
 //!
 //! Similarly to [`Cycle`](cycle::Cycle), you will need to figure out what to store in the struct
-//! [`Interleave`](interleave::Interleave), as well as what the associated `Item` type is.
+//! [`Interleave`](interleave::Interleave), as well as what the associated `Item` output type is.
 //!
 //!
 //! # Double

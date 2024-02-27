@@ -2,6 +2,8 @@ use crate::iterators::fibonacci::Fibonacci;
 
 /// Find the sum of the range of fibonacci numbers defined by `start` and `end`.
 ///
+/// You will probably want to implement this before implementing [`read_the_docs`].
+///
 /// # Example:
 ///
 /// Recall the fibonacci numbers from this sequence:
@@ -29,7 +31,7 @@ pub fn sum_fib_range(start: usize, end: usize) -> usize {
 }
 
 /// For every `i`th number from `0..n`, find the sum of the first `i`
-/// fibonnaci numbers and square that sum.
+/// fibonacci numbers and square that sum.
 ///
 /// Then, for each of those squared sums, keep only the ones that are
 /// divisible by 2 or 3.
@@ -40,6 +42,8 @@ pub fn sum_fib_range(start: usize, end: usize) -> usize {
 /// don't do `0 / 0`, and just return 0 instead.
 ///
 /// Return these numbers as a vector of `usize`.
+///
+/// You will probably want to implement [`sum_fib_range`] before implementing this.
 ///
 /// # Example
 ///
