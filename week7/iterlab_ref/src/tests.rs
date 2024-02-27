@@ -18,7 +18,7 @@ mod fibonacci_tests {
 
     #[test]
     fn test_iteration_sequence() {
-        let mut fib = Fibonacci::default();
+        let fib = Fibonacci::default();
         assert_eq!(
             vec![0, 1, 1, 2, 3, 5, 8, 13],
             fib.take(8).collect::<Vec<_>>()
