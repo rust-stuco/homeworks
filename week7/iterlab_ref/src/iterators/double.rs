@@ -25,7 +25,7 @@ where
 
 /// Implement the `Iterator` trait for `Double`!
 impl<I: Iterator + Clone> Iterator for Double<I> {
-    /// What should iterated type be?
+    /// Output the same type as the input.
     type Item = <I as Iterator>::Item;
 
     /// Advances the iterator and returns the next doubled element.

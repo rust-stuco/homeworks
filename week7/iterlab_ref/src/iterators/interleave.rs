@@ -31,7 +31,7 @@ where
     I: Iterator,
     J: Iterator<Item = I::Item>, // Both iterators should yield the same type
 {
-    /// What should iterated type be?
+    /// Output the same type as the input.
     type Item = <I as Iterator>::Item;
 
     /// Advances the iterator and returns the next interleaved element.

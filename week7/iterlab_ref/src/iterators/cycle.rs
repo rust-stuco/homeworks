@@ -18,7 +18,7 @@ impl<I: Clone> Cycle<I> {
 
 /// Implement the `Iterator` trait for `Cycle`!
 impl<I: Clone + Iterator> Iterator for Cycle<I> {
-    /// What should iterated type be?
+    /// Output the same type as the input.
     type Item = <I as Iterator>::Item;
 
     /// Advances the iterator and returns the next item in the cycle.

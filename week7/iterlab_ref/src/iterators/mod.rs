@@ -23,9 +23,6 @@
 //! You'll need to figure out what information we need to keep track of to implement this iterator,
 //! and store it in [`Cycle`](cycle::Cycle).
 //!
-//! You'll also have to figure out what the associated type should be. What output type makes sense
-//! for this new iterator given the input iterator?
-//!
 //! Don't worry too much about performance here, just make sure it works!
 //!
 //!
@@ -35,7 +32,7 @@
 //! Note that we require the two input iterators to have the same associated `Item` type.
 //!
 //! Similarly to [`Cycle`](cycle::Cycle), you will need to figure out what to store in the struct
-//! [`Interleave`](interleave::Interleave), as well as what the associated `Item` output type is.
+//! [`Interleave`](interleave::Interleave).
 //!
 //!
 //! # Double
