@@ -1,11 +1,10 @@
 use crate::iterators::fibonacci::Fibonacci;
 
-/// Find the sum of the range of fibonacci numbers
-/// defined by `start` and `end`.
+/// Find the sum of the range of fibonacci numbers defined by `start` and `end`.
 ///
 /// # Example:
 ///
-/// Recall that the fibonacci numbers from this sequence:
+/// Recall the fibonacci numbers from this sequence:
 ///
 /// ```text
 /// 0, 1, 1, 2, 3, 5, 8, 13, 21, 34, 55, 89, 144, 233...
@@ -20,6 +19,11 @@ use crate::iterators::fibonacci::Fibonacci;
 /// ```
 ///
 /// Try to not use any for loops, if statements, or mutable variables!
+///
+/// You are also allowed to use code from other parts of this homework.
+/// Make sure to `use` the correct things!
+///
+/// By re-using some code from other modules, our reference solution fits in 1 line!
 pub fn sum_fib_range(start: usize, end: usize) -> usize {
     Fibonacci::new(0, 1).skip(start).take(end - start).sum()
 }
@@ -32,7 +36,7 @@ pub fn sum_fib_range(start: usize, end: usize) -> usize {
 ///
 /// Let's say that there are now `m` remaining numbers. For every `j`th
 /// number from `1..m`, integer divide the number by `j`.
-/// Since 0 is going to end up being the first of the `m` numbers anyways,
+/// And since 0 is going to end up being the first of the `m` numbers anyways,
 /// don't do `0 / 0`, and just return 0 instead.
 ///
 /// Return these numbers as a vector of `usize`.
@@ -85,20 +89,10 @@ pub fn sum_fib_range(start: usize, end: usize) -> usize {
 ///
 /// However, you will probably find it a lot easier
 /// to use iterators and dot chaining than to use a bunch of `for` loops.
-/// You may even want to reuse some of the code you
-/// wrote for previous parts...
+/// You may even want to reuse some of the code you wrote for previous parts...
 ///
 /// Note that our reference solution is 6 short lines
 /// (which means we have at least 5 chained methods)!
-///
-/// ---
-///
-/// Note that if you decide to use [`take`](std::iter::Iterator::take),
-/// the number you input is an _exclusive_ end.
-///
-/// ```
-/// assert_eq!(vec![0, 1, 2, 3, 4], (0..).take(5).collect::<Vec<_>>());
-/// ```
 pub fn read_the_docs(n: usize) -> Vec<usize> {
     (0..n)
         .map(|i| sum_fib_range(0, i + 1).pow(2))

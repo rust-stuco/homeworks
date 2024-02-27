@@ -298,3 +298,72 @@ mod double_tests {
         assert_eq!(redoubled.next(), None);
     }
 }
+
+mod sum_squares_tests {
+    use crate::hofs::sum_squares::*;
+
+    #[test]
+    fn test_zero_largest_square_returns_zero() {
+        assert_eq!(0, sum_of_squared_odd_numbers(0));
+    }
+
+    #[test]
+    fn test_small_largest_square_returns_correct_sum() {
+        assert_eq!(1, sum_of_squared_odd_numbers(1));
+        assert_eq!(35, sum_of_squared_odd_numbers(30));
+    }
+
+    #[test]
+    fn test_functional_and_imperative_versions_match() {
+        for n in 0..1000 {
+            let functional_result = sum_of_squared_odd_numbers(n);
+            let imperative_result = sum_of_squared_odd_numbers_bad(n);
+            assert_eq!(functional_result, imperative_result);
+        }
+    }
+}
+
+mod fib_fun_tests {
+    use crate::hofs::fib_fun::*;
+
+    #[test]
+    fn test_sum_fib_range_empty_range() {
+        assert_eq!(0, sum_fib_range(0, 0));
+    }
+
+    #[test]
+    fn test_sum_fib_range_small_range() {
+        assert_eq!(9959, sum_fib_range(15, 20));
+    }
+
+    #[test]
+    fn test_sum_fib_range_large_range() {
+        assert_eq!(1346266, sum_fib_range(3, 30));
+    }
+
+    #[test]
+    fn test_read_the_docs_zero_input() {
+        assert_eq!(Vec::<usize>::new(), read_the_docs(0));
+    }
+
+    #[test]
+    fn test_read_the_docs_small_input() {
+        assert_eq!(vec![0, 4, 8, 48], read_the_docs(6));
+    }
+
+    #[test]
+    fn test_read_the_docs_larger_input() {
+        assert_eq!(vec![0, 4, 8, 48, 100, 217, 486], read_the_docs(9));
+    }
+
+    #[test]
+    fn test_read_the_docs_largest() {
+        assert_eq!(
+            vec![
+                0, 4, 8, 48, 100, 217, 486, 1106, 6728, 15708, 37088, 88381, 212268, 513222,
+                1248028, 3050113
+            ],
+            read_the_docs(20)
+        );
+    }
+}
