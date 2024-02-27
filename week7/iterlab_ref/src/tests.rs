@@ -1,3 +1,41 @@
+mod fibonacci_tests {
+    use crate::iterators::fibonacci::*;
+
+    #[test]
+    fn test_default_starts_with_0_and_1() {
+        let mut fib = Fibonacci::default();
+        assert_eq!(fib.next(), Some(0));
+        assert_eq!(fib.next(), Some(1));
+    }
+
+    #[test]
+    fn test_custom_start_values() {
+        let mut fib = Fibonacci::new(4, 6);
+        assert_eq!(fib.next(), Some(4));
+        assert_eq!(fib.next(), Some(6));
+        assert_eq!(fib.next(), Some(10));
+    }
+
+    #[test]
+    fn test_iteration_sequence() {
+        let mut fib = Fibonacci::default();
+        assert_eq!(
+            vec![0, 1, 1, 2, 3, 5, 8, 13],
+            fib.take(8).collect::<Vec<_>>()
+        );
+    }
+
+    #[test]
+    fn test_never_finishes() {
+        let mut fib = Fibonacci::default();
+        // We can't go too high otherwise we'll overflow
+        for _ in 0..91 {
+            fib.next();
+        }
+        assert_ne!(fib.next(), None);
+    }
+}
+
 mod cycle_tests {
     use crate::iterators::cycle::*;
 
