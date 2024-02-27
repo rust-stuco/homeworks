@@ -29,7 +29,7 @@ where
 impl<I, J> Iterator for Interleave<I, J>
 where
     I: Iterator,
-    J: Iterator<Item = I::Item>,
+    J: Iterator<Item = I::Item>, // Both iterators should yield the same type
 {
     /// What should iterated type be?
     type Item = <I as Iterator>::Item;

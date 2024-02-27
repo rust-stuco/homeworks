@@ -40,6 +40,8 @@ pub fn sum_of_squared_odd_numbers_bad(largest_square: usize) -> usize {
     acc
 }
 
+/// Make sure to read the documentation for [`sum_of_squared_odd_numbers_bad`] first.
+///
 /// Implement this function to do the same thing as [`sum_of_squared_odd_numbers_bad`],
 /// but without any `for` loops, `if` statements, or `mut`able variables!
 ///
