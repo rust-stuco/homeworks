@@ -1,4 +1,4 @@
-// Would you have preferred this to be in hofs.rs?
+// Would you have preferred this to be in src/hofs.rs or src/hofs/mod.rs?
 
 //! This module contains some functions that require higher-order functions to implement them.
 //!
