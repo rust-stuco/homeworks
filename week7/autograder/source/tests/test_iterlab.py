@@ -38,11 +38,15 @@ def cargo_test(test_num, weight):
 
 
 def verify_output_errors(output):
-    return "error" not in output and "FAILED" not in output
+    return "error" not in output and "test result: failed." not in output
 
 
 def verify_output_warnings(output):
-    return "warning" not in output and verify_output_errors(output)
+    return (
+        "diff" not in output
+        and "warning" not in output
+        and verify_output_errors(output)
+    )
 
 
 # Runs given shell command in a subprocess
@@ -63,7 +67,7 @@ class IterLabTest(unittest.TestCase):
         # for some reason it initializes before the os.chdir in run_tests.py
         os.chdir("/autograder/source/iterlab")
 
-        self.clippy_output = run_cmd("cargo clippy")
+        self.clippy_output = run_cmd("cargo clippy && cargo fmt --all -- --check")
         self.passed_clippy = verify_output_warnings(self.clippy_output)
 
     @number(0.0)
@@ -73,11 +77,37 @@ class IterLabTest(unittest.TestCase):
         print(self.clippy_output)
         if not self.passed_clippy:
             self.fail(
-                "Detected warnings and/or errors in cargo clippy output!\n"
+                "Detected warnings and/or errors in cargo clippy and cargo fmt output!\n"
                 "Please fix the lints above to receive credit for this assignment\n"
+                "Hint: run cargo fmt if you see a 'diff' warning!\n"
             )
 
-    @cargo_test(1.0, 100)
-    def test_all_tests(self):
-        """Testing all tests"""
-        return "cargo test"
+    @cargo_test(1.0, 10)
+    def test_fibonacci(self):
+        """Testing Fibonacci Iterator"""
+        return "cargo test fibonacci_tests"
+
+    @cargo_test(2.0, 35)
+    def test_cycle(self):
+        """Testing Cycle Iterator"""
+        return "cargo test cycle_tests"
+
+    @cargo_test(3.0, 40)
+    def test_interleave(self):
+        """Testing Interleave Iterator"""
+        return "cargo test interleave_tests"
+
+    @cargo_test(4.0, 15)
+    def test_double(self):
+        """Testing Double Iterator"""
+        return "cargo test double_tests"
+
+    @cargo_test(5.0, 15)
+    def test_sum_squares(self):
+        """Testing sum_squares"""
+        return "cargo test sum_squares_tests"
+
+    @cargo_test(6.0, 35)
+    def test_fib_fun(self):
+        """Testing fib_fun"""
+        return "cargo test fib_fun_tests"
