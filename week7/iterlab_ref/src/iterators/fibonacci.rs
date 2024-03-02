@@ -34,7 +34,7 @@ impl Iterator for Fibonacci {
         let current = self.curr;
 
         self.curr = self.next;
-        self.next += self.next;
+        self.next += current;
 
         Some(current)
     }
