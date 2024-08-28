@@ -10,6 +10,10 @@ pub fn add(left: usize, right: usize) -> usize {
 
 /// Given a number n, return true if it is a prime number, and false otherwise.
 ///
+/// # Note
+/// `isPrime` must be efficient. Refer to `fasterIsPrime` from [15-112](
+/// https://www.kosbie.net/cmu/spring-22/15-112/notes/notes-loops.html#isPrime).
+///
 /// # Example
 ///
 /// ```
@@ -49,6 +53,10 @@ pub fn nth_prime(n: usize) -> usize {
 }
 
 /// Returns the Greatest Common Divisor (gcd) of two numbers x and y.
+///
+/// # Note
+/// You must use Euclid's algorithm to solve this problem. Please feel free to
+/// use the World Wide Web to learn more (this applies for the entire course).
 ///
 /// # Example
 ///
