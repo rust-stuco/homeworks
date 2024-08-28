@@ -21,6 +21,11 @@ pub fn add(left: usize, right: usize) -> usize {
 /// let test_not_prime = 42;
 /// assert!(!is_prime(test_not_prime));
 /// ```
+///
+/// # Note
+/// `isPrime` must be efficient. Refer to `fasterIsPrime` from [15-112](
+/// https://www.kosbie.net/cmu/spring-22/15-112/notes/notes-loops.html#isPrime).
+///
 pub fn is_prime(n: usize) -> bool {
     if n == 0 || n == 1 {
         return false;
@@ -73,6 +78,7 @@ pub fn nth_prime(n: usize) -> usize {
 
 /// Returns the Greatest Common Divisor (gcd) of two numbers x and y.
 ///
+///
 /// # Example
 ///
 /// ```
@@ -83,6 +89,10 @@ pub fn nth_prime(n: usize) -> usize {
 ///
 /// assert_eq!(gcd(first_num, second_num), 12);
 /// ```
+///
+/// # Note
+/// You must use Euclid's algorithm to solve this problem. Please feel free to
+/// use the World Wide Web to learn more (this applies for the entire course).
 ///
 /// # **Restrictions**
 /// **Please do not use the "return" keyword.**
