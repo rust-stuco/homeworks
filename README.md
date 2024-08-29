@@ -3,16 +3,12 @@
 _All homeworks are due the week after they are assigned, unless you use late days._
 _You have 7 late days to use whenever you need._
 
-
-
 # Homeworks
 
 We've' tried to calibrate each of the homeworks to take around an hour.
 If you find yourself spending much more than an hour on these, please let us know!
 This is the first time these assignments have been handed out,
 and we are very open to feedback regarding the length and difficulty.
-
-
 
 # Setup
 
@@ -43,10 +39,26 @@ Documenting primerlab v0.1.0 (<path>/primerlab)
 
 Either way, a version of this writeup will be up on our website!
 
-
-
 # Submission
 
+### Formatting and Style
+
+The autograder will run these two commands on your code:
+
+```sh
+cargo clippy && cargo fmt --all -- --check
+```
+
+If the autograder detects any errors from the command above,
+you will not be able to receive any points. This may seem strict, but we have decided to follow
+standard best practices for Rust.
+
+By following [Rust's style guidelines](https://doc.rust-lang.org/stable/style-guide/),
+you ensure that anybody reading your code (who is familiar with Rust) will be
+able to easily navigate your code. This can help with diving into an unfamiliar code base,
+and it also eliminates the need for debate with others over style rules, saving time and energy.
+
+See the official [guidelines](https://doc.rust-lang.org/stable/style-guide/) for more information.
 
 ### Unix
 
@@ -62,15 +74,12 @@ Once you have `zip` installed, we will create the `handin.zip` automatically for
 
 Once you have the `handin.zip` file, submit it to Gradescope.
 
-
 ### Windows
 
 If you are on a windows system, you can zip the `src/` folder manually
 and upload that to Gradescope.
 
 Note that you don't _need_ to name it `handin.zip`, you can name it whatever you'd like.
-
-
 
 # Collaboration
 
@@ -81,8 +90,6 @@ All formal questions should be asked on Piazza. Try to discuss on Piazza so that
 other students can see your questions and answers as well!
 
 You can also discuss on Discord, but try to keep any technical questions on Piazza.
-
-
 
 # Feedback
 

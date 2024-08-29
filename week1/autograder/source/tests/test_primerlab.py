@@ -77,9 +77,9 @@ class PrimerLabTest(unittest.TestCase):
         print(self.clippy_output)
         if not self.passed_clippy:
             self.fail(
-                "Detected warnings and/or errors in cargo clippy and cargo fmt output!\n"
+                "Detected warnings and/or errors in `cargo clippy` and `cargo fmt` output!\n"
                 "Please fix the lints above to receive credit for this assignment\n"
-                "Hint: run cargo fmt if you see a 'diff' warning!\n"
+                "Hint: run `cargo fmt` if you see a 'diff' warning, and `cargo clippy` otherwise!\n"
             )
 
     @cargo_test(1.0, 48)

@@ -1,7 +1,5 @@
 ### 98-008: Intro to the Rust Programming Language
 
-
-
 # Primer Lab
 
 The goal of this homework is to make sure that you understand Rust's basic syntax.
@@ -18,8 +16,6 @@ We've tried to calibrate this homework to take around an hour,
 so if you are spending much more than that, please let us know!
 However, this time bound does _not_ include setting up Rust on your machine,
 so if you have trouble with installing Rust, make sure to ask for help!
-
-
 
 # Setup
 
@@ -50,17 +46,17 @@ Documenting primerlab v0.1.0 (<path>/primerlab)
 
 Either way, a version of this writeup will be up on our website!
 
-
-
 # Part 1: Exercises
 
 For the first part of this homework, there are 8 files that do not compile under `src/exercises`.
 You will need to modify each of them in some way to make them compile.
 
 Run this command in the root of your project (parent directory of the `src/` folder):
+
 ```sh
 $ cargo test
 ```
+
 **What does the error say?** Go into `src/exercises/fixme1.rs` and make the change.
 
 When you are able to run `cargo test` without any errors,
@@ -69,8 +65,6 @@ Go through all 8 of the exercises by uncommenting each of the `pub mod fixme_;`s
 and make sure that all the `fixme_` test cases pass when you run `cargo test`.
 
 At this point, you'll see some other tests failing. You'll fix those in the next section!
-
-
 
 # Part 2: Function implementations
 
@@ -82,6 +76,7 @@ _One of the functions requires you to implement it in a certain way,_
 _so make sure to read those comments carefully._
 
 To test all of your functions, run:
+
 ```sh
 $ cargo test
 ```
@@ -95,10 +90,26 @@ compiler optimizations (like the `-O2` flag for C) and without debug symbols.
 Also, if you want to run a specific test like `fn it_works()`, run `cargo test -- it_works`
 with the name of the test instead of `it_works`.
 
-
-
 # Submission
 
+### Formatting and Style
+
+The autograder will run these two commands on your code:
+
+```sh
+cargo clippy && cargo fmt --all -- --check
+```
+
+If the autograder detects any errors from the command above,
+you will not be able to receive any points. This may seem strict, but we have decided to follow
+standard best practices for Rust.
+
+By following [Rust's style guidelines](https://doc.rust-lang.org/stable/style-guide/),
+you ensure that anybody reading your code (who is familiar with Rust) will be
+able to easily navigate your code. This can help with diving into an unfamiliar code base,
+and it also eliminates the need for debate with others over style rules, saving time and energy.
+
+See the official [guidelines](https://doc.rust-lang.org/stable/style-guide/) for more information.
 
 ### Unix
 
@@ -114,15 +125,12 @@ Once you have `zip` installed, we will create the `handin.zip` automatically for
 
 Once you have the `handin.zip` file, submit it to Gradescope.
 
-
 ### Windows
 
 If you are on a windows system, you can zip the `src/` folder manually
 and upload that to Gradescope.
 
 Note that you don't _need_ to name it `handin.zip`, you can name it whatever you'd like.
-
-
 
 # Collaboration
 
@@ -133,8 +141,6 @@ All formal questions should be asked on Piazza. Try to discuss on Piazza so that
 other students can see your questions and answers as well!
 
 You can also discuss on Discord, but try to keep any technical questions on Piazza.
-
-
 
 # Feedback
 
