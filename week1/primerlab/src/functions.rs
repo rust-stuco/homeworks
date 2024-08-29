@@ -2,6 +2,7 @@
 
 /// Solutions and some test cases adapted from [15-112](
 /// https://www.kosbie.net/cmu/spring-22/15-112/notes/notes-loops.html#nthPrime).
+///
 /// Test cases are located in tests.rs!
 /// Make sure this works!
 pub fn add(left: usize, right: usize) -> usize {
@@ -26,7 +27,6 @@ pub fn add(left: usize, right: usize) -> usize {
 ///
 /// `isPrime` must be efficient. Refer to `fasterIsPrime` from [15-112](
 /// https://www.kosbie.net/cmu/spring-22/15-112/notes/notes-loops.html#isPrime).
-///
 pub fn is_prime(n: usize) -> bool {
     todo!()
 }
@@ -48,6 +48,7 @@ pub fn is_prime(n: usize) -> bool {
 /// ```
 ///
 /// ### Suggestions
+///
 /// You can look [here](https://en.wikipedia.org/wiki/List_of_prime_numbers) for more primes,
 /// but note that Wikipedia 1-indexes them.
 pub fn nth_prime(n: usize) -> usize {
@@ -73,6 +74,7 @@ pub fn nth_prime(n: usize) -> usize {
 /// use the World Wide Web to learn more (this applies for the entire course).
 ///
 /// # **Restrictions**
+///
 /// **Please do not use the "return" keyword.**
 /// **Please write this function using recursion.**
 pub fn gcd(x: usize, y: usize) -> usize {
@@ -92,6 +94,15 @@ pub fn gcd(x: usize, y: usize) -> usize {
 /// assert_eq!(fib(4), 3);
 /// assert_eq!(fib(7), 13);
 /// ```
+///
+/// # Note
+///
+/// There are a few ways to implement this. However, one obvious way might time out on Gradescope...
+///
+/// The easiest way to do this is to either use iteration instead of recursion, or to use some sort
+/// of helper function (which you can define somewhere else in this file).
+///
+/// Feel free to look this up online if you're having trouble!
 pub fn fib(n: usize) -> usize {
     todo!()
 }
