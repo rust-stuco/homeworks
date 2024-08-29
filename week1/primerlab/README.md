@@ -10,7 +10,7 @@ There is a markdown-rendered version of this writeup on our website that we woul
 It is automatically generated using Rust's documentation tooling,
 and is very similar to Rust documentation that you will find in the wild!
 
-We recommend you make use of the [Rust Book](https:doc.rust-lang.org/book/title-page.html)
+We recommend you make use of the [Rust Book](https://doc.rust-lang.org/book/)
 chapters 1-3, as the "textbook" of this course. It's generally easy to follow along with,
 and would make handy reference material for the homeworks in this course.
 
