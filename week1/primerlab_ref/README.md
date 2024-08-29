@@ -28,9 +28,9 @@ To confirm, run:
 
 ```sh
 $ rustup --version
-rustup 1.26.0 (2023-11-14)
+rustup 1.27.1 (2023-11-14)
 $ cargo --version
-cargo 1.74.0 (ecb9851af 2023-10-18)
+cargo 1.80.1 (ecb9851af 2023-10-18)
 ```
 
 Make sure that both of those commands execute successfully,
