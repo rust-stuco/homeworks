@@ -42,7 +42,11 @@ def verify_output_errors(output):
 
 
 def verify_output_warnings(output):
-    return "warning" not in output and verify_output_errors(output)
+    return (
+        "diff" not in output
+        and "warning" not in output
+        and verify_output_errors(output)
+    )
 
 
 # Runs given shell command in a subprocess
@@ -63,7 +67,7 @@ class SummaryLabTest(unittest.TestCase):
         # for some reason it initializes before the os.chdir in run_tests.py
         os.chdir("/autograder/source/summarylab")
 
-        self.clippy_output = run_cmd("cargo clippy")
+        self.clippy_output = run_cmd("cargo clippy && cargo fmt --all -- --check")
         self.passed_clippy = verify_output_warnings(self.clippy_output)
 
     @number(0.0)
@@ -73,8 +77,9 @@ class SummaryLabTest(unittest.TestCase):
         print(self.clippy_output)
         if not self.passed_clippy:
             self.fail(
-                "Detected warnings and/or errors in cargo clippy output!\n"
-                "Please fix the lints above to receive credit for this assignment:\n"
+                "Detected warnings and/or errors in `cargo clippy` and `cargo fmt` output!\n"
+                "Please fix the lints above to receive credit for this assignment\n"
+                "Hint: run `cargo fmt` if you see a 'diff' warning, and `cargo clippy` otherwise!\n"
             )
 
     @cargo_test(1.0, 25)
