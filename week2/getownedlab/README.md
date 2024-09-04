@@ -1,7 +1,5 @@
 ### 98-008: Intro to the Rust Programming Language
 
-
-
 # Get Owned Lab
 
 The goal of this homework is to familiarize yourself with Rust's system of Ownership.
@@ -21,8 +19,6 @@ it might be good to take a small break and go over the borrow checker's
 Remember to always read the error messages that the compiler gives you, and as always,
 we encourage you to reach out for help!
 
-
-
 # Part 1: Slices
 
 Like the previous homework, you will modify 3 files that don't compile by
@@ -33,8 +29,6 @@ except the exercises are now specific to slices.
 When you are done, you should be able to run `cargo test` with all of the
 modules (`pub mod`s) in `src/slices/mod.rs` uncommented.
 
-
-
 # Part 2: Move Semantics
 
 Like the previous section, you will modify 5 files to make them compile.
@@ -43,8 +37,6 @@ The first 3 exercises involve the `Vec` type, which is an _owned_ type.
 For this homework, all you need to know is the `vec![]` macro and the `push` method on vectors.
 Recall the `vec![]` creates a new vector with elements, and
 `push` appends an element onto the end of a vector.
-
-
 
 # Part 3: Strings
 
@@ -67,10 +59,26 @@ Linked here is the documentation for
 There's a search bar at the top of the documentation that you can also make use of.
 Try searching for methods called `trim` there!
 
-
-
 # Submission
 
+### Formatting and Style
+
+The autograder will run these two commands on your code:
+
+```sh
+cargo clippy && cargo fmt --all -- --check
+```
+
+If the autograder detects any errors from the command above,
+you will not be able to receive any points. This may seem strict, but we have decided to follow
+standard best practices for Rust.
+
+By following [Rust's style guidelines](https://doc.rust-lang.org/stable/style-guide/),
+you ensure that anybody reading your code (who is familiar with Rust) will be
+able to easily navigate your code. This can help with diving into an unfamiliar code base,
+and it also eliminates the need for debate with others over style rules, saving time and energy.
+
+See the official [guidelines](https://doc.rust-lang.org/stable/style-guide/) for more information.
 
 ### Unix
 
@@ -86,15 +94,12 @@ Once you have `zip` installed, we will create the `handin.zip` automatically for
 
 Once you have the `handin.zip` file, submit it to Gradescope.
 
-
 ### Windows
 
 If you are on a windows system, you can zip the `src/` folder manually
 and upload that to Gradescope.
 
 Note that you don't _need_ to name it `handin.zip`, you can name it whatever you'd like.
-
-
 
 # Collaboration
 
@@ -105,8 +110,6 @@ All formal questions should be asked on Piazza. Try to discuss on Piazza so that
 other students can see your questions and answers as well!
 
 You can also discuss on Discord, but try to keep any technical questions on Piazza.
-
-
 
 # Feedback
 
