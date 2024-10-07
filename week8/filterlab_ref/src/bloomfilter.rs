@@ -56,7 +56,7 @@ impl<T: Hash> BloomFilter<T> {
     }
 
     /// Checks if an element might have been previously inserted into the bloom filter.
-    pub fn contains(&mut self, elem: &T) -> bool {
+    pub fn contains(&self, elem: &T) -> bool {
         let size = self.bitvector.size();
 
         let mut hasher = DefaultHasher::new();

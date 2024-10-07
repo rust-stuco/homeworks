@@ -32,7 +32,7 @@ impl BitVector {
     }
 
     /// Retrieves a bit at the given index, returning `true` if it is 1 and `false` if it is 0.
-    pub fn get(&mut self, index: usize) -> bool {
+    pub fn get(&self, index: usize) -> bool {
         let byte = index / 8;
         let bit = index % 8;
 
