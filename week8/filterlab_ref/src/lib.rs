@@ -2,6 +2,15 @@ use bitvec::prelude as bv;
 use std::hash::{DefaultHasher, Hash, Hasher};
 use std::marker::PhantomData;
 
+// TODO remove
+pub fn fibonacci(n: u64) -> u64 {
+    match n {
+        0 => 1,
+        1 => 1,
+        n => fibonacci(n-1) + fibonacci(n-2),
+    }
+}
+
 /// An approximate-membership query / probabilistic data structure that supports point lookups.
 pub struct BloomFilter<T> {
     /// The inner bitvector / bitset that keeps track of our hashed values.
