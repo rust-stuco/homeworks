@@ -10,5 +10,4 @@ pub fn fibonacci(n: u64) -> u64 {
 mod bitvector;
 mod bloomfilter;
 
-use bitvector::BitVector;
 pub use bloomfilter::BloomFilter;

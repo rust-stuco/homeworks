@@ -1,4 +1,4 @@
-use bitvec::prelude as bv;
+use crate::bitvector::BitVector;
 use std::hash::{DefaultHasher, Hash, Hasher};
 use std::marker::PhantomData;
 
@@ -8,7 +8,7 @@ pub struct BloomFilter<T> {
     /// The inner bitvector / bitset that keeps track of our hashed values.
     ///
     /// Note that you are allowed to implement your own bitvector if you would prefer!
-    bitvector: bv::BitVec,
+    bitvector: BitVector,
 
     /// Several statistics related to the bloom filter data structure.
     num_hashes: usize,
@@ -26,7 +26,7 @@ impl<T: Hash> BloomFilter<T> {
     /// the filter and a bound on the size of the `BloomFilter`'s bitvector.
     pub fn new(num_bits: usize, num_hashes: usize) -> Self {
         Self {
-            bitvector: bv::bitvec![0; num_bits],
+            bitvector: BitVector::new(num_bits),
             num_hashes,
             phantom: PhantomData,
         }
@@ -37,7 +37,7 @@ impl<T: Hash> BloomFilter<T> {
     /// Note that this implementation is purposefully slow. We would like you to think of ways to
     /// improve the performance!
     pub fn insert(&mut self, elem: &T) {
-        let size = self.bitvector.len();
+        let size = self.bitvector.size();
 
         let mut hasher = DefaultHasher::new();
 
@@ -57,7 +57,7 @@ impl<T: Hash> BloomFilter<T> {
 
     /// Checks if an element might have been previously inserted into the bloom filter.
     pub fn contains(&mut self, elem: &T) -> bool {
-        let size = self.bitvector.len();
+        let size = self.bitvector.size();
 
         let mut hasher = DefaultHasher::new();
 
@@ -71,7 +71,7 @@ impl<T: Hash> BloomFilter<T> {
             hash = hasher.finish();
 
             // Set the bit corresponding to this hash value.
-            if !self.bitvector[hash as usize % size] {
+            if !self.bitvector.get(hash as usize % size) {
                 return false;
             }
         }
