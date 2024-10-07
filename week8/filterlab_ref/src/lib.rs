@@ -7,11 +7,12 @@ pub fn fibonacci(n: u64) -> u64 {
     match n {
         0 => 1,
         1 => 1,
-        n => fibonacci(n-1) + fibonacci(n-2),
+        n => fibonacci(n - 1) + fibonacci(n - 2),
     }
 }
 
 /// An approximate-membership query / probabilistic data structure that supports point lookups.
+#[derive(Debug, Clone)]
 pub struct BloomFilter<T> {
     /// The inner bitvector / bitset that keeps track of our hashed values.
     ///
@@ -34,7 +35,7 @@ impl<T: Hash> BloomFilter<T> {
     /// the filter and a bound on the size of the `BloomFilter`'s bitvector.
     pub fn new(num_bits: usize, num_hashes: usize) -> Self {
         Self {
-            bitvector: bv::BitVec::with_capacity(num_bits),
+            bitvector: bv::bitvec![0; num_bits],
             num_hashes,
             phantom: PhantomData,
         }
@@ -69,7 +70,7 @@ impl<T: Hash> BloomFilter<T> {
 
         let mut hasher = DefaultHasher::new();
 
-        // Provide a starting "seed" for hashing.
+        // Get the starting "seed" for hashing.
         elem.hash(&mut hasher);
         let mut hash = hasher.finish();
 
@@ -79,7 +80,7 @@ impl<T: Hash> BloomFilter<T> {
             hash = hasher.finish();
 
             // Set the bit corresponding to this hash value.
-            if self.bitvector.get(hash as usize % size).is_none() {
+            if !self.bitvector[hash as usize % size] {
                 return false;
             }
         }
