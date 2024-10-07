@@ -27,9 +27,6 @@ so there is no shame if you can't complete it in under an hour.
 We may give partial credit to honest attempts at the end of the semester,
 even if you don't pass any test cases.
 
-Also, remember that there are plenty of points to be earned, and if you show up to every lecture,
-that is already `50%` of your grade (and you need `60%` to pass)!
-
 That being said, if you have the time,
 we still encourage you to try and pass all of the test cases for practice!
 
