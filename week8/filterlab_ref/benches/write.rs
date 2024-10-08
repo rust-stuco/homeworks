@@ -3,7 +3,9 @@ use filterlab_ref::BloomFilter;
 use rand::distributions::Standard;
 use rand::Rng;
 
+/// Approximately equal to 1 million.
 const MEGABYTE: usize = 1 << 20;
+/// Approximately equal to 1 billion.
 const GIGABYTE: usize = 1 << 30;
 
 /// This benchmark tests the performance of `BloomFilter::insert`.
@@ -21,7 +23,7 @@ pub fn bloom_filter_write_benchmark(c: &mut Criterion) {
     c.bench_function("write", |b| {
         b.iter(|| {
             bf.insert(black_box(&list[index % list.len()]));
-            index += 1;
+            index += 1; // If only we had a way to infinitely cycle through this iterator...
         })
     });
 

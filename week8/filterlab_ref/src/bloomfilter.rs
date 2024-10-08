@@ -56,6 +56,9 @@ impl<T: Hash> BloomFilter<T> {
     }
 
     /// Checks if an element might have been previously inserted into the bloom filter.
+    ///
+    /// Note that this implementation is purposefully slow. We would like you to think of ways to
+    /// improve the performance!
     pub fn contains(&self, elem: &T) -> bool {
         let size = self.bitvector.size();
 
