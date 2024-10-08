@@ -16,5 +16,5 @@ name = "read"
 harness = false
 
 [[bench]]
-name = "read_write"
+name = "write"
 harness = false
