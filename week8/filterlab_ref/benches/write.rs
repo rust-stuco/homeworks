@@ -3,10 +3,10 @@ use filterlab_ref::BloomFilter;
 use rand::distributions::Standard;
 use rand::Rng;
 
-/// Hack: this should be enough operations so that the bencher doesn't run out of work.
 const MEGABYTE: usize = 1 << 20;
 const GIGABYTE: usize = 1 << 30;
 
+/// This benchmark tests the performance of `BloomFilter::insert`.
 pub fn bloom_filter_write_benchmark(c: &mut Criterion) {
     // Generate 1 million random integers.
     let list: Vec<i32> = rand::thread_rng()
