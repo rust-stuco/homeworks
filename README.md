@@ -1,4 +1,4 @@
-# Rust StuCo S24 Homeworks
+# Rust StuCo Homeworks
 
 _All homeworks are due the week after they are assigned, unless you use late days._
 _You have 7 late days to use whenever you need._
