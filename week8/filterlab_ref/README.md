@@ -3,7 +3,6 @@
 _All homeworks are due the week after they are assigned, unless you use late days._
 _You have 7 late days to use whenever you need._
 
-
 # Filter Lab
 
 The goal of this homework is to tie together several of the things we have talked about over the
@@ -11,44 +10,43 @@ past few weeks. This includes code-related topics such as structs, standard coll
 generics, but we also want to make sure you understand some of the development tools that Rust
 provides, such as crates, modules, and libraries.
 
-For this lab, we will not be giving a handout. Instead, we would like you to create your own crate
-(without any of our starter code). If you have trouble setting things up, you can always reference
-the reference solution on our [GitHub](todo_link).
-
+For this lab, we will only give you testing and benchmarking code. You should see a `lib.rs` file in
+the `src/` directory. We want you to structure your code however you would like! If you are unsure,
+you can write all of your code in the `lib.rs` file and then move things out into different files as
+necessary. If you have trouble setting things up, you can always reference the reference solution on
+our [GitHub](https://github.com/rust-stuco/homeworks).
 
 # Bloom Filters
 
 For this homework, you will get to implement a bloom filter! Bloom filters are arguably one of the
-most important probabilistic data structures in all of computer systems (and perhaps even computer
-science).
+most important probabilistic data structures in all of Computer Systems (and perhaps even Computer
+Science).
 
 TODO(cjtsui):
-- How much explanation do we need to give for bloom filters, and where should we link for more
-details?
-- At a bare minimum explain the high level concepts
-- Since we require 15-122, we don't need to explain a bitvector, but we can still point them to
-online resources if they forgot
+
+-   How much explanation do we need to give for bloom filters, and where should we link for more
+    details?
+-   At a bare minimum explain the high level concepts
+-   Since we require 15-122, we don't need to explain a bitvector, but we can still point them to
+    online resources if they forgot
 
 One final thing to note before you get started: we are going to ask you to complete another
 programming assignment that will make use of the bloom filter you program for this assignment.
 In that future programming assignment, we will ask you to make the bloom filter thread-safe.
 In other words, a multi-threaded and safe-by-default implementation of a bloom filter!
 
-
 # Grading
 
 TODO(cjtsui):
-- Do we give a handout or do we ask them to copy and paste the extra files from github?
-- A handout means they need to copy and paste the files anyways
 
+-   Do we give a handout or do we ask them to copy and paste the extra files from github?
+-   A handout means they need to copy and paste the files anyways
 
 # Leaderboard
 
 TODO(cjtsui):
-- Actually implement the leaderboard on Gradescope
 
-
-
+-   Actually implement the leaderboard on Gradescope
 
 # Submission
 
