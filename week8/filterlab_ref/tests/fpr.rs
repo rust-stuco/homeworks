@@ -1,4 +1,12 @@
 use filterlab_ref::BloomFilter;
+use std::hash::{DefaultHasher, Hash, Hasher};
+
+/// Taken straight from https://doc.rust-lang.org/std/hash/index.html.
+fn calculate_hash<T: Hash>(t: &T) -> u64 {
+    let mut s = DefaultHasher::new();
+    t.hash(&mut s);
+    s.finish()
+}
 
 #[test]
 fn simple_test() {
@@ -71,12 +79,12 @@ fn random_medium_test() {
 
     // Instead of using constants, we use an additional hash step just to make things more exciting.
     for i in (1..=300).filter(|n| n % 3 == 0) {
-        let elem = fxhash::hash32(&i);
+        let elem = calculate_hash(&i);
         bf.insert(&elem);
     }
 
     for i in (1..=300).filter(|n| n % 3 == 0) {
-        let elem = fxhash::hash32(&i);
+        let elem = calculate_hash(&i);
         assert!(
             bf.contains(&elem),
             "Bloom filters must not have false negatives"
@@ -85,7 +93,7 @@ fn random_medium_test() {
 
     let mut false_positives = 0;
     for i in (1..300).filter(|n| n % 3 != 0) {
-        let elem = fxhash::hash32(&i);
+        let elem = calculate_hash(&i);
         if bf.contains(&elem) {
             false_positives += 1;
         }
@@ -109,12 +117,12 @@ fn random_large_test() {
 
     // Instead of using constants, we use an additional hash step just to make things more exciting.
     for i in 0..MEGABYTE {
-        let elem = fxhash::hash32(&i);
+        let elem = calculate_hash(&i);
         bf.insert(&elem);
     }
 
     for i in 0..MEGABYTE {
-        let elem = fxhash::hash32(&i);
+        let elem = calculate_hash(&i);
         assert!(
             bf.contains(&elem),
             "Bloom filters must not have false negatives"
@@ -123,7 +131,7 @@ fn random_large_test() {
 
     let mut false_positives = 0;
     for i in MEGABYTE..(2 * MEGABYTE) {
-        let elem = fxhash::hash32(&i);
+        let elem = calculate_hash(&i);
         if bf.contains(&elem) {
             false_positives += 1;
         }

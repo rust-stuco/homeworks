@@ -7,7 +7,6 @@ edition = "2021"
 
 [dev-dependencies]
 criterion = "0.5"
-fxhash = "0.2"
 rand = "0.8"
 zipf = "7.0"
 
