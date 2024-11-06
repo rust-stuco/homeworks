@@ -126,6 +126,26 @@ There are 4 integration tests located in the `tests` directory, and 2 benchmarks
 and perform roughly the same or better than our reference solution (by roughly the same, we mean
 it just has to do better than half the performance of our purposefully slow solution).
 
+On Gradescope, the write benchmark takes approximately 7 microseconds, and the read benchmark takes
+approximately 19 microseconds (as of 11/6/24).
+
+Ideally, your implementation should be faster since our reference solution is purposefully slow.
+However, we will be lenient with grading this, and as long as you made an effort to try and make it
+faster, you will likely get full credit.
+
+# Review
+
+This semester, we are going to attempt an in-person peer review session in our last lecture!
+
+Since you have almost full agency on how you design your bloom filter, we want to make sure you have
+the opportunity to not only look at someone else's implementation, but also have someone else review
+the code that you write and the decisions that you made.
+
+You will be able to gain extra credit points just by being present, and additional points based on
+the review you give and receive.
+
+More details to come soon!
+
 # Submission
 
 ### Formatting and Style
