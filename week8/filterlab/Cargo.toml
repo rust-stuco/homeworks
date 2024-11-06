@@ -1,0 +1,19 @@
+[package]
+name = "filterlab"
+version = "0.1.0"
+edition = "2021"
+
+[dependencies]
+
+[dev-dependencies]
+criterion = "0.5"
+rand = "0.8"
+zipf = "7.0"
+
+[[bench]]
+name = "read"
+harness = false
+
+[[bench]]
+name = "write"
+harness = false

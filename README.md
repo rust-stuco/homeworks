@@ -17,9 +17,9 @@ To confirm, run:
 
 ```sh
 $ rustup --version
-rustup 1.26.0 (2023-11-14)
+rustup 1.27.1 (54dd3d00f 2024-04-24)
 $ cargo --version
-cargo 1.74.0 (ecb9851af 2023-10-18)
+cargo 1.81.0 (2dbb1af80 2024-08-20)
 ```
 
 Make sure that both of those commands execute successfully,
