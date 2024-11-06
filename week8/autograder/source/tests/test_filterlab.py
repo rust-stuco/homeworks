@@ -82,6 +82,11 @@ class FilterLabTest(unittest.TestCase):
                 "Hint: run `cargo fmt` if you see a 'diff' warning, and `cargo clippy` otherwise!\n"
             )
 
+    @cargo_test(0.0, 0)
+    def test_build(self):
+        """Build everything up front"""
+        return "cargo test --no-run"
+
     @cargo_test(1.0, 20)
     def test_simple(self):
         """Testing simple test"""
@@ -102,12 +107,12 @@ class FilterLabTest(unittest.TestCase):
         """Testing random large test"""
         return "cargo test --release -- --exact random_large_test"
 
-    @cargo_test(5.0, 10)
+    @cargo_test(5.0, 0)
     def test_bench_read(self):
-        """Benchmarking writes"""
-        return "cargo bench --bench write"
+        """Benchmarking writes (manually graded)"""
+        return "cargo bench --bench write --quiet"
 
-    @cargo_test(6.0, 10)
+    @cargo_test(6.0, 0)
     def test_bench_write(self):
-        """Benchmarking reads"""
-        return "cargo bench --bench read"
+        """Benchmarking reads (manually graded)"""
+        return "cargo bench --bench read --quiet"
