@@ -1,5 +1,5 @@
 use criterion::{black_box, criterion_group, criterion_main, Criterion};
-use filterlab_ref::BloomFilter;
+use filterlab::BloomFilter;
 use rand::distributions::Standard;
 use rand::Rng;
 
