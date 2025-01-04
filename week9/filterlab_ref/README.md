@@ -122,9 +122,8 @@ relying on something else to write code for you.
 # Grading
 
 There are 4 integration tests located in the `tests` directory, and 2 benchmarks located in the
-`benches` directory. To get full credit on this assignment, you must pass all 4 integration tests
-and perform roughly the same or better than our reference solution (by roughly the same, we mean
-it just has to do better than half the performance of our purposefully slow solution).
+`benches` directory. You should aim to pass all 4 integration tests and perform roughly the same or
+better than our reference solution.
 
 On Gradescope, the write benchmark takes approximately 7 microseconds, and the read benchmark takes
 approximately 19 microseconds (as of 11/6/24).
@@ -133,18 +132,17 @@ Ideally, your implementation should be faster since our reference solution is pu
 However, we will be lenient with grading this, and as long as you made an effort to try and make it
 faster, you will likely get full credit.
 
-# Review
+We will be manually grading your submission. We will be looking at he robustness of your code (does
+your code run without modifications), correctness of your feature, the quality of your tests,
+and general style (documentation and comments).
 
-This semester, we are going to attempt an in-person peer review session in our last lecture!
+The way we grade this assignment will be different from almost every Computer Science course here at
+CMU, where grading is mainly based on an autograder, and maybe a handful of points deductions for
+style. Instead, we will be looking at your code wholistically, judging it based on how people expect
+you to write code _outside_ of school.
 
-Since you have almost full agency on how you design your bloom filter, we want to make sure you have
-the opportunity to not only look at someone else's implementation, but also have someone else review
-the code that you write and the decisions that you made.
-
-You will be able to gain extra credit points just by being present, and additional points based on
-the review you give and receive.
-
-More details to come soon!
+This practice is taken from CMU's Operating Systems course,
+[15-410/615](https://www.cs.cmu.edu/~410/).
 
 # Submission
 
