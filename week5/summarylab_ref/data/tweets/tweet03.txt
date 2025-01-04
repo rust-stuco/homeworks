@@ -1,5 +1,0 @@
-@BenOwadFanAccount
-"@FerrisTheCrab @1CoolDavid Great points!
-How about we explore trait bounds next? They play a crucial role in Rust's type system.
-#RustProgramming"
-reply

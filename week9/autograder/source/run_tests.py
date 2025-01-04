@@ -8,7 +8,7 @@ if __name__ == "__main__":
     suite = unittest.defaultTestLoader.discover("tests")
 
     # All cargo tests need to run with the test crate as the root
-    os.chdir("/autograder/source/iterlab")
+    os.chdir("/autograder/source/filterlab")
 
     # Gradescope needs json results written to this exact path
     with open("/autograder/results/results.json", "w") as f:
