@@ -1,4 +1,0 @@
-Subject: Motto to live by
-From: Connor
-To: Ben
-Failure is not an Option, it's a Result<T>!
