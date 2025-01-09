@@ -1,6 +1,7 @@
 #![doc = include_str!("../README.md")]
 
+mod card;
 pub use card::Card;
 
-pub mod card;
-pub mod poker;
+#[cfg(test)]
+mod tests;

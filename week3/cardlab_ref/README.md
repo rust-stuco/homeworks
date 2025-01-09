@@ -131,6 +131,9 @@ talk more about traits in a few weeks, but for now just treat these methods as n
 methods. As you can probably guess, `eq` implements the `==` operator and `cmp` implements the
 remaining comparison operators (`<`, `<=`, `>=`, `>`).
 
+Once you finish implementing these 5 methods (and pass all of the unit tests in `src/tests.rs`), you
+are done!
+
 # Submission
 
 ### Formatting and Style
