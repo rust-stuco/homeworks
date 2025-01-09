@@ -1,4 +1,10 @@
-//! TODO module-level docs and writeup.
+//! This module contains the definition and implementation of [`Card`], which represents a card in
+//! a standard deck of 52 cards. [`Card`]s are uniquely identified by their rank (which can be the
+//! numbers 2-10 or Jack, Queen, King, or Ace) and their suit (which can be Diamond, Club, Heart,
+//! or Spade).
+//!
+//! Note to students: we would like to emphasize that you _do not_ have to represent / model playing
+//! cards in the same way that we do.
 
 /// Represents a standard playing card with a suit and a rank.
 ///
@@ -10,7 +16,7 @@
 /// # Examples
 ///
 /// ```
-/// # use cardlab_ref::card::Card;
+/// # use cardlab_ref::Card;
 /// #
 /// let ace_spades = Card::new("spade", 14);
 /// let king_spades = Card::new("spade", 13);
@@ -61,7 +67,7 @@ impl Card {
     /// # Examples
     ///
     /// ```
-    /// # use cardlab_ref::card::Card;
+    /// # use cardlab_ref::Card;
     /// #
     /// let ace_of_spades = Card::new("spade", 14);
     /// let two_of_hearts = Card::new("heart", 2);
@@ -104,7 +110,7 @@ impl Card {
     /// # Examples
     ///
     /// ```
-    /// # use cardlab_ref::card::Card;
+    /// # use cardlab_ref::Card;
     /// #
     /// let card = Card::new("club", 3);
     /// assert_eq!(card.suit_name(), "club");
@@ -124,169 +130,13 @@ impl Card {
     /// # Examples
     ///
     /// ```
-    /// # use cardlab_ref::card::Card;
+    /// # use cardlab_ref::Card;
     /// #
     /// let card = Card::new("club", 3);
-    /// assert_eq!(card.rank_number(), 3);
+    /// assert_eq!(card.rank_value(), 3);
     /// ```
-    pub fn rank_number(&self) -> u8 {
+    pub fn rank_value(&self) -> u8 {
         self.rank.rank_value()
-    }
-}
-
-/// Represents the four possible suits in a standard deck of playing cards.
-///
-/// The suits are ordered in the traditional manner:
-/// - Diamonds (lowest)
-/// - Clubs
-/// - Hearts
-/// - Spades (highest)
-///
-/// # Examples
-///
-/// ```
-/// # use cardlab_ref::card::Card;
-/// #
-/// let spade_card = Card::new("spade", 2);
-/// let diamond_card = Card::new("diamond", 2);
-/// assert!(spade_card > diamond_card);
-/// ```
-enum Suit {
-    /// The Diamond suit, typically represented by a red ♦ symbol.
-    Diamond,
-    /// The Club suit, typically represented by a black ♣ symbol.
-    Club,
-    /// The Heart suit, typically represented by a red ♥ symbol.
-    Heart,
-    /// The Spade suit, typically represented by a black ♠ symbol.
-    Spade,
-}
-
-impl Suit {
-    /// Gives unique values to the suits to make ordering of suits easier.
-    fn suit_value(&self) -> u8 {
-        match self {
-            Self::Diamond => 0,
-            Self::Club => 1,
-            Self::Heart => 2,
-            Self::Spade => 3,
-        }
-    }
-}
-
-/// Represents the rank of a playing card, which can be either a number card (2-10) or a face card
-/// (Ace, King, Queen, Jack).
-///
-/// # Examples
-///
-/// ```
-/// # use cardlab_ref::card::Card;
-/// #
-/// let five_spades = Card::new("spade", 5);
-/// let seven_spades = Card::new("spade", 7);
-/// assert!(seven_spades > five_spades);
-///
-/// let queen_hearts = Card::new("heart", 12);
-/// let seven_clubs = Card::new("club", 7);
-/// assert!(queen_hearts > seven_clubs);
-///
-/// let king_diamonds = Card::new("diamond", 13);
-/// let ace_clubs = Card::new("club", 14);
-/// assert!(ace_clubs > king_diamonds);
-/// ```
-enum Rank {
-    /// A number card (2-10).
-    Number(Number),
-    /// A face card (Ace, King, Queen, Jack).
-    Face(Face),
-}
-
-impl Rank {
-    /// Converts a rank to its numeric value (2-14), where face cards are 11-14.
-    fn rank_value(&self) -> u8 {
-        match self {
-            Self::Number(number) => number.number_value(),
-            Self::Face(face) => face.face_value(),
-        }
-    }
-}
-
-/// Represents the possible numbers for cards in a deck.
-///
-/// # Examples
-///
-/// ```
-/// # use cardlab_ref::card::Card;
-/// #
-/// let two_hearts = Card::new("heart", 2);
-/// let seven_diamonds = Card::new("diamond", 7);
-/// assert!(two_hearts < seven_diamonds);
-/// ```
-enum Number {
-    Two,
-    Three,
-    Four,
-    Five,
-    Six,
-    Seven,
-    Eight,
-    Nine,
-    Ten,
-}
-
-impl Number {
-    fn number_value(&self) -> u8 {
-        match self {
-            Self::Two => 2,
-            Self::Three => 3,
-            Self::Four => 4,
-            Self::Five => 5,
-            Self::Six => 6,
-            Self::Seven => 7,
-            Self::Eight => 8,
-            Self::Nine => 9,
-            Self::Ten => 10,
-        }
-    }
-}
-
-/// Represents the face cards in a deck, including Ace.
-///
-/// Note that even though Ace could be considered a number card in some games, we're grouping it
-/// with the face cards for this assignment.
-///
-/// # Examples
-///
-/// ```
-/// # use cardlab_ref::card::Card;
-/// #
-/// let queen_hearts = Card::new("heart", 12);
-/// let jack_clubs = Card::new("club", 11);
-/// assert!(queen_hearts > jack_clubs);
-///
-/// let ace_spades = Card::new("spade", 14);
-/// let king_diamonds = Card::new("diamond", 13);
-/// assert!(ace_spades > king_diamonds);
-/// ```
-enum Face {
-    /// The Jack card, traditionally representing a royal servant or knight.
-    Jack,
-    /// The Queen card, traditionally representing a female royal figure.
-    Queen,
-    /// The King card, traditionally representing a male royal figure.
-    King,
-    /// The Ace card, which often has special rules in many card games.
-    Ace,
-}
-
-impl Face {
-    fn face_value(&self) -> u8 {
-        match self {
-            Self::Jack => 11,
-            Self::Queen => 12,
-            Self::King => 13,
-            Self::Ace => 14,
-        }
     }
 }
 
@@ -324,6 +174,164 @@ impl Ord for Card {
 impl PartialOrd for Card {
     fn partial_cmp(&self, other: &Self) -> Option<std::cmp::Ordering> {
         Some(self.cmp(other))
+    }
+}
+
+/// Represents the four possible suits in a standard deck of playing cards.
+///
+/// The suits are ordered in the traditional manner:
+/// - Diamonds (lowest)
+/// - Clubs
+/// - Hearts
+/// - Spades (highest)
+///
+/// # Examples
+///
+/// ```
+/// # use cardlab_ref::Card;
+/// #
+/// let spade_card = Card::new("spade", 2);
+/// let diamond_card = Card::new("diamond", 2);
+/// assert!(spade_card > diamond_card);
+/// ```
+enum Suit {
+    /// The Diamond suit, typically represented by a red ♦ symbol.
+    Diamond,
+    /// The Club suit, typically represented by a black ♣ symbol.
+    Club,
+    /// The Heart suit, typically represented by a red ♥ symbol.
+    Heart,
+    /// The Spade suit, typically represented by a black ♠ symbol.
+    Spade,
+}
+
+impl Suit {
+    /// Gives unique values to the suits to make ordering of suits easier.
+    fn suit_value(&self) -> u8 {
+        match self {
+            Self::Diamond => 0,
+            Self::Club => 1,
+            Self::Heart => 2,
+            Self::Spade => 3,
+        }
+    }
+}
+
+/// Represents the rank of a playing card, which can be either a number card (2-10) or a face card
+/// (Ace, King, Queen, Jack).
+///
+/// # Examples
+///
+/// ```
+/// # use cardlab_ref::Card;
+/// #
+/// let five_spades = Card::new("spade", 5);
+/// let seven_spades = Card::new("spade", 7);
+/// assert!(seven_spades > five_spades);
+///
+/// let queen_hearts = Card::new("heart", 12);
+/// let seven_clubs = Card::new("club", 7);
+/// assert!(queen_hearts > seven_clubs);
+///
+/// let king_diamonds = Card::new("diamond", 13);
+/// let ace_clubs = Card::new("club", 14);
+/// assert!(ace_clubs > king_diamonds);
+/// ```
+enum Rank {
+    /// A number card (2-10).
+    Number(Number),
+    /// A face card (Ace, King, Queen, Jack).
+    Face(Face),
+}
+
+impl Rank {
+    /// Converts a rank to its numeric value (2-14), where the face cards are 11-14.
+    fn rank_value(&self) -> u8 {
+        match self {
+            Self::Number(number) => number.number_value(),
+            Self::Face(face) => face.face_value(),
+        }
+    }
+}
+
+/// Represents the possible numbers for cards in a deck.
+///
+/// # Examples
+///
+/// ```
+/// # use cardlab_ref::Card;
+/// #
+/// let two_hearts = Card::new("heart", 2);
+/// let seven_diamonds = Card::new("diamond", 7);
+/// assert!(two_hearts < seven_diamonds);
+/// ```
+enum Number {
+    Two,
+    Three,
+    Four,
+    Five,
+    Six,
+    Seven,
+    Eight,
+    Nine,
+    Ten,
+}
+
+impl Number {
+    // Converts a `Number` into a proper integer.
+    fn number_value(&self) -> u8 {
+        match self {
+            Self::Two => 2,
+            Self::Three => 3,
+            Self::Four => 4,
+            Self::Five => 5,
+            Self::Six => 6,
+            Self::Seven => 7,
+            Self::Eight => 8,
+            Self::Nine => 9,
+            Self::Ten => 10,
+        }
+    }
+}
+
+/// Represents the face cards in a deck, including Ace.
+///
+/// Note that even though Ace could be considered a number card in some games, we're grouping it
+/// with the face cards for this assignment.
+///
+/// # Examples
+///
+/// ```
+/// # use cardlab_ref::Card;
+/// #
+/// let queen_hearts = Card::new("heart", 12);
+/// let jack_clubs = Card::new("club", 11);
+/// assert!(queen_hearts > jack_clubs);
+///
+/// let ace_spades = Card::new("spade", 14);
+/// let king_diamonds = Card::new("diamond", 13);
+/// assert!(ace_spades > king_diamonds);
+/// ```
+enum Face {
+    /// The Jack card, traditionally representing a royal servant or knight.
+    Jack,
+    /// The Queen card, traditionally representing a female royal figure.
+    Queen,
+    /// The King card, traditionally representing a male royal figure.
+    King,
+    /// The Ace card, which often has special rules in many card games.
+    Ace,
+}
+
+impl Face {
+    // Converts a `Face` value to an integer from 11-14.
+    fn face_value(&self) -> u8 {
+        match self {
+            Self::Jack => 11,
+            Self::Queen => 12,
+            Self::King => 13,
+            Self::Ace => 14,
+        }
     }
 }
 
