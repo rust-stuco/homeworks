@@ -18,7 +18,7 @@ Make sure you have Rust installed. You should have installed Rust through `rustu
 $ rustup --version
 rustup 1.27.1 (54dd3d00f 2024-04-24)
 $ cargo --version
-cargo 1.83.0 (5ffbef321 2024-10-29)
+cargo 1.84.0 (66221abde 2024-11-19)
 ```
 
 Make sure that both of those commands execute successfully, and that they have relatively recent
