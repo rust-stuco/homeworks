@@ -8,7 +8,7 @@ fn main() {
             .arg("src/")
             .arg("Cargo.toml")
             .output()
-            .expect("Unable to zip handin files");
+            .expect("\nError: Unable to zip handin files. Either the zip executable is not installed on this computer, the zip binary is not on your PATH, or something went very wrong with zip. Please contact the staff for help!\n\n");
     }
 
     println!("cargo:rerun-if-changed=handin.zip");
