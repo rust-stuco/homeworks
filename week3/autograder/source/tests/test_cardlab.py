@@ -82,7 +82,33 @@ class CardLabTest(unittest.TestCase):
                 "Hint: run `cargo fmt` if you see a 'diff' warning, and `cargo clippy` otherwise!\n"
             )
 
-    @cargo_test(1.0, 100)
-    def test_all_tests(self):
-        """Testing all tests"""
-        return "cargo test"
+    @cargo_test(1.0, 10)
+    def test_simple(self):
+        """Testing simple card comparisons"""
+        return "cargo test test_simple_card_comparisons"
+
+    @cargo_test(2.0, 10)
+    def test_suit(self):
+        """Testing suit comparisons"""
+        return "cargo test test_suit_comparisons"
+
+    @cargo_test(3.0, 15)
+    def test_equality(self):
+        """Testing card equality"""
+        return "cargo test test_equality"
+
+    @cargo_test(4.0, 15)
+    def test_sort_easy(self):
+        """Testing easy deck sorting"""
+        return "cargo test test_deck_sorting_easy"
+
+    @cargo_test(5.0, 20)
+    def test_sort_medium(self):
+        """Testing medium deck sorting"""
+        return "cargo test test_deck_sorting_medium"
+
+    @cargo_test(6.0, 30)
+    def test_sort_full(self):
+        """Testing full deck sorting"""
+        return "cargo test test_full_deck_sorting"
+
