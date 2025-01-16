@@ -92,17 +92,17 @@ class CardLabTest(unittest.TestCase):
         """Testing suit comparisons"""
         return "cargo test test_suit_comparisons"
 
-    @cargo_test(3.0, 15)
+    @cargo_test(3.0, 10)
     def test_equality(self):
         """Testing card equality"""
         return "cargo test test_equality"
 
-    @cargo_test(4.0, 15)
+    @cargo_test(4.0, 10)
     def test_sort_easy(self):
         """Testing easy deck sorting"""
         return "cargo test test_deck_sorting_easy"
 
-    @cargo_test(5.0, 20)
+    @cargo_test(5.0, 15)
     def test_sort_medium(self):
         """Testing medium deck sorting"""
         return "cargo test test_deck_sorting_medium"
@@ -111,4 +111,9 @@ class CardLabTest(unittest.TestCase):
     def test_sort_full(self):
         """Testing full deck sorting"""
         return "cargo test test_full_deck_sorting"
+
+    @cargo_test(7.0, 15)
+    def test_doc(self):
+        """Testing documentation tests"""
+        return "cargo test --doc"
 
