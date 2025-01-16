@@ -5,6 +5,13 @@
 //!
 //! Note to students: we would like to emphasize that you _do not_ have to represent / model playing
 //! cards in the same way that we do.
+//!
+//! Additionally, we are aware that there is a _very easy_ way to implement the comparison traits
+//! for all of the relevant subtypes (`Rank`, `Suit`, `Number`, etc.), and we have purposefully not
+//! implemented them in that way in the reference solution.
+//!
+//! If you would like to use derived traits, you are allowed to. However, we felt that it would be
+//! more instructive to manually write out the implementations in the reference solution.
 
 /// Represents a standard playing card with a suit and a rank.
 ///

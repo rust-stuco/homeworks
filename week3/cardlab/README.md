@@ -104,7 +104,7 @@ enum Rank {
 }
 ```
 
-Modeling `Suit` is rather straighforward and obvious, but modeling `Rank` is a little more
+Modeling `Suit` is rather straightforward and obvious, but modeling `Rank` is a little more
 complicated. Because a card can have both a number as its value and as well as a face, we choose to
 represent the `Rank` type as an enum (sum type) between a `Number` type and a `Face` type.
 
@@ -130,6 +130,11 @@ Note that the last two methods (`eq` and `cmp`) are methods on standard library 
 talk more about traits in a few weeks, but for now just treat these methods as normal implementation
 methods. As you can probably guess, `eq` implements the `==` operator and `cmp` implements the
 remaining comparison operators (`<`, `<=`, `>=`, `>`).
+
+_We are aware that there is a very easy way to implement the comparison traits with derived traits._
+You do not have to manually implement all of the comparison traits yourself, but we believe that it
+is instructive to manually write out the implementations so that you fully understand the code you
+are writing.
 
 Once you finish implementing these 5 methods (and pass all of the unit tests in `src/tests.rs`), you
 are done!

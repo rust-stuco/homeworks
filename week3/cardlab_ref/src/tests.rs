@@ -52,12 +52,12 @@ fn test_deck_sorting_easy() {
 
     let expected = [
         Card::new("diamond", 2),
-        Card::new("spade", 2), 
+        Card::new("spade", 2),
         Card::new("heart", 7),
         Card::new("club", 10),
         Card::new("diamond", 14),
         Card::new("club", 14),
-        Card::new("heart", 14), 
+        Card::new("heart", 14),
         Card::new("spade", 14),
     ];
 
@@ -76,7 +76,7 @@ fn test_deck_sorting_medium() {
         Card::new("heart", 14),
         Card::new("club", 14),
         Card::new("diamond", 8),
-        Card::new("heart", 2), 
+        Card::new("heart", 2),
         Card::new("club", 3),
         Card::new("spade", 11),
         Card::new("diamond", 13),
@@ -137,10 +137,10 @@ fn test_full_deck_sorting() {
     let mut prev_card = &cards[0];
     assert!(prev_card == &Card::new("diamond", 2));
     assert!(cards[51] == Card::new("spade", 14));
-    
+
     for card in cards.iter().skip(1) {
         assert!(card >= prev_card);
-        
+
         if card.suit_name() == "club" {
             assert_eq!(prev_card.suit_name(), "diamond");
             assert_eq!(prev_card.rank_value(), card.rank_value());
