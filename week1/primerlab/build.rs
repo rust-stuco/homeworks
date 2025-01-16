@@ -7,7 +7,7 @@ fn main() {
             .arg("handin.zip")
             .arg("src/")
             .output()
-            .expect("\nError: Unable to zip handin files. Either zip is not installed on this computer, or something went very wrong with zip. If zip is already installed , please contact the staff for help!\n\n");
+            .expect("\nError: Unable to zip handin files. Either the zip executable is not installed on this computer, the zip binary is not on your PATH, or something went very wrong with zip. Please contact the staff for help!\n\n");
     }
 
     println!("cargo:rerun-if-changed=handin.zip");
