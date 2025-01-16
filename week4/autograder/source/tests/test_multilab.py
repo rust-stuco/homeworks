@@ -4,7 +4,7 @@ from functools import wraps
 from gradescope_utils.autograder_utils.decorators import weight, number, partial_credit
 
 
-# Main decorator for gradescope tests
+# Main decorator for Gradescope tests.
 def cargo_test(test_num, weight):
     def cargo_test_wrapper(func):
         @number(test_num)
@@ -20,13 +20,13 @@ def cargo_test(test_num, weight):
             else:
                 print("cargo clippy succeeded, moving on to tests:\n")
 
-            # Run the command and show student the output
+            # Run the command and show student the output.
             cmd = func(self)
             print(f"Running `{cmd}`...\n")
             output = run_cmd(cmd)
             print(output)
 
-            # Check for any errors in output
+            # Check for any errors in output.
             if not verify_output_errors(output):
                 self.fail(
                     "Error detected! Please review the above to see what went wrong."
@@ -49,12 +49,12 @@ def verify_output_warnings(output):
     )
 
 
-# Runs given shell command in a subprocess
+# Runs given shell command in a subprocess.
 def run_cmd(cmd):
     test = subprocess.Popen(
         cmd, shell=True, stdout=subprocess.PIPE, stderr=subprocess.STDOUT
     )
-    # Capture the output of the subprocess command
+    # Capture the output of the subprocess command.
     output = test.stdout.read().strip().lower().decode()
     return output
 
@@ -63,8 +63,8 @@ class MultiLabTest(unittest.TestCase):
     def __init__(self, *args, **kwargs):
         super().__init__(*args, **kwargs)
 
-        # Need to cd into crate root here,
-        # for some reason it initializes before the os.chdir in run_tests.py
+        # Need to cd into crate root here, for some reason it initializes before the `os.chdir` in
+        # `run_tests.py`
         os.chdir("/autograder/source/multilab")
 
         self.clippy_output = run_cmd("cargo clippy && cargo fmt --all -- --check")
