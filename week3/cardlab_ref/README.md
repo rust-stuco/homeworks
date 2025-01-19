@@ -30,7 +30,7 @@ In the file `src/card.rs`, you will see a unit struct [`Card`] type, as well as 
 implementation blocks. In this first part, you will model the structure of this [`Card`] type.
 
 There are many "correct" ways to do this, some more favorable than others. For example, you _could_
-model a [`Card`] like this:
+model a `Card` like this:
 
 ```rust,ignore
 pub struct Card {
@@ -47,8 +47,6 @@ less than "king of spades"? It is certainly possible, but it is probably tedious
 And what happens if someone writes `Card::new(String::from("fourteen of gold"))`? Now you also have
 to handle these edge cases.
 
-<br>
-
 What if we instead assigned a unique integer to each card? Since we only have 52 cards, this should
 be very easy.
 
@@ -58,12 +56,15 @@ pub struct Card {
 }
 ```
 
-However, how would we assign integers to specific cards? If we say that the integer 2
-represents the two of diamonds, and the integer 3 represents the three of diamonds, what should
-represent the two of hearts? Of clubs? Again, this is possible, but it might be painful to implement
-and error prone.
+However, how would we assign integers to specific cards? If we say that the integer 2 represents the
+two of diamonds, and the integer 3 represents the three of diamonds, what should represent the two
+of hearts? Of clubs? And even if you did figure out how to represent them, if someone using your
+card type chooses any value other than the 52 you choose for your `Card` type, you have now have to
+handle those errors.
 
-<br>
+Again, using a single integer is possible, but it might be painful to implement and error prone.
+
+## Suggested Modeling
 
 For this lab, we will show you a model for [`Card`] that _eliminates the possibility of incorrect
 state_. More specifically, we will model the [`Card`] in such a way that it is impossible to create
@@ -81,8 +82,8 @@ pub struct Card {
 }
 ```
 
-Since playing cards are uniquely identified by the pair of `(Rank, Suit)`, we will model our code in
-the same way. `Rank` and `Suit` can be enums:
+Since playing cards are uniquely identified by the pair of `(Rank, Suit)`, we can model our code in
+the same way. `Rank` and `Suit` can also be enums:
 
 ```rust,ignore
 enum Suit {
@@ -131,10 +132,13 @@ talk more about traits in a few weeks, but for now just treat these methods as n
 methods. As you can probably guess, `eq` implements the `==` operator and `cmp` implements the
 remaining comparison operators (`<`, `<=`, `>=`, `>`).
 
-_We are aware that there is a very easy way to implement the comparison traits with derived traits._
-You do not have to manually implement all of the comparison traits yourself, but we believe that it
-is instructive to manually write out the implementations so that you fully understand the code you
-are writing.
+_We are aware that there is a very easy way to implement the comparison traits with derived traits.
+You technically do not have to manually implement all of the comparison traits yourself._
+
+_However, we believe that it is instructive to manually write out the implementations so that you
+**fully understand the code you are writing**. If you **do** know how to use derived traits, you are
+free to use them, but we ask that you make sure you understand **exactly** what those macros are
+doing._
 
 Once you finish implementing these 5 methods (and pass all of the unit tests in `src/tests.rs`), you
 are done!
