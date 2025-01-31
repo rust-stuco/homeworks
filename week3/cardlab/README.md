@@ -132,6 +132,14 @@ talk more about traits in a few weeks, but for now just treat these methods as n
 methods. As you can probably guess, `eq` implements the `==` operator and `cmp` implements the
 remaining comparison operators (`<`, `<=`, `>=`, `>`).
 
+If you go with our modeling above (with the `Suit` and `Rank` types), you will find that you want to
+compare two `Rank` types together. You can copy and paste the `impl <Trait> for Card` blocks and
+replace the `Card` for `Rank` / `Suit` and implement those methods to allow comparison for the types
+you have defined.
+
+In other words, you'll probably want to implement `impl PartialEq for Rank`, `impl Ord for Rank`,
+and a few more things. Ask on Piazza or consult the reference solution if you are confused!
+
 _We are aware that there is a very easy way to implement the comparison traits with derived traits.
 You technically do not have to manually implement all of the comparison traits yourself._
 
