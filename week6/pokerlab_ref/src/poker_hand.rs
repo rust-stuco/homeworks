@@ -3,11 +3,7 @@
 use crate::Card;
 
 /// TODO docs.
-pub struct PokerHand {
-    cards: [Card; 5],
-}
-
-pub enum HandRank {
+pub enum PokerHand {
     HighCard,
     OnePair,
     TwoPair,
@@ -19,9 +15,15 @@ pub enum HandRank {
     StraightFlush,
 }
 
+impl PokerHand {
+    pub fn new(cards: [Card; 5]) -> Self {
+        todo!("implement me")
+    }
+}
+
 impl PartialEq for PokerHand {
     fn eq(&self, other: &Self) -> bool {
-        todo!("")
+        todo!("implement me")
     }
 }
 

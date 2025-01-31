@@ -3,6 +3,9 @@
 mod card;
 pub use card::Card;
 
+mod deck;
+pub use deck::Deck;
+
 mod poker_hand;
 pub use poker_hand::PokerHand;
 
