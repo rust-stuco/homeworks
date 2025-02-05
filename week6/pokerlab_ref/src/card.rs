@@ -4,15 +4,23 @@
 //! or Spade).
 //!
 //! Note to students: You are allowed to modify this file and replace the implementation with
-//! something similar to your own from Card Lab. However, make sure you understand that the function
-//! signatures are different, and that the `Rank` and `Suit` types are now public!
+//! something similar to your own implementation in Card Lab.
+//!
+//! However, make sure you understand that the function signatures are different, and that the
+//! `Rank` and `Suit` types are now public! Additionally, we now no longer make a distinction
+//! between suits. For example, we will say that the Ace of Spades has equal value to the Ace of
+//! Diamonds.
+
+use derivative::Derivative;
 
 /// Represents a standard playing card with a suit and a rank.
 ///
 /// Each card consists of one of the four suits (Diamond, Club, Heart, Spade), as well as a rank
 /// that can be either a number card (2-10) or a face card (Jack, Queen, King, Ace).
 ///
-/// This type implements the traits [`PartialEq`], [`Eq`], [`PartialOrd`], and [`Ord`].
+/// This type implements the traits [`PartialEq`], [`Eq`], [`PartialOrd`], and [`Ord`]. Note that
+/// `Card` only considers the `Rank` of the `Card` when doing comparisons, so the Three of Clubs is
+/// considered to have equal value to the Three of Hearts.
 ///
 /// # Examples
 ///
@@ -31,16 +39,18 @@
 /// assert!(king_spades > ten_spades);
 /// assert!(ten_spades > five_spades);
 ///
-/// // Compare cards of same rank but different suit.
-/// assert!(ace_spades > ace_hearts);
-/// assert!(ace_hearts > ace_clubs);
+/// // Compare cards with same rank
+/// assert_eq!(ace_spades, ace_hearts);
+/// assert_eq!(ace_hearts, ace_clubs);
 ///
 /// // Test equality between identical cards.
-/// assert!(ace_spades == Card::new(Suit::Spade, Rank::Face(Face::Ace)));
+/// assert_eq!(ace_spades, Card::new(Suit::Spade, Rank::Face(Face::Ace)));
 /// ```
-#[derive(Debug, Clone, Copy, PartialEq, Eq, PartialOrd, Ord)]
+#[derive(Debug, Clone, Copy, Derivative)]
+#[derivative(PartialEq, Eq, PartialOrd, Ord)]
 pub struct Card {
     rank: Rank,
+    #[derivative(PartialEq = "ignore", PartialOrd = "ignore", Ord = "ignore")]
     suit: Suit,
 }
 
@@ -73,10 +83,10 @@ impl Card {
     /// # use pokerlab_ref::card::{Card, Suit, Rank, Number};
     /// #
     /// let card = Card::new(Suit::Club, Rank::Number(Number::Three));
-    /// assert_eq!(&Suit::Club, card.suit());
+    /// assert_eq!(Suit::Club, card.suit());
     /// ```
-    pub fn suit(&self) -> &Suit {
-        &self.suit
+    pub fn suit(&self) -> Suit {
+        self.suit
     }
 
     /// Returns a reference to this card's rank.
@@ -87,10 +97,10 @@ impl Card {
     /// # use pokerlab_ref::card::{Card, Suit, Rank, Number};
     /// #
     /// let card = Card::new(Suit::Club, Rank::Number(Number::Three));
-    /// assert_eq!(&Rank::Number(Number::Three), card.rank());
+    /// assert_eq!(Rank::Number(Number::Three), card.rank());
     /// ```
-    pub fn rank(&self) -> &Rank {
-        &self.rank
+    pub fn rank(&self) -> Rank {
+        self.rank
     }
 }
 
@@ -109,9 +119,9 @@ impl Card {
 /// #
 /// let spade_card = Card::new(Suit::Spade, Rank::Number(Number::Two));
 /// let diamond_card = Card::new(Suit::Diamond, Rank::Number(Number::Two));
-/// assert!(spade_card > diamond_card);
+/// assert_eq!(spade_card, diamond_card);
 /// ```
-#[derive(Debug, Clone, Copy, PartialEq, Eq, PartialOrd, Ord)]
+#[derive(Debug, Clone, Copy, PartialEq, Eq)]
 pub enum Suit {
     /// The Diamond suit, typically represented by a red ♦ symbol.
     Diamond,
@@ -169,7 +179,7 @@ impl Rank {
 /// #
 /// let two_hearts = Card::new(Suit::Heart, Rank::Number(Number::Two));
 /// let seven_diamonds = Card::new(Suit::Diamond, Rank::Number(Number::Seven));
-/// assert!(two_hearts < seven_diamonds);
+/// assert!(seven_diamonds > two_hearts);
 /// ```
 #[repr(u8)]
 #[derive(Debug, Clone, Copy, PartialEq, Eq, PartialOrd, Ord)]
