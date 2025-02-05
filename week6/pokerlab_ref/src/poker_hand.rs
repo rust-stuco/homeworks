@@ -3,11 +3,24 @@
 use crate::card::Card;
 
 /// TODO docs.
+/// Should allow students to modify this how they wish.
 pub enum PokerHand {
-    HighCard,
-    OnePair,
-    TwoPair,
-    ThreeOfAKind,
+    HighCard {
+        high_card: Card,
+        kickers: [Card; 4],
+    },
+    OnePair {
+        pair: (Card, Card),
+        kickers: [Card; 3],
+    },
+    TwoPair {
+        first_pair: (Card, Card),
+        second_pair: (Card, Card),
+    },
+    ThreeOfAKind {
+        triplet: (Card, Card, Card),
+        kickers: [Card; 2],
+    },
     Straight,
     Flush,
     FullHouse,
@@ -16,7 +29,8 @@ pub enum PokerHand {
 }
 
 impl PokerHand {
-    pub fn new(_cards: [Card; 5]) -> Self {
+    /// Given 5 cards as input, creates a `PokerHand` with the correct ranking.
+    pub fn solve(_cards: [Card; 5]) -> Self {
         todo!("implement me")
     }
 }

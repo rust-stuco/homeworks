@@ -48,7 +48,7 @@ impl Card {
     /// Creates a new Card instance from a Suit and Rank.
     ///
     /// # Parameters
-    /// 
+    ///
     /// * `suit` - The suit of the card as a [`Suit`] enum value
     /// * `rank` - The rank of the card as a [`Rank`] enum value
     ///
