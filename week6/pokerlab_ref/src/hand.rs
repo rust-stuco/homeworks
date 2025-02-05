@@ -1,7 +1,100 @@
 //! Module for poker hand evaluation and comparison.
 
-use crate::card::{Card, Rank, Suit};
+use crate::card::{Card, Face, Number, Rank, Suit};
 use derivative::Derivative;
+
+/// Represents a standard `Hand` of 5 playing [`Card`]s.
+///
+/// Note that the cards will always be stored in sorted descending order (only by [`Rank`]).
+#[derive(Debug)]
+pub struct Hand {
+    /// The cards in the hand.
+    cards: [Card; 5],
+}
+
+pub struct UniqueError;
+
+impl Hand {
+    /// Creates a new `Hand` of 5 [`Card`]s.
+    ///
+    /// Stores the cards in reverse (descending) sorted order.
+    ///
+    /// Returns an error if any cards are duplicates.
+    pub fn new(mut cards: [Card; 5]) -> Result<Self, UniqueError> {
+        // Sort in reverse order.
+        cards.sort_by(|a, b| b.cmp(a));
+
+        // Check for duplicate cards.
+        for i in 0..4 {
+            if cards[i] == cards[i + 1] && cards[i].rank() == cards[i + 1].rank() {
+                return Err(UniqueError);
+            }
+        }
+
+        Ok(Self { cards })
+    }
+
+    /// Checks if all cards in the hand have the same suit.
+    pub fn is_flush(&self) -> bool {
+        let first_suit = self.cards[0].suit();
+
+        for i in 1..5 {
+            if self.cards[i].suit() != first_suit {
+                return false;
+            }
+        }
+
+        true
+    }
+
+    /// Checks if the cards form a straight (consecutive ranks).
+    pub fn is_straight(&self) -> bool {
+        // Check for standard straight.
+        let mut is_sequential = true;
+        for i in 0..4 {
+            if self.cards[i].rank().as_u8() != self.cards[i + 1].rank().as_u8() + 1 {
+                is_sequential = false;
+                break;
+            }
+        }
+
+        if is_sequential {
+            return true;
+        }
+
+        // Do a final check for a wheel / Ace-low straight (A, 2, 3, 4, 5).
+        self.cards[0].rank() == Rank::Face(Face::Ace)
+            && self.cards[1].rank() == Rank::Number(Number::Five)
+            && self.cards[2].rank() == Rank::Number(Number::Four)
+            && self.cards[3].rank() == Rank::Number(Number::Three)
+            && self.cards[4].rank() == Rank::Number(Number::Two)
+    }
+
+    /// Checks if the hand contains four cards of the same rank
+    pub fn is_four_of_a_kind(&self) -> bool {
+        // Check that the first four cards or the last four cards are all equal (relies on order).
+        (self.cards[0].rank() == self.cards[3].rank())
+            || (self.cards[1].rank() == self.cards[4].rank())
+    }
+
+    /// Checks if the hand contains three cards of the same rank.
+    pub fn has_triple(&self) -> bool {
+        // Check each possible position for three matching cards (relies on order).
+        (self.cards[0].rank() == self.cards[2].rank())
+            || (self.cards[1].rank() == self.cards[3].rank())
+            || (self.cards[2].rank() == self.cards[4].rank())
+    }
+
+    /// Checks if the hand contains at least one pair.
+    pub fn has_pair(&self) -> bool {
+        for i in 0..4 {
+            if self.cards[i].rank() == self.cards[i + 1].rank() {
+                return true;
+            }
+        }
+        false
+    }
+}
 
 /// Represents different poker hand rankings with their respective cards.
 /// Each variant contains the relevant cards that make up the hand.
@@ -16,6 +109,17 @@ pub enum PokerHand {
     FullHouse(FullHouse),
     FourOfAKind(FourOfAKind),
     StraightFlush(StraightFlush),
+}
+
+impl PokerHand {
+    /// Given 5 cards as input, creates a `PokerHand` with the correct ranking.
+    /// 
+    /// Note that there is definitely a cleaner way to implement Poker hands, but since 
+    pub fn solve(hand: Hand) -> Self {
+        let cards = hand.cards;
+
+        todo!("Implement me!")
+    }
 }
 
 /// Represents a pair of cards of the same rank.
@@ -133,13 +237,4 @@ pub struct StraightFlush {
     /// The suit shared by all five cards.
     #[derivative(PartialEq = "ignore", PartialOrd = "ignore", Ord = "ignore")]
     suit: Suit,
-}
-
-impl PokerHand {
-    /// Given 5 cards as input, creates a `PokerHand` with the correct ranking.
-    pub fn solve(mut cards: [Card; 5]) -> Self {
-        cards.sort();
-
-        todo!()
-    }
 }

@@ -2,7 +2,7 @@
 
 pub mod card;
 pub mod deck;
-pub mod poker_hand;
+pub mod hand;
 
 #[cfg(test)]
 mod tests;
