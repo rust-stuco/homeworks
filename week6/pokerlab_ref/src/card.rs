@@ -3,7 +3,9 @@
 //! numbers 2-10 or Jack, Queen, King, or Ace) and their suit (which can be Diamond, Club, Heart,
 //! or Spade).
 //!
-//! Note to students: You can copy and paste your [`Card`] implementation from Card Lab here!
+//! Note to students: You are allowed to modify this file and replace the implementation with
+//! something similar to your own from Card Lab. However, make sure you understand that the function
+//! signatures are different, and that the `Rank` and `Suit` types are now public!
 
 /// Represents a standard playing card with a suit and a rank.
 ///
@@ -43,26 +45,12 @@ pub struct Card {
 }
 
 impl Card {
-    /// Creates a new Card instance from a suit name and numeric rank.
+    /// Creates a new Card instance from a Suit and Rank.
     ///
     /// # Parameters
-    ///
-    /// * `suit` - A string representing the suit:
-    ///   * `"diamond"`
-    ///   * `"club"`
-    ///   * `"heart"`
-    ///   * `"spade"`
-    /// * `rank` - A number from 1-13 representing the rank:
-    ///   * 2-10: Number cards
-    ///   * 11: Jack
-    ///   * 12: Queen
-    ///   * 13: King
-    ///   * 14: Ace
-    ///
-    /// # Panics
-    ///
-    /// * If suit is not one of: `"spade"`, `"heart"`, `"club"`, `"diamond"`.
-    /// * If rank is not in the range [2, 14].
+    /// 
+    /// * `suit` - The suit of the card as a [`Suit`] enum value
+    /// * `rank` - The rank of the card as a [`Rank`] enum value
     ///
     /// # Examples
     ///
@@ -77,7 +65,7 @@ impl Card {
         Card { suit, rank }
     }
 
-    /// Returns a string representation of this card's suit.
+    /// Returns a reference to this card's suit.
     ///
     /// # Examples
     ///
@@ -91,8 +79,7 @@ impl Card {
         &self.suit
     }
 
-    /// Returns the numeric rank of this card, where number cards = 2-10, and Jack = 11, Queen = 12,
-    /// King = 13, and Ace = 14.
+    /// Returns a reference to this card's rank.
     ///
     /// # Examples
     ///

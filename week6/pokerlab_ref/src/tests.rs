@@ -29,10 +29,8 @@ fn test_equality() {
     let ace_spades2 = Card::new(Suit::Spade, Rank::Face(Face::Ace));
     let king_spades = Card::new(Suit::Spade, Rank::Face(Face::King));
 
-    // Note that we do not use `assert_eq` and `assert_ne` here because that requires `Card` to
-    // implement `Debug`, and for the purposes of this homework we will not require that.
-    assert!(ace_spades1 == ace_spades2);
-    assert!(ace_spades1 != king_spades);
+    assert_eq!(ace_spades1, ace_spades2);
+    assert_ne!(ace_spades1, king_spades);
 }
 
 #[test]
@@ -156,16 +154,16 @@ fn test_full_deck_sorting() {
         assert!(card >= prev_card);
 
         if *card.suit() == Suit::Club {
-            assert_eq!(*prev_card.suit(), Suit::Diamond);
+            assert_eq!(prev_card.suit(), &Suit::Diamond);
             assert_eq!(prev_card.rank(), card.rank());
         } else if *card.suit() == Suit::Heart {
-            assert_eq!(*prev_card.suit(), Suit::Club);
+            assert_eq!(prev_card.suit(), &Suit::Club);
             assert_eq!(prev_card.rank(), card.rank());
         } else if *card.suit() == Suit::Spade {
-            assert_eq!(*prev_card.suit(), Suit::Heart);
+            assert_eq!(prev_card.suit(), &Suit::Heart);
             assert_eq!(prev_card.rank(), card.rank());
         } else if *card.suit() == Suit::Diamond {
-            assert_eq!(*prev_card.suit(), Suit::Spade);
+            assert_eq!(prev_card.suit(), &Suit::Spade);
             assert!(prev_card.rank().as_u8() == card.rank().as_u8() - 1);
         }
 

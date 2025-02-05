@@ -13,6 +13,8 @@ standard 52-card deck. In that lab, you implemented the comparison traits for in
 this lab, you will additionally model a [`PokerHand`] type that represents a hand of 5 cards and
 implement the comparison traits on this new type.
 
+[`PokerHand`]: crate::poker_hand::PokerHand
+
 TODO
 
 # Submission

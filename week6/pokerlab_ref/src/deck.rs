@@ -1,8 +1,10 @@
+//! This module contains the definition and implementation of the [`Deck`] type.
+
 use crate::card::{Card, Face, Number, Rank, Suit};
 use rand::seq::SliceRandom;
 
 /// The number of cards in a standard playing card deck.
-const DECK_SIZE: usize = 52;
+pub const DECK_SIZE: usize = 52;
 
 /// A deck of [`DECK_SIZE`] (52) playing [`Card`]s.
 pub struct Deck {
