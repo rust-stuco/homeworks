@@ -1,6 +1,6 @@
 //! TODO Add docs.
 
-use crate::Card;
+use crate::card::Card;
 
 /// TODO docs.
 pub enum PokerHand {
@@ -16,13 +16,13 @@ pub enum PokerHand {
 }
 
 impl PokerHand {
-    pub fn new(cards: [Card; 5]) -> Self {
+    pub fn new(_cards: [Card; 5]) -> Self {
         todo!("implement me")
     }
 }
 
 impl PartialEq for PokerHand {
-    fn eq(&self, other: &Self) -> bool {
+    fn eq(&self, _other: &Self) -> bool {
         todo!("implement me")
     }
 }
@@ -37,7 +37,7 @@ impl PartialOrd for PokerHand {
 }
 
 impl Ord for PokerHand {
-    fn cmp(&self, other: &Self) -> std::cmp::Ordering {
+    fn cmp(&self, _other: &Self) -> std::cmp::Ordering {
         todo!()
     }
 }

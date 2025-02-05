@@ -1,13 +1,8 @@
 #![doc = include_str!("../README.md")]
 
-mod card;
-pub use card::Card;
-
-mod deck;
-pub use deck::Deck;
-
-mod poker_hand;
-pub use poker_hand::PokerHand;
+pub mod card;
+pub mod deck;
+pub mod poker_hand;
 
 #[cfg(test)]
 mod tests;

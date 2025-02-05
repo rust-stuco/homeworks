@@ -1,10 +1,10 @@
-use crate::Card;
+use crate::card::{Card, Face, Number, Rank, Suit};
 
 #[test]
 fn test_simple_card_comparisons() {
-    let ace_spades = Card::new("spade", 14);
-    let king_spades = Card::new("spade", 13);
-    let two_spades = Card::new("spade", 2);
+    let ace_spades = Card::new(Suit::Spade, Rank::Face(Face::Ace));
+    let king_spades = Card::new(Suit::Spade, Rank::Face(Face::King));
+    let two_spades = Card::new(Suit::Spade, Rank::Number(Number::Two));
 
     assert!(ace_spades > king_spades);
     assert!(king_spades > two_spades);
@@ -13,10 +13,10 @@ fn test_simple_card_comparisons() {
 
 #[test]
 fn test_suit_comparisons() {
-    let ace_spades = Card::new("spade", 14);
-    let ace_hearts = Card::new("heart", 14);
-    let ace_clubs = Card::new("club", 14);
-    let ace_diamonds = Card::new("diamond", 14);
+    let ace_spades = Card::new(Suit::Spade, Rank::Face(Face::Ace));
+    let ace_hearts = Card::new(Suit::Heart, Rank::Face(Face::Ace));
+    let ace_clubs = Card::new(Suit::Club, Rank::Face(Face::Ace));
+    let ace_diamonds = Card::new(Suit::Diamond, Rank::Face(Face::Ace));
 
     assert!(ace_spades > ace_hearts);
     assert!(ace_hearts > ace_clubs);
@@ -25,9 +25,9 @@ fn test_suit_comparisons() {
 
 #[test]
 fn test_equality() {
-    let ace_spades1 = Card::new("spade", 14);
-    let ace_spades2 = Card::new("spade", 14);
-    let king_spades = Card::new("spade", 13);
+    let ace_spades1 = Card::new(Suit::Spade, Rank::Face(Face::Ace));
+    let ace_spades2 = Card::new(Suit::Spade, Rank::Face(Face::Ace));
+    let king_spades = Card::new(Suit::Spade, Rank::Face(Face::King));
 
     // Note that we do not use `assert_eq` and `assert_ne` here because that requires `Card` to
     // implement `Debug`, and for the purposes of this homework we will not require that.
@@ -38,27 +38,27 @@ fn test_equality() {
 #[test]
 fn test_deck_sorting_easy() {
     let mut cards = [
-        Card::new("diamond", 2),
-        Card::new("spade", 14),
-        Card::new("heart", 7),
-        Card::new("club", 10),
-        Card::new("diamond", 14),
-        Card::new("spade", 2),
-        Card::new("heart", 14),
-        Card::new("club", 14),
+        Card::new(Suit::Diamond, Rank::Number(Number::Two)),
+        Card::new(Suit::Spade, Rank::Face(Face::Ace)),
+        Card::new(Suit::Heart, Rank::Number(Number::Seven)),
+        Card::new(Suit::Club, Rank::Number(Number::Ten)),
+        Card::new(Suit::Diamond, Rank::Face(Face::Ace)),
+        Card::new(Suit::Spade, Rank::Number(Number::Two)),
+        Card::new(Suit::Heart, Rank::Face(Face::Ace)),
+        Card::new(Suit::Club, Rank::Face(Face::Ace)),
     ];
 
     cards.sort();
 
     let expected = [
-        Card::new("diamond", 2),
-        Card::new("spade", 2),
-        Card::new("heart", 7),
-        Card::new("club", 10),
-        Card::new("diamond", 14),
-        Card::new("club", 14),
-        Card::new("heart", 14),
-        Card::new("spade", 14),
+        Card::new(Suit::Diamond, Rank::Number(Number::Two)),
+        Card::new(Suit::Spade, Rank::Number(Number::Two)),
+        Card::new(Suit::Heart, Rank::Number(Number::Seven)),
+        Card::new(Suit::Club, Rank::Number(Number::Ten)),
+        Card::new(Suit::Diamond, Rank::Face(Face::Ace)),
+        Card::new(Suit::Club, Rank::Face(Face::Ace)),
+        Card::new(Suit::Heart, Rank::Face(Face::Ace)),
+        Card::new(Suit::Spade, Rank::Face(Face::Ace)),
     ];
 
     assert!(cards == expected);
@@ -67,43 +67,43 @@ fn test_deck_sorting_easy() {
 #[test]
 fn test_deck_sorting_medium() {
     let mut cards = [
-        Card::new("diamond", 2),
-        Card::new("spade", 14),
-        Card::new("heart", 7),
-        Card::new("club", 10),
-        Card::new("diamond", 14),
-        Card::new("spade", 2),
-        Card::new("heart", 14),
-        Card::new("club", 14),
-        Card::new("diamond", 8),
-        Card::new("heart", 2),
-        Card::new("club", 3),
-        Card::new("spade", 11),
-        Card::new("diamond", 13),
-        Card::new("heart", 13),
-        Card::new("club", 13),
-        Card::new("spade", 13),
+        Card::new(Suit::Diamond, Rank::Number(Number::Two)),
+        Card::new(Suit::Spade, Rank::Face(Face::Ace)),
+        Card::new(Suit::Heart, Rank::Number(Number::Seven)),
+        Card::new(Suit::Club, Rank::Number(Number::Ten)),
+        Card::new(Suit::Diamond, Rank::Face(Face::Ace)),
+        Card::new(Suit::Spade, Rank::Number(Number::Two)),
+        Card::new(Suit::Heart, Rank::Face(Face::Ace)),
+        Card::new(Suit::Club, Rank::Face(Face::Ace)),
+        Card::new(Suit::Diamond, Rank::Number(Number::Eight)),
+        Card::new(Suit::Heart, Rank::Number(Number::Two)),
+        Card::new(Suit::Club, Rank::Number(Number::Three)),
+        Card::new(Suit::Spade, Rank::Face(Face::Jack)),
+        Card::new(Suit::Diamond, Rank::Face(Face::King)),
+        Card::new(Suit::Heart, Rank::Face(Face::King)),
+        Card::new(Suit::Club, Rank::Face(Face::King)),
+        Card::new(Suit::Spade, Rank::Face(Face::King)),
     ];
 
     cards.sort();
 
     let expected = [
-        Card::new("diamond", 2),
-        Card::new("heart", 2),
-        Card::new("spade", 2),
-        Card::new("club", 3),
-        Card::new("heart", 7),
-        Card::new("diamond", 8),
-        Card::new("club", 10),
-        Card::new("spade", 11),
-        Card::new("diamond", 13),
-        Card::new("club", 13),
-        Card::new("heart", 13),
-        Card::new("spade", 13),
-        Card::new("diamond", 14),
-        Card::new("club", 14),
-        Card::new("heart", 14),
-        Card::new("spade", 14),
+        Card::new(Suit::Diamond, Rank::Number(Number::Two)),
+        Card::new(Suit::Heart, Rank::Number(Number::Two)),
+        Card::new(Suit::Spade, Rank::Number(Number::Two)),
+        Card::new(Suit::Club, Rank::Number(Number::Three)),
+        Card::new(Suit::Heart, Rank::Number(Number::Seven)),
+        Card::new(Suit::Diamond, Rank::Number(Number::Eight)),
+        Card::new(Suit::Club, Rank::Number(Number::Ten)),
+        Card::new(Suit::Spade, Rank::Face(Face::Jack)),
+        Card::new(Suit::Diamond, Rank::Face(Face::King)),
+        Card::new(Suit::Club, Rank::Face(Face::King)),
+        Card::new(Suit::Heart, Rank::Face(Face::King)),
+        Card::new(Suit::Spade, Rank::Face(Face::King)),
+        Card::new(Suit::Diamond, Rank::Face(Face::Ace)),
+        Card::new(Suit::Club, Rank::Face(Face::Ace)),
+        Card::new(Suit::Heart, Rank::Face(Face::Ace)),
+        Card::new(Suit::Spade, Rank::Face(Face::Ace)),
     ];
 
     assert!(cards == expected);
@@ -112,8 +112,22 @@ fn test_deck_sorting_medium() {
 #[test]
 fn test_full_deck_sorting() {
     let mut cards = Vec::new();
-    let suits = ["diamond", "club", "heart", "spade"];
-    let ranks = (2..=14).collect::<Vec<_>>();
+    let suits = [Suit::Diamond, Suit::Club, Suit::Heart, Suit::Spade];
+    let ranks = [
+        Rank::Number(Number::Two),
+        Rank::Number(Number::Three),
+        Rank::Number(Number::Four),
+        Rank::Number(Number::Five),
+        Rank::Number(Number::Six),
+        Rank::Number(Number::Seven),
+        Rank::Number(Number::Eight),
+        Rank::Number(Number::Nine),
+        Rank::Number(Number::Ten),
+        Rank::Face(Face::Jack),
+        Rank::Face(Face::Queen),
+        Rank::Face(Face::King),
+        Rank::Face(Face::Ace),
+    ];
 
     // Create full deck of 52 cards.
     for &suit in suits.iter() {
@@ -135,24 +149,24 @@ fn test_full_deck_sorting() {
 
     // Verify that the cards are properly sorted.
     let mut prev_card = &cards[0];
-    assert!(prev_card == &Card::new("diamond", 2));
-    assert!(cards[51] == Card::new("spade", 14));
+    assert!(prev_card == &Card::new(Suit::Diamond, Rank::Number(Number::Two)));
+    assert!(cards[51] == Card::new(Suit::Spade, Rank::Face(Face::Ace)));
 
     for card in cards.iter().skip(1) {
         assert!(card >= prev_card);
 
-        if card.suit_name() == "club" {
-            assert_eq!(prev_card.suit_name(), "diamond");
-            assert_eq!(prev_card.rank_value(), card.rank_value());
-        } else if card.suit_name() == "heart" {
-            assert_eq!(prev_card.suit_name(), "club");
-            assert_eq!(prev_card.rank_value(), card.rank_value());
-        } else if card.suit_name() == "spade" {
-            assert_eq!(prev_card.suit_name(), "heart");
-            assert_eq!(prev_card.rank_value(), card.rank_value());
-        } else if card.suit_name() == "diamond" {
-            assert_eq!(prev_card.suit_name(), "spade");
-            assert_eq!(prev_card.rank_value(), card.rank_value() - 1);
+        if *card.suit() == Suit::Club {
+            assert_eq!(*prev_card.suit(), Suit::Diamond);
+            assert_eq!(prev_card.rank(), card.rank());
+        } else if *card.suit() == Suit::Heart {
+            assert_eq!(*prev_card.suit(), Suit::Club);
+            assert_eq!(prev_card.rank(), card.rank());
+        } else if *card.suit() == Suit::Spade {
+            assert_eq!(*prev_card.suit(), Suit::Heart);
+            assert_eq!(prev_card.rank(), card.rank());
+        } else if *card.suit() == Suit::Diamond {
+            assert_eq!(*prev_card.suit(), Suit::Spade);
+            assert!(prev_card.rank().as_u8() == card.rank().as_u8() - 1);
         }
 
         prev_card = card;
