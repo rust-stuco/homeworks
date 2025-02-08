@@ -22,6 +22,27 @@
 
 use crate::card::{Card, Rank};
 
+/// Represents different poker hand rankings with their respective cards.
+///
+/// Each variant contains the relevant cards that make up the hand.
+///
+/// Note that this type has easily derivable comparison traits, as later [`PokerHand`] variants
+/// always beat earlier ones, and each of the variants are able to be compared with themselves.
+///
+/// See the integration tests in `tests/poker_tests.rs` for examples.
+#[derive(Debug, Clone, Copy, PartialEq, Eq, PartialOrd, Ord)]
+pub enum PokerHand {
+    HighCard(HighCard),
+    OnePair(OnePair),
+    TwoPair(TwoPair),
+    ThreeOfAKind(ThreeOfAKind),
+    Straight(Straight),
+    Flush(Flush),
+    FullHouse(FullHouse),
+    FourOfAKind(FourOfAKind),
+    StraightFlush(StraightFlush),
+}
+
 /// Represents a high card hand, consisting of five unpaired cards.
 #[derive(Debug, Clone, Copy, PartialEq, Eq, PartialOrd, Ord)]
 pub struct HighCard {
@@ -60,18 +81,19 @@ pub struct ThreeOfAKind {
     kickers: [Rank; 2],
 }
 
-/// Represents five consecutive cards of different suits.
+/// Represents five consecutive cards of different suits, storing only the highest card rank.
 ///
-/// Note that the [`derivative`] derive macro here simply lets us ignore specific fields when
-/// auto-implementing traits. Here, we want to ignore the `suit` field when comparing against other
-/// `Straight`s, as Poker considers two straights of the same rank but with different suits a tie.
+/// Straights can range from Ace-high straights to wheels. A wheel refers to the lowest possible
+/// 5-high straight (Ace, 2, 3, 4, 5). In this case, even though the Ace is normally the highest
+/// card, it counts as a low card (like a 1), making a wheel.
 #[derive(Debug, Clone, Copy, PartialEq, Eq, PartialOrd, Ord)]
 pub struct Straight {
     /// The highest rank in the straight (highest can be an Ace, lowest is a 5 for a wheel).
     high_card: Rank,
 }
 
-/// Represents five cards of the same suit. The suit of the cards is ignored.
+/// Represents five cards of the same suit. The suit of the cards is ignored since we do not need it
+/// for comparison.
 #[derive(Debug, Clone, Copy, PartialEq, Eq, PartialOrd, Ord)]
 pub struct Flush {
     /// The ranks of the five cards in descending order.
@@ -96,30 +118,12 @@ pub struct FourOfAKind {
     kicker: Rank,
 }
 
-/// Represents five consecutive cards of the same suit. The suits of the card are ignored.
+/// Represents five consecutive cards of the same suit. The suit of the cards is ignored since we do
+/// not need it for comparison.
 #[derive(Debug, Clone, Copy, PartialEq, Eq, PartialOrd, Ord)]
 pub struct StraightFlush {
     /// The highest rank in the straight (highest can be an Ace, lowest is a 5 for a wheel).
     high_card: Rank,
-}
-
-/// Represents different poker hand rankings with their respective cards.
-///
-/// Each variant contains the relevant cards that make up the hand.
-///
-/// Note that this type has easily derivable comparison traits, as later [`PokerHand`] variants
-/// always beat earlier ones, and each of the variants are able to be compared with themselves.
-#[derive(Debug, Clone, Copy, PartialEq, Eq, PartialOrd, Ord)]
-pub enum PokerHand {
-    HighCard(HighCard),
-    OnePair(OnePair),
-    TwoPair(TwoPair),
-    ThreeOfAKind(ThreeOfAKind),
-    Straight(Straight),
-    Flush(Flush),
-    FullHouse(FullHouse),
-    FourOfAKind(FourOfAKind),
-    StraightFlush(StraightFlush),
 }
 
 impl PokerHand {
