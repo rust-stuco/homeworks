@@ -1,11 +1,30 @@
 //! Module for poker hand evaluation and comparison.
+//! 
+//! There is a bit of Poker lingo that this file uses. If you find yourself confused by anything,
+//! please reach out to us and ask! The term that will probably be most confusing is a "kicker".
+//! A "kicker", also known as a "side card", is simply a card that does not take part in determine
+//! the rank of a hand. For example, if we want to compare 2 four-of-a-kinds, the fifth card in each
+//! hand would be considered the kicker. Note that kickers are still important in breaking ties.
+//! 
+//! A good way to approach this assignment is to first read the code in `src/card.rs`, and then
+//! read all of the starter code in this file (`src/hand.rs`). If you are unfamiliar with Poker, you
+//! may also want to read up on the hands you can make on [Wikipedia]. Finally (as a good rule of
+//! thumb for any programming course), make sure to go over the test cases to make sure you have a
+//! correct idea of what you should implement.
+//! 
+//! We have purposefully made some of the struct definitions somewhat unwieldy. You are allowed to
+//! change _any_ of the private fields of structs in this file, as long as you are able to implement
+//! the all of the [`Hand`] methods without issue. You are also allowed to modify the
+//! [`PokerHand::solve`] method, but be aware that the test cases are _only_ using that method to
+//! check the correctness of your implementation.
+//! 
+//! [Wikipedia]: https://en.wikipedia.org/wiki/List_of_poker_hands
 
 use crate::card::{Card, Face, Number, Rank, Suit};
 use derivative::Derivative;
 
-/// Represents a high card hand, consisting of five unmatched cards.
-#[derive(Debug, Clone, Copy, Derivative)]
-#[derivative(PartialEq, Eq, PartialOrd, Ord)]
+/// Represents a high card hand, consisting of five unpaired cards.
+#[derive(Debug, Clone, Copy, PartialEq, Eq, PartialOrd, Ord)]
 pub struct HighCard {
     /// The highest card in the hand.
     high_card: Card,
@@ -14,8 +33,7 @@ pub struct HighCard {
 }
 
 /// Represents a hand containing one pair and three kickers.
-#[derive(Debug, Clone, Copy, Derivative)]
-#[derivative(PartialEq, Eq, PartialOrd, Ord)]
+#[derive(Debug, Clone, Copy, PartialEq, Eq, PartialOrd, Ord)]
 pub struct OnePair {
     /// The matched pair of cards.
     pair: Pair,
@@ -24,8 +42,7 @@ pub struct OnePair {
 }
 
 /// Represents a hand containing two pairs and one kicker.
-#[derive(Debug, Clone, Copy, Derivative)]
-#[derivative(PartialEq, Eq, PartialOrd, Ord)]
+#[derive(Debug, Clone, Copy, PartialEq, Eq, PartialOrd, Ord)]
 pub struct TwoPair {
     /// The higher ranked pair.
     first_pair: Pair,
@@ -36,8 +53,7 @@ pub struct TwoPair {
 }
 
 /// Represents a hand containing three cards of the same rank and two kickers.
-#[derive(Debug, Clone, Copy, Derivative)]
-#[derivative(PartialEq, Eq, PartialOrd, Ord)]
+#[derive(Debug, Clone, Copy, PartialEq, Eq, PartialOrd, Ord)]
 pub struct ThreeOfAKind {
     /// The three matched cards.
     triple: Triple,
@@ -46,6 +62,10 @@ pub struct ThreeOfAKind {
 }
 
 /// Represents five consecutive cards of different suits.
+/// 
+/// Note that the [`derivative`] derive macro here simply lets us ignore specific fields when
+/// auto-implementing traits. Here, we want to ignore the `suit` field when comparing against other
+/// `Straight`s, as Poker considers two straights of the same rank but with different suits a tie.
 #[derive(Debug, Clone, Copy, Derivative)]
 #[derivative(PartialEq, Eq, PartialOrd, Ord)]
 pub struct Straight {
@@ -57,6 +77,10 @@ pub struct Straight {
 }
 
 /// Represents five cards of the same suit.
+/// 
+/// Note that the [`derivative`] derive macro here simply lets us ignore specific fields when
+/// auto-implementing traits. Here, we want to ignore the `suit` field when comparing against other
+/// `Flush`es, as Poker considers two flushes with the exact same ranks a tie.
 #[derive(Debug, Clone, Copy, Derivative)]
 #[derivative(PartialEq, Eq, PartialOrd, Ord)]
 pub struct Flush {
@@ -68,8 +92,7 @@ pub struct Flush {
 }
 
 /// Represents a hand containing three cards of one rank and two cards of another rank.
-#[derive(Debug, Clone, Copy, Derivative)]
-#[derivative(PartialEq, Eq, PartialOrd, Ord)]
+#[derive(Debug, Clone, Copy, PartialEq, Eq, PartialOrd, Ord)]
 pub struct FullHouse {
     /// The three matched cards.
     triple: Triple,
@@ -78,8 +101,7 @@ pub struct FullHouse {
 }
 
 /// Represents a hand containing four cards of the same rank and one kicker.
-#[derive(Debug, Clone, Copy, Derivative)]
-#[derivative(PartialEq, Eq, PartialOrd, Ord)]
+#[derive(Debug, Clone, Copy, PartialEq, Eq, PartialOrd, Ord)]
 pub struct FourOfAKind {
     /// The rank shared by all four cards.
     quad: Rank,
@@ -88,6 +110,10 @@ pub struct FourOfAKind {
 }
 
 /// Represents five consecutive cards of the same suit.
+/// 
+/// Note that the [`derivative`] derive macro here simply lets us ignore specific fields when
+/// auto-implementing traits. Here, we want to ignore the `suit` field when comparing against other
+/// `StraightFlush`es. See [`Straight`] and [`Flush`] for similar examples.
 #[derive(Debug, Clone, Copy, Derivative)]
 #[derivative(PartialEq, Eq, PartialOrd, Ord)]
 pub struct StraightFlush {
@@ -101,6 +127,9 @@ pub struct StraightFlush {
 /// Represents a pair of cards of the same rank.
 ///
 /// Note that this is different from [`OnePair`], which also includes kicker cards.
+/// 
+/// Also note that the [`derivative`] derive macro here simply lets us ignore specific fields when
+/// auto-implementing traits. When comparing [`Pair`]s, we do not really care about the suits.
 #[derive(Debug, Clone, Copy, Derivative)]
 #[derivative(PartialEq, Eq, PartialOrd, Ord)]
 struct Pair {
@@ -114,6 +143,9 @@ struct Pair {
 /// Represents three cards of the same rank.
 ///
 /// Note that this is different from [`ThreeOfAKind`], which also includes kicker cards.
+/// 
+/// Also note that the [`derivative`] derive macro here simply lets us ignore specific fields when
+/// auto-implementing traits. When comparing [`Triple`]s, we do not really care about the suits.
 #[derive(Debug, Clone, Copy, Derivative)]
 #[derivative(PartialEq, Eq, PartialOrd, Ord)]
 struct Triple {
@@ -127,6 +159,9 @@ struct Triple {
 /// Represents different poker hand rankings with their respective cards.
 ///
 /// Each variant contains the relevant cards that make up the hand.
+/// 
+/// Note that this type has easily derivable comparison traits, as later [`PokerHand`] variants
+/// always beat earlier ones, and each of the variants are able to be compared with themselves.
 #[derive(Debug, Clone, Copy, PartialEq, Eq, PartialOrd, Ord)]
 pub enum PokerHand {
     HighCard(HighCard),
@@ -239,6 +274,7 @@ impl Hand {
                 });
             }
         }
+
         None
     }
 
@@ -424,48 +460,55 @@ impl Hand {
             kickers,
         }) = self.get_one_pair()
         {
-            // Look for second pair in the kickers
-            for i in 0..2 {
+            // Look for a second pair in the kickers.
+            for i in 0..=1 {
                 if kickers[i].rank() == kickers[i + 1].rank() {
+                    let second_pair = Pair {
+                        rank: kickers[i].rank(),
+                        suits: [kickers[i].suit(), kickers[i + 1].suit()],
+                    };
+                    let remaining_kicker = if i == 0 { kickers[2] } else { kickers[0] };
+
                     return Some(TwoPair {
                         first_pair,
-                        second_pair: Pair {
-                            rank: kickers[i].rank(),
-                            suits: [kickers[i].suit(), kickers[i + 1].suit()],
-                        },
-                        kicker: if i == 0 { kickers[2] } else { kickers[0] },
+                        second_pair,
+                        kicker: remaining_kicker,
                     });
                 }
             }
         }
+
         None
     }
 
-    /// Returns a `OnePair` if the hand contains a pair of cards with matching rank, otherwise
+    /// Returns a [`OnePair`] if the hand contains a pair of cards with matching rank, otherwise
     /// returns `None`.
     ///
     /// This function assumes that all higher-ranking hand checks have been called.
     pub fn get_one_pair(&self) -> Option<OnePair> {
         for i in 0..4 {
+            // For each consecutive card, check if the ranks are the same.
             if self.cards[i].rank() == self.cards[i + 1].rank() {
                 let pair = Pair {
                     rank: self.cards[i].rank(),
                     suits: [self.cards[i].suit(), self.cards[i + 1].suit()],
                 };
 
-                let mut kickers = [self.cards[0], self.cards[0], self.cards[0]];
-                let mut k = 0;
+                // Get the remaining cards (kickers).
+                let mut indexes = vec![0, 1, 2, 3, 4];
+                indexes.remove(i + 1);
+                indexes.remove(i);
 
-                for j in 0..5 {
-                    if j != i && j != (i + 1) {
-                        kickers[k] = self.cards[j];
-                        k += 1;
-                    }
-                }
+                let kickers = [
+                    self.cards[indexes[0]],
+                    self.cards[indexes[1]],
+                    self.cards[indexes[2]],
+                ];
 
                 return Some(OnePair { pair, kickers });
             }
         }
+
         None
     }
 }
