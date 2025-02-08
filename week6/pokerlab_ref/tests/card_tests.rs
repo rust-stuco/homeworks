@@ -1,3 +1,5 @@
+//! Tests for [`Card`] comparisons.
+
 use pokerlab_ref::card::{Card, Rank::*, Suit::*};
 
 #[test]
