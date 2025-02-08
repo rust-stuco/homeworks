@@ -21,7 +21,7 @@ use derivative::Derivative;
 /// This type implements the traits [`PartialEq`], [`Eq`], [`PartialOrd`], and [`Ord`]. Note that
 /// `Card` only considers the `Rank` of the `Card` when doing comparisons, so the Three of Clubs is
 /// considered to have equal value to the Three of Hearts.
-/// 
+///
 /// This is achieved using the [`derivative`] macro, where instead of using all of the fields of a
 /// struct to auto-implement a trait, we are able to ignore specific fields. If you have questions
 /// about this, please do not hesitate to ask!
@@ -29,14 +29,14 @@ use derivative::Derivative;
 /// # Examples
 ///
 /// ```
-/// # use pokerlab_ref::card::{Card, Suit, Rank, Face, Number};
+/// # use pokerlab_ref::card::{Card, Suit, Rank};
 /// #
-/// let ace_spades = Card::new(Suit::Spade, Rank::Face(Face::Ace));
-/// let king_spades = Card::new(Suit::Spade, Rank::Face(Face::King));
-/// let ten_spades = Card::new(Suit::Spade, Rank::Number(Number::Ten));
-/// let five_spades = Card::new(Suit::Spade, Rank::Number(Number::Five));
-/// let ace_hearts = Card::new(Suit::Heart, Rank::Face(Face::Ace));
-/// let ace_clubs = Card::new(Suit::Club, Rank::Face(Face::Ace));
+/// let ace_spades = Card::new(Suit::Spade, Rank::Ace);
+/// let king_spades = Card::new(Suit::Spade, Rank::King);
+/// let ten_spades = Card::new(Suit::Spade, Rank::Ten);
+/// let five_spades = Card::new(Suit::Spade, Rank::Five);
+/// let ace_hearts = Card::new(Suit::Heart, Rank::Ace);
+/// let ace_clubs = Card::new(Suit::Club, Rank::Ace);
 ///
 /// // Compare cards of same suit but different rank.
 /// assert!(ace_spades > king_spades);
@@ -48,7 +48,7 @@ use derivative::Derivative;
 /// assert_eq!(ace_hearts, ace_clubs);
 ///
 /// // Test equality between identical cards.
-/// assert_eq!(ace_spades, Card::new(Suit::Spade, Rank::Face(Face::Ace)));
+/// assert_eq!(ace_spades, Card::new(Suit::Spade, Rank::Ace));
 /// ```
 #[derive(Debug, Clone, Copy, Derivative)]
 #[derivative(PartialEq, Eq, PartialOrd, Ord)]
@@ -69,11 +69,11 @@ impl Card {
     /// # Examples
     ///
     /// ```
-    /// # use pokerlab_ref::card::{Card, Suit, Rank, Face, Number};
+    /// # use pokerlab_ref::card::{Card, Suit, Rank};
     /// #
-    /// let ace_of_spades = Card::new(Suit::Spade, Rank::Face(Face::Ace));
-    /// let two_of_hearts = Card::new(Suit::Heart, Rank::Number(Number::Two));
-    /// let three_of_clubs = Card::new(Suit::Club, Rank::Number(Number::Three));
+    /// let ace_of_spades = Card::new(Suit::Spade, Rank::Ace);
+    /// let two_of_hearts = Card::new(Suit::Heart, Rank::Two);
+    /// let three_of_clubs = Card::new(Suit::Club, Rank::Three);
     /// ```
     pub fn new(suit: Suit, rank: Rank) -> Self {
         Card { suit, rank }
@@ -84,9 +84,9 @@ impl Card {
     /// # Examples
     ///
     /// ```
-    /// # use pokerlab_ref::card::{Card, Suit, Rank, Number};
+    /// # use pokerlab_ref::card::{Card, Suit, Rank};
     /// #
-    /// let card = Card::new(Suit::Club, Rank::Number(Number::Three));
+    /// let card = Card::new(Suit::Club, Rank::Three);
     /// assert_eq!(Suit::Club, card.suit());
     /// ```
     pub fn suit(&self) -> Suit {
@@ -98,10 +98,10 @@ impl Card {
     /// # Examples
     ///
     /// ```
-    /// # use pokerlab_ref::card::{Card, Suit, Rank, Number};
+    /// # use pokerlab_ref::card::{Card, Suit, Rank};
     /// #
-    /// let card = Card::new(Suit::Club, Rank::Number(Number::Three));
-    /// assert_eq!(Rank::Number(Number::Three), card.rank());
+    /// let card = Card::new(Suit::Club, Rank::Three);
+    /// assert_eq!(Rank::Three, card.rank());
     /// ```
     pub fn rank(&self) -> Rank {
         self.rank
@@ -119,10 +119,10 @@ impl Card {
 /// # Examples
 ///
 /// ```
-/// # use pokerlab_ref::card::{Card, Suit, Rank, Number};
+/// # use pokerlab_ref::card::{Card, Suit, Rank};
 /// #
-/// let spade_card = Card::new(Suit::Spade, Rank::Number(Number::Two));
-/// let diamond_card = Card::new(Suit::Diamond, Rank::Number(Number::Two));
+/// let spade_card = Card::new(Suit::Spade, Rank::Two);
+/// let diamond_card = Card::new(Suit::Diamond, Rank::Two);
 /// assert_eq!(spade_card, diamond_card);
 /// ```
 #[derive(Debug, Clone, Copy, PartialEq, Eq)]
@@ -143,51 +143,23 @@ pub enum Suit {
 /// # Examples
 ///
 /// ```
-/// # use pokerlab_ref::card::{Card, Suit, Rank, Face, Number};
+/// # use pokerlab_ref::card::{Card, Suit, Rank};
 /// #
-/// let five_spades = Card::new(Suit::Spade, Rank::Number(Number::Five));
-/// let seven_spades = Card::new(Suit::Spade, Rank::Number(Number::Seven));
+/// let five_spades = Card::new(Suit::Spade, Rank::Five);
+/// let seven_spades = Card::new(Suit::Spade, Rank::Seven);
 /// assert!(seven_spades > five_spades);
 ///
-/// let queen_hearts = Card::new(Suit::Heart, Rank::Face(Face::Queen));
-/// let seven_clubs = Card::new(Suit::Club, Rank::Number(Number::Seven));
+/// let queen_hearts = Card::new(Suit::Heart, Rank::Queen);
+/// let seven_clubs = Card::new(Suit::Club, Rank::Seven);
 /// assert!(queen_hearts > seven_clubs);
 ///
-/// let king_diamonds = Card::new(Suit::Diamond, Rank::Face(Face::King));
-/// let ace_clubs = Card::new(Suit::Club, Rank::Face(Face::Ace));
+/// let king_diamonds = Card::new(Suit::Diamond, Rank::King);
+/// let ace_clubs = Card::new(Suit::Club, Rank::Ace);
 /// assert!(ace_clubs > king_diamonds);
-/// ```
-#[derive(Debug, Clone, Copy, PartialEq, Eq, PartialOrd, Ord)]
-pub enum Rank {
-    /// A number card (2-10).
-    Number(Number),
-    /// A face card (Ace, King, Queen, Jack).
-    Face(Face),
-}
-
-impl Rank {
-    pub fn as_u8(&self) -> u8 {
-        match self {
-            Rank::Number(number) => *number as u8,
-            Rank::Face(face) => *face as u8,
-        }
-    }
-}
-
-/// Represents the possible numbers for cards in a deck.
-///
-/// # Examples
-///
-/// ```
-/// # use pokerlab_ref::card::{Card, Suit, Rank, Number};
-/// #
-/// let two_hearts = Card::new(Suit::Heart, Rank::Number(Number::Two));
-/// let seven_diamonds = Card::new(Suit::Diamond, Rank::Number(Number::Seven));
-/// assert!(seven_diamonds > two_hearts);
 /// ```
 #[repr(u8)]
 #[derive(Debug, Clone, Copy, PartialEq, Eq, PartialOrd, Ord)]
-pub enum Number {
+pub enum Rank {
     Two = 2,
     Three = 3,
     Four = 4,
@@ -197,29 +169,6 @@ pub enum Number {
     Eight = 8,
     Nine = 9,
     Ten = 10,
-}
-
-/// Represents the face cards in a deck, including Ace.
-///
-/// Note that even though Ace could be considered a number card in some games, we're grouping it
-/// with the face cards for this assignment.
-///
-/// # Examples
-///
-/// ```
-/// # use pokerlab_ref::card::{Card, Suit, Rank, Face};
-/// #
-/// let queen_hearts = Card::new(Suit::Heart, Rank::Face(Face::Queen));
-/// let jack_clubs = Card::new(Suit::Club, Rank::Face(Face::Jack));
-/// assert!(queen_hearts > jack_clubs);
-///
-/// let ace_spades = Card::new(Suit::Spade, Rank::Face(Face::Ace));
-/// let king_diamonds = Card::new(Suit::Diamond, Rank::Face(Face::King));
-/// assert!(ace_spades > king_diamonds);
-/// ```
-#[repr(u8)]
-#[derive(Debug, Clone, Copy, PartialEq, Eq, PartialOrd, Ord)]
-pub enum Face {
     /// The Jack card, traditionally representing a royal servant or knight.
     Jack = 11,
     /// The Queen card, traditionally representing a female royal figure.

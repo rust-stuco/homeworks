@@ -1,6 +1,6 @@
 //! This module contains the definition and implementation of the [`Deck`] type.
 
-use crate::card::{Card, Face, Number, Rank, Suit};
+use crate::card::{Card, Rank, Suit};
 use rand::seq::SliceRandom;
 
 /// The number of cards in a standard playing card deck.
@@ -22,21 +22,22 @@ impl Deck {
         for suit in [Suit::Diamond, Suit::Club, Suit::Heart, Suit::Spade] {
             // Note that you can avoid a lot of this boilerplate code by using an external crate:
             // https://docs.rs/enum-iterator/latest/enum_iterator/
-            for number in [
-                Number::Two,
-                Number::Three,
-                Number::Four,
-                Number::Five,
-                Number::Six,
-                Number::Seven,
-                Number::Eight,
-                Number::Nine,
-                Number::Ten,
+            for rank in [
+                Rank::Two,
+                Rank::Three,
+                Rank::Four,
+                Rank::Five,
+                Rank::Six,
+                Rank::Seven,
+                Rank::Eight,
+                Rank::Nine,
+                Rank::Ten,
+                Rank::Jack,
+                Rank::Queen,
+                Rank::King,
+                Rank::Ace,
             ] {
-                cards.push(Card::new(suit, Rank::Number(number)));
-            }
-            for face in [Face::Jack, Face::Queen, Face::King, Face::Ace] {
-                cards.push(Card::new(suit, Rank::Face(face)));
+                cards.push(Card::new(suit, rank));
             }
         }
 

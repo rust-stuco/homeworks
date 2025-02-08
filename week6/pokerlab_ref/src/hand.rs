@@ -1,92 +1,79 @@
 //! Module for poker hand evaluation and comparison.
-//! 
+//!
 //! There is a bit of Poker lingo that this file uses. If you find yourself confused by anything,
 //! please reach out to us and ask! The term that will probably be most confusing is a "kicker".
 //! A "kicker", also known as a "side card", is simply a card that does not take part in determine
 //! the rank of a hand. For example, if we want to compare 2 four-of-a-kinds, the fifth card in each
 //! hand would be considered the kicker. Note that kickers are still important in breaking ties.
-//! 
+//!
 //! A good way to approach this assignment is to first read the code in `src/card.rs`, and then
 //! read all of the starter code in this file (`src/hand.rs`). If you are unfamiliar with Poker, you
 //! may also want to read up on the hands you can make on [Wikipedia]. Finally (as a good rule of
 //! thumb for any programming course), make sure to go over the test cases to make sure you have a
 //! correct idea of what you should implement.
-//! 
+//!
 //! We have purposefully made some of the struct definitions somewhat unwieldy. You are allowed to
 //! change _any_ of the private fields of structs in this file, as long as you are able to implement
 //! the all of the [`Hand`] methods without issue. You are also allowed to modify the
 //! [`PokerHand::solve`] method, but be aware that the test cases are _only_ using that method to
 //! check the correctness of your implementation.
-//! 
+//!
 //! [Wikipedia]: https://en.wikipedia.org/wiki/List_of_poker_hands
 
-use crate::card::{Card, Face, Number, Rank, Suit};
-use derivative::Derivative;
+use crate::card::{Card, Rank};
 
 /// Represents a high card hand, consisting of five unpaired cards.
 #[derive(Debug, Clone, Copy, PartialEq, Eq, PartialOrd, Ord)]
 pub struct HighCard {
-    /// The highest card in the hand.
-    high_card: Card,
-    /// The remaining four cards in descending order.
-    kickers: [Card; 4],
+    /// The highest card rank in the hand.
+    high_card: Rank,
+    /// The remaining four card ranks in descending order.
+    kickers: [Rank; 4],
 }
 
 /// Represents a hand containing one pair and three kickers.
 #[derive(Debug, Clone, Copy, PartialEq, Eq, PartialOrd, Ord)]
 pub struct OnePair {
-    /// The matched pair of cards.
-    pair: Pair,
-    /// The remaining three cards in descending order.
-    kickers: [Card; 3],
+    /// The rank of the matched pair of cards.
+    pair: Rank,
+    /// The remaining three card ranks in descending order.
+    kickers: [Rank; 3],
 }
 
 /// Represents a hand containing two pairs and one kicker.
 #[derive(Debug, Clone, Copy, PartialEq, Eq, PartialOrd, Ord)]
 pub struct TwoPair {
     /// The higher ranked pair.
-    first_pair: Pair,
+    first_pair: Rank,
     /// The lower ranked pair.
-    second_pair: Pair,
+    second_pair: Rank,
     /// The remaining unpaired card.
-    kicker: Card,
+    kicker: Rank,
 }
 
 /// Represents a hand containing three cards of the same rank and two kickers.
 #[derive(Debug, Clone, Copy, PartialEq, Eq, PartialOrd, Ord)]
 pub struct ThreeOfAKind {
-    /// The three matched cards.
-    triple: Triple,
-    /// The remaining two cards in descending order.
-    kickers: [Card; 2],
+    /// The rank of the three matched cards.
+    triple: Rank,
+    /// The remaining two card ranks in descending order.
+    kickers: [Rank; 2],
 }
 
 /// Represents five consecutive cards of different suits.
-/// 
+///
 /// Note that the [`derivative`] derive macro here simply lets us ignore specific fields when
 /// auto-implementing traits. Here, we want to ignore the `suit` field when comparing against other
 /// `Straight`s, as Poker considers two straights of the same rank but with different suits a tie.
-#[derive(Debug, Clone, Copy, Derivative)]
-#[derivative(PartialEq, Eq, PartialOrd, Ord)]
+#[derive(Debug, Clone, Copy, PartialEq, Eq, PartialOrd, Ord)]
 pub struct Straight {
     /// The highest rank in the straight (highest can be an Ace, lowest is a 5 for a wheel).
     high_card: Rank,
-    /// The suits of the five cards in the straight.
-    #[derivative(PartialEq = "ignore", PartialOrd = "ignore", Ord = "ignore")]
-    suits: [Suit; 5],
 }
 
-/// Represents five cards of the same suit.
-/// 
-/// Note that the [`derivative`] derive macro here simply lets us ignore specific fields when
-/// auto-implementing traits. Here, we want to ignore the `suit` field when comparing against other
-/// `Flush`es, as Poker considers two flushes with the exact same ranks a tie.
-#[derive(Debug, Clone, Copy, Derivative)]
-#[derivative(PartialEq, Eq, PartialOrd, Ord)]
+/// Represents five cards of the same suit. The suit of the cards is ignored.
+#[derive(Debug, Clone, Copy, PartialEq, Eq, PartialOrd, Ord)]
 pub struct Flush {
-    /// The suit shared by all five cards.
-    #[derivative(PartialEq = "ignore", PartialOrd = "ignore", Ord = "ignore")]
-    suit: Suit,
     /// The ranks of the five cards in descending order.
     ranks: [Rank; 5],
 }
@@ -94,10 +81,10 @@ pub struct Flush {
 /// Represents a hand containing three cards of one rank and two cards of another rank.
 #[derive(Debug, Clone, Copy, PartialEq, Eq, PartialOrd, Ord)]
 pub struct FullHouse {
-    /// The three matched cards.
-    triple: Triple,
-    /// The two matched cards.
-    pair: Pair,
+    /// The rank of the three matched cards.
+    triple: Rank,
+    /// The rank of the two matched cards.
+    pair: Rank,
 }
 
 /// Represents a hand containing four cards of the same rank and one kicker.
@@ -105,61 +92,21 @@ pub struct FullHouse {
 pub struct FourOfAKind {
     /// The rank shared by all four cards.
     quad: Rank,
-    /// The remaining unpaired card.
-    kicker: Card,
+    /// The remaining unpaired card rank.
+    kicker: Rank,
 }
 
-/// Represents five consecutive cards of the same suit.
-/// 
-/// Note that the [`derivative`] derive macro here simply lets us ignore specific fields when
-/// auto-implementing traits. Here, we want to ignore the `suit` field when comparing against other
-/// `StraightFlush`es. See [`Straight`] and [`Flush`] for similar examples.
-#[derive(Debug, Clone, Copy, Derivative)]
-#[derivative(PartialEq, Eq, PartialOrd, Ord)]
+/// Represents five consecutive cards of the same suit. The suits of the card are ignored.
+#[derive(Debug, Clone, Copy, PartialEq, Eq, PartialOrd, Ord)]
 pub struct StraightFlush {
     /// The highest rank in the straight (highest can be an Ace, lowest is a 5 for a wheel).
     high_card: Rank,
-    /// The suit shared by all five cards.
-    #[derivative(PartialEq = "ignore", PartialOrd = "ignore", Ord = "ignore")]
-    suit: Suit,
-}
-
-/// Represents a pair of cards of the same rank.
-///
-/// Note that this is different from [`OnePair`], which also includes kicker cards.
-/// 
-/// Also note that the [`derivative`] derive macro here simply lets us ignore specific fields when
-/// auto-implementing traits. When comparing [`Pair`]s, we do not really care about the suits.
-#[derive(Debug, Clone, Copy, Derivative)]
-#[derivative(PartialEq, Eq, PartialOrd, Ord)]
-struct Pair {
-    /// The rank shared by both cards in a pair.
-    rank: Rank,
-    /// The suits of the two cards in a pair.
-    #[derivative(PartialEq = "ignore", PartialOrd = "ignore", Ord = "ignore")]
-    suits: [Suit; 2],
-}
-
-/// Represents three cards of the same rank.
-///
-/// Note that this is different from [`ThreeOfAKind`], which also includes kicker cards.
-/// 
-/// Also note that the [`derivative`] derive macro here simply lets us ignore specific fields when
-/// auto-implementing traits. When comparing [`Triple`]s, we do not really care about the suits.
-#[derive(Debug, Clone, Copy, Derivative)]
-#[derivative(PartialEq, Eq, PartialOrd, Ord)]
-struct Triple {
-    /// The rank shared by all three cards.
-    rank: Rank,
-    /// The suits of the three cards.
-    #[derivative(PartialEq = "ignore", PartialOrd = "ignore", Ord = "ignore")]
-    suits: [Suit; 3],
 }
 
 /// Represents different poker hand rankings with their respective cards.
 ///
 /// Each variant contains the relevant cards that make up the hand.
-/// 
+///
 /// Note that this type has easily derivable comparison traits, as later [`PokerHand`] variants
 /// always beat earlier ones, and each of the variants are able to be compared with themselves.
 #[derive(Debug, Clone, Copy, PartialEq, Eq, PartialOrd, Ord)]
@@ -222,8 +169,13 @@ impl PokerHand {
 
         // If no other hand is found, it's a high card hand.
         PokerHand::HighCard(HighCard {
-            high_card: hand.cards[0],
-            kickers: [hand.cards[1], hand.cards[2], hand.cards[3], hand.cards[4]],
+            high_card: hand.cards[0].rank(),
+            kickers: [
+                hand.cards[1].rank(),
+                hand.cards[2].rank(),
+                hand.cards[3].rank(),
+                hand.cards[4].rank(),
+            ],
         })
     }
 }
@@ -238,6 +190,7 @@ pub struct Hand {
 }
 
 /// TODO docs.
+#[derive(Debug)]
 pub struct UniqueError;
 
 impl Hand {
@@ -252,7 +205,9 @@ impl Hand {
 
         // Check for any duplicate cards.
         for i in 0..4 {
-            if cards[i] == cards[i + 1] && cards[i].rank() == cards[i + 1].rank() {
+            // Need to also check if the suits are equal since `Card` equality does not consider
+            // suits when checking comparison.
+            if cards[i] == cards[i + 1] && cards[i].suit() == cards[i + 1].suit() {
                 return Err(UniqueError);
             }
         }
@@ -267,10 +222,9 @@ impl Hand {
     pub fn get_straight_flush(&self) -> Option<StraightFlush> {
         // Check if we have both a straight and a flush.
         if let Some(straight) = self.get_straight() {
-            if let Some(flush) = self.get_flush() {
+            if self.get_flush().is_some() {
                 return Some(StraightFlush {
                     high_card: straight.high_card,
-                    suit: flush.suit,
                 });
             }
         }
@@ -287,7 +241,7 @@ impl Hand {
         if self.cards[0].rank() == self.cards[3].rank() {
             return Some(FourOfAKind {
                 quad: self.cards[0].rank(),
-                kicker: self.cards[4],
+                kicker: self.cards[4].rank(),
             });
         }
 
@@ -295,7 +249,7 @@ impl Hand {
         if self.cards[1].rank() == self.cards[4].rank() {
             return Some(FourOfAKind {
                 quad: self.cards[1].rank(),
-                kicker: self.cards[0],
+                kicker: self.cards[0].rank(),
             });
         }
 
@@ -309,13 +263,10 @@ impl Hand {
         // First check if have a triple.
         if let Some(ThreeOfAKind { triple, kickers }) = self.get_triple() {
             // Check if the kickers form a pair.
-            if kickers[0].rank() == kickers[1].rank() {
+            if kickers[0] == kickers[1] {
                 return Some(FullHouse {
                     triple,
-                    pair: Pair {
-                        rank: kickers[0].rank(),
-                        suits: [kickers[0].suit(), kickers[1].suit()],
-                    },
+                    pair: kickers[0],
                 });
             }
         }
@@ -336,7 +287,6 @@ impl Hand {
         }
 
         Some(Flush {
-            suit: first_suit,
             ranks: [
                 self.cards[0].rank(),
                 self.cards[1].rank(),
@@ -357,7 +307,7 @@ impl Hand {
         // Check for standard straight.
         let mut is_sequential = true;
         for i in 0..4 {
-            if self.cards[i].rank().as_u8() != self.cards[i + 1].rank().as_u8() + 1 {
+            if self.cards[i].rank() as u8 != self.cards[i + 1].rank() as u8 + 1 {
                 is_sequential = false;
                 break;
             }
@@ -366,33 +316,19 @@ impl Hand {
         if is_sequential {
             return Some(Straight {
                 high_card: self.cards[0].rank(),
-                suits: [
-                    self.cards[0].suit(),
-                    self.cards[1].suit(),
-                    self.cards[2].suit(),
-                    self.cards[3].suit(),
-                    self.cards[4].suit(),
-                ],
             });
         }
 
         // Do a final check for a wheel / Ace-low straight (Ace, 2, 3, 4, 5).
-        if self.cards[0].rank() == Rank::Face(Face::Ace)
-            && self.cards[1].rank() == Rank::Number(Number::Five)
-            && self.cards[2].rank() == Rank::Number(Number::Four)
-            && self.cards[3].rank() == Rank::Number(Number::Three)
-            && self.cards[4].rank() == Rank::Number(Number::Two)
+        if self.cards[0].rank() == Rank::Ace
+            && self.cards[1].rank() == Rank::Five
+            && self.cards[2].rank() == Rank::Four
+            && self.cards[3].rank() == Rank::Three
+            && self.cards[4].rank() == Rank::Two
         {
             return Some(Straight {
                 // In a wheel, 5 is the high card.
-                high_card: Rank::Number(Number::Five),
-                suits: [
-                    self.cards[0].suit(),
-                    self.cards[1].suit(),
-                    self.cards[2].suit(),
-                    self.cards[3].suit(),
-                    self.cards[4].suit(),
-                ],
+                high_card: Rank::Five,
             });
         }
 
@@ -407,43 +343,22 @@ impl Hand {
         // Check each possible position for three matching cards.
         if self.cards[0].rank() == self.cards[2].rank() {
             return Some(ThreeOfAKind {
-                triple: Triple {
-                    rank: self.cards[0].rank(),
-                    suits: [
-                        self.cards[0].suit(),
-                        self.cards[1].suit(),
-                        self.cards[2].suit(),
-                    ],
-                },
-                kickers: [self.cards[3], self.cards[4]],
+                triple: self.cards[0].rank(),
+                kickers: [self.cards[3].rank(), self.cards[4].rank()],
             });
         }
 
         if self.cards[1].rank() == self.cards[3].rank() {
             return Some(ThreeOfAKind {
-                triple: Triple {
-                    rank: self.cards[1].rank(),
-                    suits: [
-                        self.cards[1].suit(),
-                        self.cards[2].suit(),
-                        self.cards[3].suit(),
-                    ],
-                },
-                kickers: [self.cards[0], self.cards[4]],
+                triple: self.cards[1].rank(),
+                kickers: [self.cards[0].rank(), self.cards[4].rank()],
             });
         }
 
         if self.cards[2].rank() == self.cards[4].rank() {
             return Some(ThreeOfAKind {
-                triple: Triple {
-                    rank: self.cards[2].rank(),
-                    suits: [
-                        self.cards[2].suit(),
-                        self.cards[3].suit(),
-                        self.cards[4].suit(),
-                    ],
-                },
-                kickers: [self.cards[0], self.cards[1]],
+                triple: self.cards[2].rank(),
+                kickers: [self.cards[0].rank(), self.cards[1].rank()],
             });
         }
 
@@ -462,11 +377,8 @@ impl Hand {
         {
             // Look for a second pair in the kickers.
             for i in 0..=1 {
-                if kickers[i].rank() == kickers[i + 1].rank() {
-                    let second_pair = Pair {
-                        rank: kickers[i].rank(),
-                        suits: [kickers[i].suit(), kickers[i + 1].suit()],
-                    };
+                if kickers[i] == kickers[i + 1] {
+                    let second_pair = kickers[i];
                     let remaining_kicker = if i == 0 { kickers[2] } else { kickers[0] };
 
                     return Some(TwoPair {
@@ -489,10 +401,7 @@ impl Hand {
         for i in 0..4 {
             // For each consecutive card, check if the ranks are the same.
             if self.cards[i].rank() == self.cards[i + 1].rank() {
-                let pair = Pair {
-                    rank: self.cards[i].rank(),
-                    suits: [self.cards[i].suit(), self.cards[i + 1].suit()],
-                };
+                let pair = self.cards[i].rank();
 
                 // Get the remaining cards (kickers).
                 let mut indexes = vec![0, 1, 2, 3, 4];
@@ -500,9 +409,9 @@ impl Hand {
                 indexes.remove(i);
 
                 let kickers = [
-                    self.cards[indexes[0]],
-                    self.cards[indexes[1]],
-                    self.cards[indexes[2]],
+                    self.cards[indexes[0]].rank(),
+                    self.cards[indexes[1]].rank(),
+                    self.cards[indexes[2]].rank(),
                 ];
 
                 return Some(OnePair { pair, kickers });
