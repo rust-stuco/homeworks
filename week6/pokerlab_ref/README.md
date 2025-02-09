@@ -2,20 +2,53 @@
 
 # Poker Lab
 
-This goal of this homework is to expose you to working with traits, specifically the traits found in
-the standard library.
+This goal of this homework is to further expose you to working with structs and enums, as well as
+implementing the traits found in the standard library.
 
 You will be modeling [Poker](https://en.wikipedia.org/wiki/Poker) by implementing comparison between
 sets of cards, or a "hand" of cards.
 
-This lab is built on top of an earlier lab (Card Lab), in which you modeled a playing card in a
+This lab is a continuation of an earlier lab (Card Lab), in which you modeled a playing card in a
 standard 52-card deck. In that lab, you implemented the comparison traits for individual cards. In
-this lab, you will additionally model a [`PokerHand`] type that represents a hand of 5 cards and
-implement the comparison traits on this new type.
+this lab, you will now model a comparison among multiple Cards, specifically a [`PokerHand`] type
+that represents a "hand" of 5 cards.
 
-[`PokerHand`]: crate::poker_hand::PokerHand
+We have provided our own definition and implementation of [`Card`] in `src/card.rs`. Take some time
+to read over the documentation and code for [`Card`], as it is slightly different than the one we
+asked you to implement in the previous lab (the differences will hopefully make implementing
+[`PokerHand`] easier).
 
-TODO
+_You should compare and contrast the `card.rs` file in this assignment to the one from your own Card
+Lab. You'll notice that we are no longer manually implementing any of the comparison traits, and
+instead we are using the `derive` macro to auto-implement their behavior. Make sure you understand
+how the derived traits work!_
+
+## Implementation
+
+You will need to fill in the implementation of 8 methods on the [`Hand`] type (located in
+`src/hand/rs`), which is essentially a wrapper struct for an array of 5 [`Card`]s. We use these
+methods on [`Hand`] to implement the [`solve`] method on [`PokerHand`]. We have provided the
+definition and implementation of [`PokerHand`] to you, and you can read more about this type in its
+documentation.
+
+There are 30 test cases, all located inside `tests/poker_tests.rs`. Each test is worth 5 points, for
+a total of up to 150 points. By implementing more methods on [`Hand`], you will pass more test
+cases. Remember that you can test your code by running `cargo test`!
+
+We would recommend going bottom up: start with implementing the method for detecting a single pair,
+then two pairs, etc. You could get 80/150 points just by implementing one method (though we would
+encourage you to try and implement all of them for extra credit)! You also do not need to go in
+order, and if you want to skip any of the methods that is totally fine.
+
+You are allowed to change any of the fields of the structs defined in `src/hand.rs` if you feel that
+it would be easier for you to use different fields. As long as you pass the test cases, mostly
+everything is fair game (other than plagiarism). If you have any questions about this, please do not
+hesitate to ask us!
+
+[`Card`]: crate::card::Card
+[`Hand`]: crate::hand::Hand
+[`PokerHand`]: crate::hand::PokerHand
+[`solve`]: crate::hand::PokerHand::solve
 
 # Submission
 

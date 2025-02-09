@@ -26,8 +26,8 @@ use crate::card::{Card, Rank};
 /// relevant cards that make up the hand.
 ///
 /// Note to students: When you auto derive [`PartialOrd`] and [`Ord`], the enum variants are ordered
-/// by declaration order. For example, `HighCard` will always come before `OnePair`.
-/// 
+/// by declaration order. For example, [`HighCard`] will always come before [`OnePair`].
+///
 /// This type has easily derivable comparison traits, as later [`PokerHand`] variants always beat
 /// earlier ones, and each of the variants are able to be compared with themselves.
 ///

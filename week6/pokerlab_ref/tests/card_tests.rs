@@ -1,4 +1,7 @@
 //! Tests for [`Card`] comparisons.
+//!
+//! Note that we are importing every variant of both [`Rank`] and [`Suit`] directly into this module
+//! to make things easier to read.
 
 use pokerlab_ref::card::{Card, Rank::*, Suit::*};
 

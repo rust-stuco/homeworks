@@ -1,7 +1,10 @@
-//! Tests for Poker hand rank comparisons.
+//! Tests for [`PokerHand`] rank comparisons.
 //!
-//! Disclaimer: many of the poker hand tests were generated with AI, since a lot of it consists of
-//! boilerplate code. However, we were still the ones coming up with the specific test scenarios.
+//! Note that we are importing every variant of both [`Rank`] and [`Suit`] directly into this module
+//! to make things easier to read.
+//!
+//! Disclaimer: many of these tests were generated with AI, since a lot of it consists of repetitive
+//! boilerplate code. However, the specific test scenarios were manually crafted.
 
 use pokerlab_ref::card::{Card, Rank::*, Suit::*};
 use pokerlab_ref::hand::{Hand, PokerHand};

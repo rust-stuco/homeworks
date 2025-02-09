@@ -19,8 +19,8 @@ use derivative::Derivative;
 /// that can be either a number card (2-10) or a face card (Jack, Queen, King, Ace).
 ///
 /// This type implements the traits [`PartialEq`], [`Eq`], [`PartialOrd`], and [`Ord`]. Note that
-/// `Card` only considers the `Rank` of the `Card` when doing comparisons, so the Three of Clubs is
-/// considered to have equal value to the Three of Hearts.
+/// `Card` only considers the [`Rank`] of the `Card` when doing comparisons, so the Three of Clubs
+/// is considered to have equal value to the Three of Hearts.
 ///
 /// This is achieved using the [`derivative`] macro, where instead of using all of the fields of a
 /// struct to auto-implement a trait, we are able to ignore specific fields. If you have questions
