@@ -12,11 +12,11 @@
 //! thumb for any programming course), make sure to go over the test cases to make sure you have a
 //! correct idea of what you should implement.
 //!
-//! We have purposefully made some of the struct definitions somewhat unwieldy. You are allowed to
-//! change _any_ of the private fields of structs in this file, as long as you are able to implement
-//! the all of the [`Hand`] methods without issue. You are also allowed to modify the
-//! [`PokerHand::solve`] method, but be aware that the test cases are _only_ using that method to
-//! check the correctness of your implementation.
+//! You are also allowed to change _any_ of the private fields of structs in this file, as long as
+//! you are able to implement the all of the [`Hand`] methods without issue. You are also allowed to
+//! modify the [`PokerHand::solve`] method, but be aware that the test cases are _solely_ using that
+//! method to check the correctness of your implementation, so make sure not to play around with it
+//! too much.
 //!
 //! [Wikipedia]: https://en.wikipedia.org/wiki/List_of_poker_hands
 
@@ -202,7 +202,7 @@ impl Hand {
     ///
     /// Stores the cards in reverse (descending) sorted order.
     ///
-    /// Returns an error if any cards are duplicates.
+    /// Returns [`None`] if any cards are duplicates.
     pub fn new(mut cards: [Card; 5]) -> Option<Self> {
         // Sort in reverse order.
         cards.sort_by(|a, b| b.cmp(a));
