@@ -22,12 +22,14 @@
 
 use crate::card::{Card, Rank};
 
-/// Represents different poker hand rankings with their respective cards.
+/// Represents different poker hand rankings with their respective cards. Each variant contains the
+/// relevant cards that make up the hand.
 ///
-/// Each variant contains the relevant cards that make up the hand.
-///
-/// Note that this type has easily derivable comparison traits, as later [`PokerHand`] variants
-/// always beat earlier ones, and each of the variants are able to be compared with themselves.
+/// Note to students: When you auto derive [`PartialOrd`] and [`Ord`], the enum variants are ordered
+/// by declaration order. For example, `HighCard` will always come before `OnePair`.
+/// 
+/// This type has easily derivable comparison traits, as later [`PokerHand`] variants always beat
+/// earlier ones, and each of the variants are able to be compared with themselves.
 ///
 /// See the integration tests in `tests/poker_tests.rs` for examples.
 #[derive(Debug, Clone, Copy, PartialEq, Eq, PartialOrd, Ord)]
@@ -193,17 +195,13 @@ pub struct Hand {
     cards: [Card; 5],
 }
 
-/// TODO docs.
-#[derive(Debug)]
-pub struct UniqueError;
-
 impl Hand {
     /// Creates a new `Hand` of 5 [`Card`]s.
     ///
     /// Stores the cards in reverse (descending) sorted order.
     ///
     /// Returns an error if any cards are duplicates.
-    pub fn new(mut cards: [Card; 5]) -> Result<Self, UniqueError> {
+    pub fn new(mut cards: [Card; 5]) -> Option<Self> {
         // Sort in reverse order.
         cards.sort_by(|a, b| b.cmp(a));
 
@@ -212,11 +210,11 @@ impl Hand {
             // Need to also check if the suits are equal since `Card` equality does not consider
             // suits when checking comparison.
             if cards[i] == cards[i + 1] && cards[i].suit() == cards[i + 1].suit() {
-                return Err(UniqueError);
+                return None;
             }
         }
 
-        Ok(Self { cards })
+        Some(Self { cards })
     }
 
     /// Returns a [`StraightFlush`] if the hand contains consecutive cards of the same suit,
