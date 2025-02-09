@@ -224,31 +224,6 @@ fn test_three_of_a_kind_vs_three_of_a_kind() {
 }
 
 #[test]
-fn test_straight_vs_one_pair() {
-    // Straight hand: (9♠ 8♣ 7♦ 6♥ 5♣).
-    let straight_hand = Hand::new([
-        Card::new(Spade, Nine),
-        Card::new(Club, Eight),
-        Card::new(Diamond, Seven),
-        Card::new(Heart, Six),
-        Card::new(Club, Five),
-    ])
-    .unwrap();
-
-    // One pair hand: (A♠ A♣ K♦ Q♥ J♣).
-    let one_pair_hand = Hand::new([
-        Card::new(Spade, Ace),
-        Card::new(Club, Ace),
-        Card::new(Diamond, King),
-        Card::new(Heart, Queen),
-        Card::new(Club, Jack),
-    ])
-    .unwrap();
-
-    assert_winner(straight_hand, one_pair_hand);
-}
-
-#[test]
 fn test_straight_vs_two_pair() {
     // Straight hand: (9♠ 8♣ 7♦ 6♥ 5♣).
     let straight_hand = Hand::new([
@@ -274,14 +249,14 @@ fn test_straight_vs_two_pair() {
 }
 
 #[test]
-fn test_straight_vs_three_of_a_kind() {
-    // Straight hand: (9♠ 8♣ 7♦ 6♥ 5♣).
-    let straight_hand = Hand::new([
-        Card::new(Spade, Nine),
-        Card::new(Club, Eight),
-        Card::new(Diamond, Seven),
-        Card::new(Heart, Six),
-        Card::new(Club, Five),
+fn test_wheel_straight_vs_three_of_a_kind() {
+    // Wheel straight hand: (5♠ 4♣ 3♦ 2♥ A♣).
+    let wheel_straight_hand = Hand::new([
+        Card::new(Spade, Five),
+        Card::new(Club, Four),
+        Card::new(Diamond, Three),
+        Card::new(Heart, Two),
+        Card::new(Club, Ace),
     ])
     .unwrap();
 
@@ -295,7 +270,7 @@ fn test_straight_vs_three_of_a_kind() {
     ])
     .unwrap();
 
-    assert_winner(straight_hand, three_of_a_kind_hand);
+    assert_winner(wheel_straight_hand, three_of_a_kind_hand);
 }
 
 #[test]
@@ -721,6 +696,31 @@ fn test_straight_flush_vs_flush() {
     .unwrap();
 
     assert_winner(straight_flush_hand, flush_hand);
+}
+
+#[test]
+fn test_straight_flush_vs_full_house() {
+    // Straight flush hand: (T♠ 9♠ 8♠ 7♠ 6♠).
+    let straight_flush_hand = Hand::new([
+        Card::new(Spade, Ten),
+        Card::new(Spade, Nine),
+        Card::new(Spade, Eight),
+        Card::new(Spade, Seven),
+        Card::new(Spade, Six),
+    ])
+    .unwrap();
+
+    // Full house hand: (A♠ A♣ A♦ K♥ K♣).
+    let full_house_hand = Hand::new([
+        Card::new(Spade, Ace),
+        Card::new(Club, Ace),
+        Card::new(Diamond, Ace),
+        Card::new(Heart, King),
+        Card::new(Club, King),
+    ])
+    .unwrap();
+
+    assert_winner(straight_flush_hand, full_house_hand);
 }
 
 #[test]
