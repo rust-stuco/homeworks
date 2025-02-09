@@ -131,7 +131,9 @@ pub struct StraightFlush {
 impl PokerHand {
     /// Given 5 cards as input, creates a `PokerHand` with the correct ranking.
     ///
-    /// Note that there is definitely a cleaner way to implement Poker hands, but since
+    /// Note that there is definitely a cleaner way to implement Poker hands, but by breaking it
+    /// down into these specific types we can support partial implementation that don't handle every
+    /// single kind of Poker hand!
     pub fn solve(hand: Hand) -> Self {
         // Check for a straight flush first (highest ranking hand).
         if let Some(straight_flush) = hand.get_straight_flush() {
