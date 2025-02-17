@@ -45,16 +45,19 @@ The extra feature you want to add is **up to you** once you've finished the base
 - A very basic feature that you could add is a "count" flag through `-c` or `--count`, which changes
   the output to show how many lines a pattern is in, rather than printing out all of the lines.
 - Another feature you could implement is searching directories as well as specific files.
-- You could even add regex support! You may want to use the
-  [`regex`](https://docs.rs/regex/latest/regex/) crate for this.
-- If you would like, you can try to integrate a third-party CLI handling library such as
-  [`clap`](https://docs.rs/clap/latest/clap/) or an error-handling library such as
-  [`anyhow`](https://docs.rs/anyhow/latest/anyhow/) into your code. If you would like to do this
-  with a different third-party crate, please ask us for permission first!
+- You can add regex support by using the [`regex`](https://docs.rs/regex/latest/regex/) crate.
+- You can integrate a third-party CLI library such as [`clap`](https://docs.rs/clap/latest/clap/) to
+  make the command line interface more user-friendly.
+- You can integrate a third-party error-handling library such as
+  [`anyhow`](https://docs.rs/anyhow/latest/anyhow/) or
+  [`thiserror`](https://docs.rs/thiserror/latest/thiserror/) into your error handling code.
+
+If you would like to do this with a different third-party crate, please ask us for permission first!
 
 There are many things that you could do here, so try and be creative if you have time!
 A good source of inspiration would be the man page for
-[`grep`](https://man7.org/linux/man-pages/man1/grep.1.html).
+[`grep`](https://man7.org/linux/man-pages/man1/grep.1.html). If you have more than one additional
+feature, we will probably give you extra credit points in your code review.
 
 Whatever you choose, make sure you document it by indicating what your feature is in your
 documentation comments. The very first thing we will do when grading your submission will be running
@@ -88,8 +91,8 @@ Nevertheless, we still believe that this is an important exercise to go through 
 need to go through this process in the future.
 
 We are going to be really harsh! This practice is taken from CMU's Operating Systems course,
-[15-410/615](https://www.cs.cmu.edu/~410/). Please don't worry if you receive a low code review
-score, and remember that this is all extra credit.
+[15-410/605](https://www.cs.cmu.edu/~410/). Please don't worry if you receive a low code review
+score, and remember that this is all extra credit!
 
 # Submission
 
@@ -99,7 +102,7 @@ directory)!
 Please do not include the `target/` subdirectory when you zip the crate's root folder, either
 manually or with `cargo clean`. You can always regenerate it with `cargo build` and `cargo test`.
 
-Make sure that your code is fully formated and linted with the following commands:
+Make sure that your code is fully formatted and linted with the following commands:
 
 ```sh
 cargo clippy && cargo fmt --all -- --check
