@@ -35,12 +35,8 @@ iterator, so be aware of the difference. It is not so different that you will ne
 everything from scratch.** You will, however, need to make some changes to the starter code in order
 to get things to compile (mainly removing the placeholder `'static` lifetimes).
 
-There is a unit test in `tests/str.rs` that is commented out. You will need to make sure that test
-compiles in order to receive credit for this assignment. As always, you can run all of the tests
-with `cargo test`!
-
 _Note that Jon does not reveal how to make those compile until the end of the livestream (the
-"Multiple lifetimes" sections)._ 
+"Multiple lifetimes" sections)._
 
 **Finally, it is probably in your interest to watch the livestream _before_ writing any code, as you
 will not need to write more than 20 lines of code, and understanding the concepts is far more

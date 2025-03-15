@@ -1,5 +1,20 @@
 use super::*;
 
+#[test]
+fn test_str_compiles() {
+    let haystack = String::from("a b c d e");
+
+    let results = {
+        let delimeter = String::from(" ");
+
+        let split_result: Vec<&str> = Split::new(&haystack, &delimeter).collect();
+
+        split_result
+    };
+
+    assert_eq!(results, vec!["a", "b", "c", "d", "e"]);
+}
+
 test_str!(
     test_crust_of_rust_it_works,
     "a b c d e",
