@@ -1,16 +1,23 @@
 /// A struct that represents split operations on a string.
+///
+/// TODO(student): You will need to change the `SplitPattern` struct to use lifetime parameter(s).
 pub struct SplitPattern<P> {
     /// The remainder of the string that has not yet been split.
     ///
     /// Before the iterator has yielded any substrings, this is the entire string.
     /// After each call to `next`, this is the part of the string that has not yet been split.
+    ///
+    /// TODO(student): Replace the `'static` lifetime with something else!
     remainder: Option<&'static str>,
+
     /// The generic delimiter pattern used to split the haystack string.
     delimiter: P,
 }
 
 impl<P> SplitPattern<P> {
     /// Creates a new `Split` instance with the given haystack and delimiter.
+    ///
+    /// TODO(student): Replace the `'static` lifetime with something else!
     pub fn new(haystack: &'static str, delimiter: P) -> Self {
         Self {
             remainder: Some(haystack),
@@ -25,6 +32,8 @@ where
 {
     /// This iterator yields substrings of the original `haystack` string, split by some delimiter
     /// pattern.
+    ///
+    /// TODO(student): Replace the `'static` lifetime with something else!
     type Item = &'static str;
 
     /// Returns the next substring of the original `haystack` string, split by some delimiter

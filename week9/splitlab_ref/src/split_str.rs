@@ -6,6 +6,7 @@ pub struct Split<'haystack, 'delimiter> {
     /// Before the iterator has yielded any substrings, this is the entire string.
     /// After each call to `next`, this is the part of the string that has not yet been split.
     remainder: Option<&'haystack str>,
+
     /// The delimiter used to split the haystack string.
     delimiter: &'delimiter str,
 }

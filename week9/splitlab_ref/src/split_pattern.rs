@@ -5,6 +5,7 @@ pub struct SplitPattern<'haystack, P> {
     /// Before the iterator has yielded any substrings, this is the entire string.
     /// After each call to `next`, this is the part of the string that has not yet been split.
     remainder: Option<&'haystack str>,
+
     /// The generic delimiter pattern used to split the haystack string.
     delimiter: P,
 }
@@ -38,7 +39,7 @@ where
 
         // Find the position of the delimiter in the remainder, if it exists.
         let Some((start, end)) = self.delimiter.find_next(remainder) else {
-            // If there is no delimeter in the remainder, return the entire remainder.
+            // If there is no delimiter in the remainder, return the entire remainder.
             return self.remainder.take();
         };
         assert_ne!(start, end, "Delimiter cannot be empty");

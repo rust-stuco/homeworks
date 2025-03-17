@@ -58,11 +58,11 @@ after you finish it, you can try to implement the iterator yourself!
 
 ### Livestream Sections
 
-Below are the sections. If they are ~~striked out~~, they are not absolutely necessary to watch in
+Below are the sections. If they are ~~struck out~~, they are not absolutely necessary to watch in
 order to finish this assignment, but they will definitely help you understand the concepts better.
 The **bolded** sections are ones that we think are **very** important.
 
-#### Naive Implementaton
+#### Naive Implementation
 
 In these sections, Jon walks you through a naive implementation of a split iterator.
 
@@ -108,7 +108,7 @@ at the reference solution on our GitHub that does not use `ref`._
 
 The code is working, but it will not work for very specific scenarios. What happens if the haystack
 and the delimiter have different lifetimes? Or in other words, what happens if they come from
-differenct places?
+different places?
 
 - **0:57:49 Multiple lifetimes, implementing until_char**
 - ~~1:03:19 Difference between a str and a String~~
@@ -116,7 +116,7 @@ differenct places?
 
 #### Generic Delimiters (Extra Credit):
 
-We can observe that our delimeters only need to have one operation: finding themselves inside a
+We can observe that our delimiters only need to have one operation: finding themselves inside a
 string! You can implement the `split_pattern` file which exposes a `Pattern` trait. This is a
 simplified version of the real `Pattern` trait in the standard library.
 
