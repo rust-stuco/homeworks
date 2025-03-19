@@ -30,21 +30,20 @@ community) explains exactly how to implement this iterator.
 Please don't spend too much time on this! The goal here is to understand how lifetimes work, not how
 to specifically implement something that is already in the standard library.
 
-**Also, the starter code we have given you is slightly different to how Jon implements this
-iterator, so be aware of the difference. It is not so different that you will need to rewrite
-everything from scratch.** You will, however, need to make some changes to the starter code in order
-to get things to compile (mainly removing the placeholder `'static` lifetimes).
+**Also, the starter code we have given you is slightly different to how Jon implements `Split`, so
+be aware of the difference. It is not so different that you will need to rewrite everything from
+scratch.** You will, however, need to make some changes to the starter code in order to get things
+to compile (mainly removing the placeholder `'static` lifetimes).
 
 _Note that Jon does not reveal how to make those compile until the end of the livestream (the
-"Multiple lifetimes" sections)._
+"Multiple lifetimes" sections). After that section, you only need to keep watching if you want to
+complete the extra credit in `src/split_pattern.rs`._
 
 **Finally, it is probably in your interest to watch the livestream _before_ writing any code, as you
 will not need to write more than 20 lines of code, and understanding the concepts is far more
 important.** If you try to finesse how much of the livestream you watch and how much code you write
 in between the sections, you will likely end up spending **more** time than if you just watched the
 entire livestream and wrote your own solution.
-
-<br>
 
 ## Livestream
 
