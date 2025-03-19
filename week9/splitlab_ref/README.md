@@ -12,7 +12,7 @@ When you use references, you are also using lifetimes, even if you can't see the
 In this homework, you will implement functionality similar to that of the [`split`] method on
 [`str`] in the Rust standard library. You will need to construct a `Split` struct that implements
 the [`Iterator`] trait, where the items it yields are slices of the original string (the
-`haystack`), deliminated by some `delimiter`.
+`haystack`), delimited by some `delimiter`.
 
 A correct solution is likely going to contain very few lines of code (~20). However, the interaction
 between the lifetimes and your code will probably be tricky to implement on your own.

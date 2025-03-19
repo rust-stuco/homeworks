@@ -46,7 +46,7 @@ impl<'haystack> Iterator for Split<'haystack, '_> {
 
         // Find the position of the delimiter in the remainder, if it exists.
         let Some(index) = remainder.find(self.delimiter) else {
-            // If there is no delimeter in the remainder, return the entire remainder.
+            // If there is no delimiter in the remainder, return the entire remainder.
             return self.remainder.take();
         };
 
