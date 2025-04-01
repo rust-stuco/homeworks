@@ -31,7 +31,7 @@ where
     /// Returns the next substring of the original `haystack` string, split by some delimiter
     /// pattern.
     ///
-    /// Panics if the delimiter is empty (length 0).
+    /// Should panic if the delimiter is empty (length 0).
     fn next(&mut self) -> Option<Self::Item> {
         // If `remainder` is `None`, then there is nothing left to yield, and we should return
         // `None` immediately (with `?`).

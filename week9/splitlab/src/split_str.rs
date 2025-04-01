@@ -20,7 +20,7 @@ pub struct Split {
 impl Split {
     /// Creates a new `Split` instance with the given haystack and delimiter.
     ///
-    /// Panics if the delimiter is empty (length 0).
+    /// Should panic if the delimiter is empty (length 0).
     ///
     /// TODO(student): Replace the `'static` lifetimes with other lifetimes!
     pub fn new(haystack: &'static str, delimiter: &'static str) -> Self {
@@ -46,9 +46,6 @@ impl Iterator for Split {
     type Item = &'static str;
 
     /// Returns the next substring of the original `haystack` string, split by some delimiter.
-    ///
-    /// If the delimiter is the empty string, returns the next character (as a string) to avoid
-    /// infinitely looping.
     fn next(&mut self) -> Option<Self::Item> {
         todo!("Implement me (make sure to fix the lifetimes!)")
     }
