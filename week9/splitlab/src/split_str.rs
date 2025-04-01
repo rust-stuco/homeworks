@@ -24,10 +24,6 @@ impl Split {
     ///
     /// TODO(student): Replace the `'static` lifetimes with other lifetimes!
     pub fn new(haystack: &'static str, delimiter: &'static str) -> Self {
-        assert!(
-            !delimiter.is_empty(),
-            "Delimiter must not be an empty string"
-        );
 
         Self {
             remainder: Some(haystack),

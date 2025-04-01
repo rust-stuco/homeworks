@@ -16,10 +16,9 @@ impl<'haystack, 'delimiter> Split<'haystack, 'delimiter> {
     ///
     /// Should panic if the delimiter is empty (length 0).
     pub fn new(haystack: &'haystack str, delimiter: &'delimiter str) -> Self {
-        assert!(
-            !delimiter.is_empty(),
-            "Delimiter must not be an empty string"
-        );
+        if delimiter.is_empty() {
+            panic!("Delimiter cannot be empty")
+        }
 
         Self {
             remainder: Some(haystack),

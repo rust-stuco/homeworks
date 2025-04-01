@@ -15,6 +15,12 @@ fn test_str_compiles() {
     assert_eq!(results, vec!["a", "b", "c", "d", "e"]);
 }
 
+#[test]
+#[should_panic]
+fn test_str_empty_delimiter() {
+    let _ = Split::new(&String::from("a b c"), &String::from(""));
+}
+
 test_str!(
     test_crust_of_rust_it_works,
     "a b c d e",

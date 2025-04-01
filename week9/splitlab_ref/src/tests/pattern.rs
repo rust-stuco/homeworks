@@ -1,5 +1,11 @@
 use super::*;
 
+#[test]
+#[should_panic]
+fn test_pattern_empty_delimiter() {
+    let _ = SplitPattern::new(&String::from("a b c"), "").collect::<Vec<&str>>();
+}
+
 test_pattern!(
     test_crust_of_rust_until_char_test,
     "hello world",

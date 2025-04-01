@@ -42,7 +42,9 @@ where
             // If there is no delimiter in the remainder, return the entire remainder.
             return self.remainder.take();
         };
-        assert_ne!(start, end, "Delimiter cannot be empty");
+        if start == end {
+            panic!("Delimiter cannot be empty");
+        }
 
         // Compute the next string to yield as well as the new remainder.
         let next_str = &remainder[..start];
