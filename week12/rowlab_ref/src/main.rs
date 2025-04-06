@@ -4,5 +4,6 @@ use rowlab_ref::aggregate;
 const MEASUREMENTS_FILE: &str = "../measurements.txt";
 
 fn main() {
-    aggregate(MEASUREMENTS_FILE);
+    let res = aggregate(MEASUREMENTS_FILE);
+    println!("{}", res.into_string())
 }

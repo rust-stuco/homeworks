@@ -1,4 +1,8 @@
 //! Taken and modified from https://github.com/PurpleMyst/1brc.rs/blob/main/src/bin/generate_data.rs
+//!
+//! Note that if this were a real command line executable, we would instead make the constants
+//! command line arguments so that the user could provide their own files. However, since this is an
+//! autograded assignment and we need specific file names, we are keeping these fixed.
 
 use anyhow::{Result, anyhow};
 use indicatif::{ProgressIterator, ProgressStyle};
@@ -13,11 +17,14 @@ use std::{
 /// The output file to write the measurements into.
 const OUT_FILE: &str = "../measurements.txt";
 
+/// The file containing the different weather stations and their average temperatures.
+const STATIONS_FILE: &str = "src/bin/stations.txt";
+
 /// The regex pattern to read in the possible weather stations and their average temperatures.
 const STATIONS_PATTERN: &str = r#"new WeatherStation\("([^*]+)", ([^)]+)\)"#;
 
 /// The number of rows in the output measurements file.
-const MEASUREMENTS: usize = 1_000_000_000;
+const MEASUREMENTS: usize = 10000;
 
 /// The template for the progress bar.
 const PROGRESS_TEMPLATE: &str =
@@ -50,10 +57,15 @@ impl<'a> WeatherStation<'a> {
 }
 
 fn main() -> Result<()> {
+    // This regex will be used to parse the weather stations list.
     let re = Regex::new(STATIONS_PATTERN).unwrap();
 
     // Read in the weather stations.
-    let stations = include_str!("stations.txt")
+    let stations_content =
+        std::fs::read_to_string(STATIONS_FILE).expect("unable to read stations file");
+
+    // Parse the weather station list using regex.
+    let stations = stations_content
         .lines()
         .map(|line| {
             re.captures(line)
@@ -67,6 +79,7 @@ fn main() -> Result<()> {
         })
         .collect::<Result<Vec<WeatherStation>, _>>()?;
 
+    // The output measurements file writer.
     let mut writer = BufWriter::new(File::create(OUT_FILE)?);
     let mut rng = rand::rng();
 
