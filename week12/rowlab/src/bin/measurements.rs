@@ -24,7 +24,7 @@ const STATIONS_FILE: &str = "src/bin/stations.txt";
 const STATIONS_PATTERN: &str = r#"new WeatherStation\("([^*]+)", ([^)]+)\)"#;
 
 /// The number of rows in the output measurements file.
-const MEASUREMENTS: usize = 10000;
+const MEASUREMENTS: usize = 1_000_000_000;
 
 /// The template for the progress bar.
 const PROGRESS_TEMPLATE: &str =
