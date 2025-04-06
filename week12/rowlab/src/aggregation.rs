@@ -40,7 +40,7 @@ impl StationAggregation {
     }
 
     /// Updates the aggregation with a new measurement.
-    /// 
+    ///
     /// TODO(student): Is processing measurements one-by-one the best way to compute aggregations?
     /// Remember that you are allowed to add other methods in this implementation block!
     pub fn add_measurement(&mut self, measurement: f64) {
@@ -62,7 +62,7 @@ impl StationAggregation {
 /// might best be located.
 #[derive(Debug)]
 pub struct AggregationResults {
-    pub(crate) results: HashMap<String, StationAggregation>,
+    results: HashMap<String, StationAggregation>,
 }
 
 impl AggregationResults {
@@ -73,6 +73,20 @@ impl AggregationResults {
     pub fn new() -> Self {
         Self {
             results: HashMap::new(),
+        }
+    }
+
+    // Updates the metrics for the given station with a measurement.
+    pub fn insert_measurement(&mut self, station: &str, measurement: f64) {
+        // We don't use the `entry` API in the `Some` case since it would require us to always turn
+        // `station` into an owned `String`, since `.entry()` requires an owned type.
+        match self.results.get_mut(station) {
+            Some(val) => val.add_measurement(measurement),
+            None => self
+                .results
+                .entry(station.to_string())
+                .or_default()
+                .add_measurement(measurement),
         }
     }
 

@@ -20,7 +20,7 @@ pub fn aggregate(measurements_path: impl AsRef<Path>) -> AggregationResults {
     let measurements = File::open(measurements_path).expect("unable to read measurements");
     let buf_reader = std::io::BufReader::new(measurements);
 
-    let mut aggr = AggregationResults::new();
+    let mut results = AggregationResults::new();
 
     for line_res in buf_reader.lines() {
         let line = line_res.expect("Was unable to read the line");
@@ -33,17 +33,8 @@ pub fn aggregate(measurements_path: impl AsRef<Path>) -> AggregationResults {
             .parse::<f64>()
             .expect("unable to parse temperature");
 
-        // We don't use the `entry` API in the `Some` case since it would require us to always turn
-        // `station` into an owned `String`, since `.entry()` requires an owned type.
-        match aggr.results.get_mut(station) {
-            Some(val) => val.add_measurement(parsed_temperature),
-            None => aggr
-                .results
-                .entry(station.to_string())
-                .or_default()
-                .add_measurement(parsed_temperature),
-        }
+        results.insert_measurement(station, parsed_temperature);
     }
 
-    aggr
+    results
 }
