@@ -40,7 +40,7 @@ where
 
     // Create an `mpsc` channel that threads will use to send their aggregation results back to the
     // main (current) thread.
-    // Note that you can achieve the same effect via a mutex-protected vector.
+    // Note that you can achieve the exact same effect via a mutex-protected vector. Try it out!
     let (tx, rx) = mpsc::channel();
 
     // This scope is just an more ergonomic way to spawn threads and wait for all of them to finish
@@ -74,6 +74,10 @@ where
 
     // Once we have the results, use `rayon`'s `ParallelIterator` to combine all of them (reduce)
     // into a single value.
+    // Note that you really don't need to (and probably shouldn't) do this. It's likely that the
+    // single-threaded version is faster, depending on how many chunks you have.
+    // This is just demonstrating the `rayon` library and how easy it is to parallelize things in
+    // Rust :D.
     chunk_results
         .into_par_iter()
         .reduce(AggregationResults::new, |mut a, b| {

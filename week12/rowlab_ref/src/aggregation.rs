@@ -1,12 +1,8 @@
 use itertools::Itertools;
 use std::collections::HashMap;
-use std::fmt::Display;
+use std::fmt::{Display, Write};
 
 /// Aggregate statistics for a specific [`WeatherStation`].
-///
-/// TODO(student): This is purposefully not an ideal structure! Can you think of better ways to
-/// store this data? Do the types make sense? Could you make optimizations via the types you use? Do
-/// you even need all of these fields?
 #[derive(Debug)]
 pub struct StationAggregation {
     /// The minimum temperature measurement.
@@ -72,14 +68,12 @@ impl StationAggregation {
 /// might best be located.
 #[derive(Debug)]
 pub struct AggregationResults {
+    /// A map from weather station identifier to its aggregate metrics.
     results: HashMap<String, StationAggregation>,
 }
 
 impl AggregationResults {
     /// Creates an empty `AggregationResult`.
-    ///
-    /// TODO(student): Think about what information you know in advance (before you start
-    /// aggregating temperatures). Can you leverage that information to make the aggregation faster?
     pub fn new() -> Self {
         Self {
             results: HashMap::new(),
@@ -90,6 +84,7 @@ impl AggregationResults {
     pub fn insert_measurement(&mut self, station: &str, measurement: f64) {
         // We don't use the `entry` API in the `Some` case since it would require us to always turn
         // `station` into an owned `String`, since `.entry()` requires an owned type.
+        // So the problem here is that the map requires a `String` key...
         match self.results.get_mut(station) {
             Some(val) => val.add_measurement(measurement),
             None => self
@@ -111,45 +106,37 @@ impl AggregationResults {
             }
         }
     }
+}
 
-    /// Converts the aggregations results into a [`String`].
-    pub fn into_string(self) -> String {
+impl Display for AggregationResults {
+    fn fmt(&self, f: &mut std::fmt::Formatter<'_>) -> std::fmt::Result {
         // Sort the results by weather station ID and join into the output string format.
         let sorted_results: Vec<_> = self
             .results
-            .into_iter()
+            .iter()
             .sorted_by(|a, b| Ord::cmp(&a.0, &b.0))
             .collect();
 
-        let mut res = String::new();
-        res.push('{');
+        f.write_char('{')?;
 
         // Append each weather station's metrics to the output string.
-        for (station, aggregation) in sorted_results {
-            res.push_str(&station);
-            res.push('=');
+        for (station, aggregation) in sorted_results.iter().take(sorted_results.len() - 1) {
+            f.write_str(station)?;
+            f.write_char('=')?;
             // Note that implementing `Display` on `StationAggregation` means that you can call
             // `to_string` and it will do a similar thing as `Display::fmt`.
-            res.push_str(&aggregation.to_string());
-            res.push(',');
-            res.push(' ');
+            f.write_str(&aggregation.to_string())?;
+            f.write_char(',')?;
+            f.write_char(' ')?;
         }
 
-        // Remove the trailing comma and space.
-        assert_eq!(
-            res.pop(),
-            Some(' '),
-            "somehow didn't aggregate any stations"
-        );
-        assert_eq!(
-            res.pop(),
-            Some(','),
-            "somehow didn't aggregate any stations"
-        );
+        let (last_station, last_aggregation) =
+            sorted_results.last().expect("somehow empty results");
+        f.write_str(last_station)?;
+        f.write_char('=')?;
+        f.write_str(&last_aggregation.to_string())?;
 
-        res.push('}');
-
-        res
+        f.write_char('}')
     }
 }
 

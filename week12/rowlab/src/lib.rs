@@ -11,7 +11,7 @@ pub const BILLION: usize = 1_000_000_000;
 /// station's data.
 ///
 /// TODO(student): This is purposefully an very bad way to compute aggregations (namely, completely
-/// sequentially). If you want real improvements, you will need to introduce parallelism in some
+/// sequentially). If you don't want to time out, you will need to introduce parallelism in some
 /// manner. And even after you introduce parallelism, there are many different things you can do to
 /// speed this up dramatically.
 ///
