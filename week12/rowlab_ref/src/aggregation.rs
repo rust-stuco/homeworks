@@ -91,9 +91,6 @@ impl AggregationResults {
     }
 
     /// Converts the aggregations results into a [`String`].
-    ///
-    /// TODO(student): Is this function efficient? Is there another way you could do this? Note that
-    /// on _every single line here_ there is an opportunity for optimization.
     pub fn into_string(self) -> String {
         // Sort the results by weather station ID and join into the output string format.
         let sorted_results: Vec<_> = self
