@@ -2,10 +2,10 @@ use rowlab_ref::{WeatherStations, aggregate, BILLION};
 use std::time::Instant;
 
 fn main() {
-    let start = Instant::now();
-
     let stations = WeatherStations::new();
     let measurements = stations.measurements();
+
+    let start = Instant::now();
 
     let res = aggregate(measurements.take(BILLION));
 

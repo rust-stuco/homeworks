@@ -1,14 +1,11 @@
-use rowlab::{WeatherStations, aggregate};
+use rowlab::{BILLION, WeatherStations, aggregate};
 use std::time::Instant;
 
-/// One billion.
-const BILLION: usize = 1_000_000_000;
-
 fn main() {
-    let start = Instant::now();
-
     let stations = WeatherStations::new();
     let measurements = stations.measurements();
+
+    let start = Instant::now();
 
     let res = aggregate(measurements.take(BILLION));
 
