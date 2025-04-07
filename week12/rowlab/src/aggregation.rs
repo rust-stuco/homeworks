@@ -7,7 +7,7 @@ use std::fmt::Display;
 /// TODO(student): This is purposefully not an ideal structure! Can you think of better ways to
 /// store this data? Do the types make sense? Could you make optimizations via the types you use? Do
 /// you even need all of these fields?
-#[derive(Debug, Clone)]
+#[derive(Debug)]
 pub struct StationAggregation {
     /// The minimum temperature measurement.
     min: f64,

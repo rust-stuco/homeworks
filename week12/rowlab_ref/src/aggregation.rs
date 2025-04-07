@@ -7,7 +7,7 @@ use std::fmt::Display;
 /// TODO(student): This is purposefully not an ideal structure! Can you think of better ways to
 /// store this data? Do the types make sense? Could you make optimizations via the types you use? Do
 /// you even need all of these fields?
-#[derive(Debug, Clone)]
+#[derive(Debug)]
 pub struct StationAggregation {
     /// The minimum temperature measurement.
     min: f64,
@@ -53,6 +53,16 @@ impl StationAggregation {
         self.num_measurements += 1.0;
         self.mean = self.sum_measurements / self.num_measurements;
     }
+
+    /// Merge an aggregation with another aggregation.
+    pub fn merge(&mut self, other: &Self) {
+        self.min = self.min.min(other.min);
+        self.max = self.max.max(other.max);
+
+        self.sum_measurements += other.sum_measurements;
+        self.num_measurements += other.num_measurements;
+        self.mean = self.sum_measurements / self.num_measurements;
+    }
 }
 
 /// The aggregation results for the billion row challenge.
@@ -87,6 +97,18 @@ impl AggregationResults {
                 .entry(station.to_string())
                 .or_default()
                 .add_measurement(measurement),
+        }
+    }
+
+    /// Merge another `AggregationResult` into the current aggregations.
+    pub fn merge_aggregation(&mut self, other: Self) {
+        for (station, aggregation) in other.results {
+            match self.results.get_mut(&station) {
+                Some(existing) => existing.merge(&aggregation),
+                None => {
+                    self.results.insert(station, aggregation);
+                }
+            }
         }
     }
 
