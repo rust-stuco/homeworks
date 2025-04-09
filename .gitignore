@@ -21,6 +21,3 @@ submission/
 
 # Ignore macOS metadata.
 .DS_Store
-
-# Ignore the very large files for Week 12 (Billion Row Challenge), but not `stations.txt`.
-week12/*.txt
