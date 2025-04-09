@@ -1,3 +1,5 @@
+#![doc = include_str!("../README.md")]
+
 use rayon::iter::{IntoParallelIterator, ParallelIterator};
 use std::sync::mpsc;
 use std::thread;
