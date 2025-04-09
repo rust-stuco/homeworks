@@ -15,6 +15,7 @@ const STANDARD_DEVIATION: f64 = 20.0;
 const MAGIC_NUMBER: u64 = 42;
 
 /// An iterator for [`WeatherStations`] that yields random measurements for random weather stations.
+#[derive(Debug, Clone)]
 pub struct Measurements<'a> {
     /// Weather station identifier references and normal distributions for each.
     station_distributions: Vec<(&'a str, Normal<f64>)>,
@@ -35,6 +36,7 @@ impl<'a> Iterator for Measurements<'a> {
 }
 
 /// The different locations that we want to aggregate measurements for.
+#[derive(Debug)]
 pub struct WeatherStations {
     /// Weather station identifiers and their average temperatures.
     stations: Vec<(String, f64)>,
@@ -67,6 +69,8 @@ impl WeatherStations {
         Self { stations }
     }
 
+    /// Creates a measurements iterator that yields random temperature measurements for the weather
+    /// stations.
     pub fn measurements(&self) -> Measurements<'_> {
         let station_distributions: Vec<_> = self
             .stations

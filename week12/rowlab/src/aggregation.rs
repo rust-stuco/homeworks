@@ -3,7 +3,7 @@ use std::collections::HashMap;
 use std::fmt::{Display, Write};
 
 /// Aggregate statistics for a specific [`WeatherStation`].
-#[derive(Debug)]
+#[derive(Debug, Clone, Copy)]
 pub struct StationAggregation {
     /// The minimum temperature measurement.
     min: f64,
@@ -36,6 +36,18 @@ impl StationAggregation {
     pub fn add_measurement(&mut self, measurement: f64) {
         todo!("Implement me!")
     }
+
+    pub fn min(&self) -> f64 {
+        self.min
+    }
+
+    pub fn max(&self) -> f64 {
+        self.max
+    }
+
+    pub fn mean(&self) -> f64 {
+        self.mean
+    }
 }
 
 impl Display for StationAggregation {
@@ -66,6 +78,11 @@ impl AggregationResults {
     /// Updates the metrics for the given station with a measurement.
     pub fn insert_measurement(&mut self, station: &str, measurement: f64) {
         todo!("Implement me!")
+    }
+
+    /// Retrieve the stats of a specific station, if it exists. Used for testing purposes.
+    pub fn get_metrics(&self, station: &str) -> Option<StationAggregation> {
+        self.results.get(station).copied()
     }
 }
 

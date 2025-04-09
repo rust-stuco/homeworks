@@ -18,26 +18,6 @@ pub struct StationAggregation {
 }
 
 impl StationAggregation {
-    pub fn min(&self) -> f64 {
-        self.min
-    }
-
-    pub fn max(&self) -> f64 {
-        self.max
-    }
-
-    pub fn mean(&self) -> f64 {
-        self.mean
-    }
-}
-
-impl Display for StationAggregation {
-    fn fmt(&self, f: &mut std::fmt::Formatter<'_>) -> std::fmt::Result {
-        write!(f, "{:.1}/{:.1}/{:.1}", self.min, self.mean, self.max)
-    }
-}
-
-impl StationAggregation {
     /// Creates a new `StationAggregation` for computing aggregations.
     pub fn new() -> Self {
         Self {
@@ -71,6 +51,24 @@ impl StationAggregation {
         self.sum_measurements += other.sum_measurements;
         self.num_measurements += other.num_measurements;
         self.mean = self.sum_measurements / self.num_measurements;
+    }
+
+    pub fn min(&self) -> f64 {
+        self.min
+    }
+
+    pub fn max(&self) -> f64 {
+        self.max
+    }
+
+    pub fn mean(&self) -> f64 {
+        self.mean
+    }
+}
+
+impl Display for StationAggregation {
+    fn fmt(&self, f: &mut std::fmt::Formatter<'_>) -> std::fmt::Result {
+        write!(f, "{:.1}/{:.1}/{:.1}", self.min, self.mean, self.max)
     }
 }
 
