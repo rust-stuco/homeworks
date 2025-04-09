@@ -3,7 +3,7 @@ use std::collections::HashMap;
 use std::fmt::{Display, Write};
 
 /// Aggregate statistics for a specific [`WeatherStation`].
-#[derive(Debug)]
+#[derive(Debug, Clone, Copy)]
 pub struct StationAggregation {
     /// The minimum temperature measurement.
     min: f64,
@@ -15,6 +15,20 @@ pub struct StationAggregation {
     sum_measurements: f64,
     /// Helper field for calculating mean (sum_measurements / num_measurements).
     num_measurements: f64,
+}
+
+impl StationAggregation {
+    pub fn min(&self) -> f64 {
+        self.min
+    }
+
+    pub fn max(&self) -> f64 {
+        self.max
+    }
+
+    pub fn mean(&self) -> f64 {
+        self.mean
+    }
 }
 
 impl Display for StationAggregation {
@@ -36,9 +50,6 @@ impl StationAggregation {
     }
 
     /// Updates the aggregation with a new measurement.
-    ///
-    /// TODO(student): Is processing measurements one-by-one the best way to compute aggregations?
-    /// Remember that you are allowed to add other methods in this implementation block!
     pub fn add_measurement(&mut self, measurement: f64) {
         // Update the minimum and maximums.
         self.min = self.min.min(measurement);
@@ -52,9 +63,11 @@ impl StationAggregation {
 
     /// Merge an aggregation with another aggregation.
     pub fn merge(&mut self, other: &Self) {
+        // Merge the minimums and maximums.
         self.min = self.min.min(other.min);
         self.max = self.max.max(other.max);
 
+        // Merge the averages (weighted calculation).
         self.sum_measurements += other.sum_measurements;
         self.num_measurements += other.num_measurements;
         self.mean = self.sum_measurements / self.num_measurements;
@@ -84,7 +97,7 @@ impl AggregationResults {
     pub fn insert_measurement(&mut self, station: &str, measurement: f64) {
         // We don't use the `entry` API in the `Some` case since it would require us to always turn
         // `station` into an owned `String`, since `.entry()` requires an owned type.
-        // So the problem here is that the map requires a `String` key...
+        // So the problem here is that the map requires a `String` key... could you change that?
         match self.results.get_mut(station) {
             Some(val) => val.add_measurement(measurement),
             None => self
@@ -105,6 +118,11 @@ impl AggregationResults {
                 }
             }
         }
+    }
+
+    /// Retrieve the stats of a specific station, if it exists. Used for testing purposes.
+    pub fn get_metrics(&self, station: &str) -> Option<StationAggregation> {
+        self.results.get(station).copied()
     }
 }
 
