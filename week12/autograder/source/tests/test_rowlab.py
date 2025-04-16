@@ -1,7 +1,10 @@
-import os, subprocess
+import os
+import re
+import subprocess
 import unittest
 from functools import wraps
-from gradescope_utils.autograder_utils.decorators import weight, number, partial_credit
+
+from gradescope_utils.autograder_utils.decorators import number, partial_credit, weight, leaderboard
 
 
 # Main decorator for Gradescope tests.
@@ -102,3 +105,50 @@ class RowLabTest(unittest.TestCase):
         """Testing everything"""
         return "cargo test -- --exact test_all"
 
+    @leaderboard("runtime", sort_order="asc")
+    def test_bench_rowlab(self, set_leaderboard_value=None):
+        """Benchmarking with Criterion"""
+
+        # Even though this is not a test, we still have to prefix it with `test_` for the Gradsecope
+        # test suite to work properly.
+
+        if not self.passed_clippy:
+            self.fail(
+                "Detected warnings and/or errors in `cargo clippy` and `cargo fmt` output!\n"
+                "Please fix the lints above to receive credit for this assignment\n"
+                "Hint: run `cargo fmt` if you see a 'diff' warning, and `cargo clippy` otherwise!\n"
+            )
+
+        # Example Criterion Output:
+        """
+        Benchmarking brc: Warming up for 3.0000 s
+        Warning: Unable to complete 10 samples in 5.0s. You may wish to increase target time to 207.6s.
+        brc                     time:   [12.694 s 12.765 s 12.857 s]
+                                change: [-2.7843% -1.0671% +0.7337%] (p = 0.28 > 0.05)
+                                No change in performance detected.
+        """
+
+        criterion_output = run_cmd("cargo bench")
+
+        # Find the `time` line with the 3 measurements in brackets.
+        # This pattern looks for "time: [number s number s number s]" with flexible whitespace.
+        # (Generated with the help of LLMs)
+        time_pattern = (
+            r"time:\s*\[\s*([\d\.]+)\s+s\s+([\d\.]+)\s+s\s+([\d\.]+)\s+s\s*\]"
+        )
+
+        re_match = re.search(time_pattern, criterion_output)
+        if not re_match:
+            self.fail("Could not find `time` data in the expected Criterion format")
+
+        # We should have exactly 3 numbers in the `time` line output.
+        num_groups = len(re_match.groups())
+        if num_groups != 3:
+            self.fail(f"Expected 3 time measurements, found {num_groups}")
+
+        # Extract the middle number as the best estimate of execution time.
+        try:
+            average_time = float(re_match.group(2))
+            set_leaderboard_value(average_time)
+        except ValueError:
+            self.fail("Failed to convert '{}' to a float".format(re_match.group(2)))
