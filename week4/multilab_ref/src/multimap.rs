@@ -87,20 +87,39 @@ impl<K: Hash + Eq, V: Eq> MultiMap<K, V> {
     /// assert!(multimap.remove_value(&1, &"hello"));
     /// assert_eq!(multimap.get_values(&1).unwrap(), &["world"]);
     /// ```
+    #[allow(clippy::needless_range_loop)]
     pub fn remove_value(&mut self, key: &K, value: &V) -> bool {
-        match self.inner.get_mut(key) {
-            None => false,
-            Some(values) => match values.iter().position(|x| x == value) {
-                None => false,
-                Some(i) => {
-                    values.remove(i);
-                    if values.is_empty() {
-                        self.inner.remove(key);
-                    }
-                    true
-                }
-            },
+        // Check if the key exists first.
+        let Some(values) = self.inner.get_mut(key) else {
+            return false;
+        };
+
+        // Note that we can do the below much more succinctly with
+        // `values.iter().position(|x| x == value)`, but since we haven't talked about iterators
+        // yet, you don't have to worry about that now.
+
+        let mut found_index = None;
+        for i in 0..values.len() {
+            if values[i] == *value {
+                found_index = Some(i);
+                break;
+            }
         }
+
+        let Some(i) = found_index else {
+            return false;
+        };
+
+        // Since we've found the index of the value, we can remove it.
+        values.remove(i);
+
+        // Technically we don't need to remove the key if the value list is empty. This is a space
+        // optimization (as opposed to a time optimization).
+        if values.is_empty() {
+            self.inner.remove(key);
+        }
+
+        true
     }
 
     /// Removes all values associated with a key and returns them.
