@@ -101,11 +101,7 @@ pub fn nth_prime(n: usize) -> usize {
 /// **Please do not use the "return" keyword.**
 /// **Please write this function using recursion.**
 pub fn gcd(x: usize, y: usize) -> usize {
-    if y == 0 {
-        x
-    } else {
-        gcd(y, x % y)
-    }
+    if y == 0 { x } else { gcd(y, x % y) }
 }
 
 /// Returns the nth fibonacci number.

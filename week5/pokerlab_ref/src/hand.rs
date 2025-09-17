@@ -225,12 +225,12 @@ impl Hand {
     /// This function assumes that all higher-ranking hand checks have been called.
     pub fn get_straight_flush(&self) -> Option<StraightFlush> {
         // Check if we have both a straight and a flush.
-        if let Some(straight) = self.get_straight() {
-            if self.get_flush().is_some() {
-                return Some(StraightFlush {
-                    high_card: straight.high_card,
-                });
-            }
+        if let Some(straight) = self.get_straight()
+            && self.get_flush().is_some()
+        {
+            return Some(StraightFlush {
+                high_card: straight.high_card,
+            });
         }
 
         None

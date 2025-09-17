@@ -1,7 +1,7 @@
-use criterion::{black_box, criterion_group, criterion_main, Criterion};
+use criterion::{Criterion, black_box, criterion_group, criterion_main};
 use filterlab_ref::BloomFilter;
-use rand::distributions::{Bernoulli, Distribution, Standard};
 use rand::Rng;
+use rand::distributions::{Bernoulli, Distribution, Standard};
 
 /// Approximately equal to 1 million.
 const MEGABYTE: usize = 1 << 20;
@@ -35,7 +35,7 @@ pub fn bloom_filter_read_benchmark(c: &mut Criterion) {
                 list[index]
             } else {
                 // Lookup a random element.
-                rng.gen()
+                rng.generate()
             }
         })
         .collect();
