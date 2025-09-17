@@ -14,12 +14,11 @@ pub struct Split<'haystack, 'delimiter> {
 impl<'haystack, 'delimiter> Split<'haystack, 'delimiter> {
     /// Creates a new `Split` instance with the given haystack and delimiter.
     ///
-    /// Panics if the delimiter is empty (length 0).
+    /// Should panic if the delimiter is empty (length 0).
     pub fn new(haystack: &'haystack str, delimiter: &'delimiter str) -> Self {
-        assert!(
-            !delimiter.is_empty(),
-            "Delimiter must not be an empty string"
-        );
+        if delimiter.is_empty() {
+            panic!("Delimiter cannot be empty")
+        }
 
         Self {
             remainder: Some(haystack),
@@ -37,8 +36,6 @@ impl<'haystack> Iterator for Split<'haystack, '_> {
 
     /// Returns the next substring of the original `haystack` string, split by some delimiter.
     ///
-    /// If the delimiter is the empty string, returns the next character (as a string) to avoid
-    /// infinitely looping.
     fn next(&mut self) -> Option<Self::Item> {
         // If `remainder` is `None`, then there is nothing left to yield, and we should return
         // `None` immediately (with `?`).
@@ -51,7 +48,6 @@ impl<'haystack> Iterator for Split<'haystack, '_> {
         };
 
         let (start, end) = (index, index + self.delimiter.len());
-        assert_ne!(start, end, "Delimiter cannot be empty");
 
         // Compute the next string to yield as well as the new remainder.
         let next_str = &remainder[..start];
