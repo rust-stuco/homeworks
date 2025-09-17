@@ -12,14 +12,16 @@ how they work. If you have a question, your best bet is to probably just contact
 
 Run this command to build a specific autograder, replacing the docker name and the autograder name:
 
+Make sure 
+
 ```sh
-docker buildx build -t <container-name> <path-to-autograder>
+docker buildx build --platform=linux/amd64 -t <container-name> <path-to-autograder>
 ```
 
 For example:
 
 ```sh
-docker buildx build -t connortsui/cardlab_autograder week3/autograder/
+docker buildx build --platform=linux/amd64 -t connortsui/cardlab_autograder week3/autograder/
 ```
 
 _You can also omit the `buildx` command, but that is being deprecated soon._
