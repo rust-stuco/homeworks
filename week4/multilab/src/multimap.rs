@@ -85,6 +85,7 @@ impl<K: Hash + Eq, V: Eq> MultiMap<K, V> {
     /// assert!(multimap.remove_value(&1, &"hello"));
     /// assert_eq!(multimap.get_values(&1).unwrap(), &["world"]);
     /// ```
+    #[allow(clippy::needless_range_loop)]
     pub fn remove_value(&mut self, key: &K, value: &V) -> bool {
         todo!()
     }
