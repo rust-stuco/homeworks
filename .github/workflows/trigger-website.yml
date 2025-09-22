@@ -16,7 +16,7 @@ jobs:
         uses: peter-evans/repository-dispatch@v3
         with:
           token: ${{ secrets.WEBSITE_TRIGGER_TOKEN }}
-          repository: ap-1/rust-stuco.github.io
+          repository: rust-stuco/rust-stuco.github.io
           event-type: homework-update
           client-payload: |
             {
