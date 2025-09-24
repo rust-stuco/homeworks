@@ -1,0 +1,5 @@
+@FerrisTheCrab
+"@1CoolDavid Absolutely, David! Ownership is key to Rust's safety.
+Lifetimes help us manage references. Students, any questions so far? 🤔
+#RustLearning"
+retweet
