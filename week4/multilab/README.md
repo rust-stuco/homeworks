@@ -16,7 +16,7 @@ For [`MultiSet`](crate::multiset::MultiSet), we have not provided what types the
 _We recommend that you use one of the collection types provided in the [`std::collections`] module_
 _to help you build these new types._
 
-We would like you think a bit more about your own code than previous homeworks, so we will be
+We would like you to think a bit more about your own code than previous homeworks, so we will be
 providing less detail than before on implementation details. Instead, you should read the
 documentation and implement the data structure and methods so that they follow the documentation and
 pass all the test cases.
