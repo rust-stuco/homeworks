@@ -1,0 +1,26 @@
+name: Trigger Website Rebuild
+
+on:
+  push:
+    branches: [ main ]
+    paths:
+      - 'week*/**'
+      - '!week*/autograder/**'
+  workflow_dispatch:
+
+jobs:
+  trigger-website-build:
+    runs-on: ubuntu-latest
+    steps:
+      - name: Trigger website repository workflow
+        uses: peter-evans/repository-dispatch@v3
+        with:
+          token: ${{ secrets.WEBSITE_TRIGGER_TOKEN }}
+          repository: rust-stuco/rust-stuco.github.io
+          event-type: homework-update
+          client-payload: |
+            {
+              "ref": "${{ github.ref }}",
+              "sha": "${{ github.sha }}",
+              "repository": "${{ github.repository }}"
+            }
