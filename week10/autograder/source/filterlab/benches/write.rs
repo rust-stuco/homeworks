@@ -1,6 +1,6 @@
 use criterion::{black_box, criterion_group, criterion_main, Criterion};
 use filterlab::BloomFilter;
-use rand::distributions::Standard;
+use rand::distr::StandardUniform;
 use rand::Rng;
 
 /// Approximately equal to 1 million.
@@ -11,8 +11,8 @@ const GIGABYTE: usize = 1 << 30;
 /// This benchmark tests the performance of `BloomFilter::insert`.
 pub fn bloom_filter_write_benchmark(c: &mut Criterion) {
     // Generate 1 million random integers.
-    let list: Vec<i32> = rand::thread_rng()
-        .sample_iter(Standard)
+    let list: Vec<i32> = rand::rng()
+        .sample_iter(StandardUniform)
         .take(MEGABYTE)
         .collect();
 
