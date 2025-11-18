@@ -27,6 +27,8 @@ impl BitVector {
         }
     }
 
+    // Oh yes, I implemented three versions of the `set` operation
+
     fn _set_v1(&mut self, chunk: usize, offset: usize, val: bool) {
         // "Keep it simple, silly"
         let mask = 1 << offset;

@@ -1,11 +1,13 @@
+// This is the SIMD-optimized version of doublehasher.rs.
+// We use AVX instead of AVX-512, since our grader infra was on stable Rust,
+// and the latter would have required Rust's nightly build.
+
 use rand::Rng;
 use std::arch::x86_64::*;
 use std::cmp::{max, min};
 use std::hash::{Hash, Hasher};
 use std::marker::PhantomData;
 use twox_hash::XxHash64;
-//use aligned_array::{Aligned, A64};
-//use std::mem::MaybeUninit;
 
 #[allow(dead_code)]
 pub trait IDoubleHasher<T> {

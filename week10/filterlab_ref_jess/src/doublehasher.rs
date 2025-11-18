@@ -1,3 +1,5 @@
+// The implementation of the double-hashing algorithm *before* SIMD.
+
 use rand::Rng;
 use std::cmp::{max, min};
 use std::hash::{Hash, Hasher};

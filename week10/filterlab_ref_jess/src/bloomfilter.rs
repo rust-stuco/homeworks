@@ -1,9 +1,14 @@
 use crate::bitvector_vanilla::BitVector;
 use crate::bitvector_vanilla::IBitVector;
+
+// The pre-SIMD implementation
 //use crate::doublehasher::DoubleHasher;
 //use crate::doublehasher::IDoubleHasher;
+
+// The SIMD implementation
 use crate::doublehasher_x86_avx::DoubleHasher;
 use crate::doublehasher_x86_avx::IDoubleHasher;
+
 use std::hash::Hash;
 use std::marker::PhantomData;
 
@@ -14,12 +19,6 @@ Main optimizations:
     * Selected the XxHash64 function due to these posts
         https://aras-p.info/blog/2016/08/02/Hash-Functions-all-the-way-down/
         https://jolynch.github.io/posts/use_fast_data_algorithms/
-Later:
-    * If I have time, in bitvector.rs, I'll implement a batched operation
-        set_bits that sets multiple bits at a time using SIMD and other
-        optimizations
-        My write benchmarks are good enough, so I'll leave set_bits for now.
-        Current focus is improving read benchmarks by reducing false positives
 */
 
 const MEGABYTE: usize = 1 << 20;
