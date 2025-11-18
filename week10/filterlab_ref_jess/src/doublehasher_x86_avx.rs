@@ -111,9 +111,9 @@ impl<T> DoubleHasher<T> {
     // However, checking if a number is prime is likely less efficient than
     //  directly doing our routine below in expected constant time.
     fn _generate_coprime(x: usize) -> usize {
-        let mut rng = rand::thread_rng();
+        let mut rng = rand::rng();
         loop {
-            let candidate = rng.gen_range(1..=usize::MAX) | 1;
+            let candidate = rng.random_range(1..=usize::MAX) | 1;
             if Self::_gcd(candidate, x) == 1 {
                 return candidate;
             }

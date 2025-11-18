@@ -1,7 +1,8 @@
 use criterion::{Criterion, black_box, criterion_group, criterion_main};
 use filterlab_ref::BloomFilter;
 use rand::Rng;
-use rand::distributions::{Bernoulli, Distribution, Standard};
+use rand::distr::{Bernoulli, Distribution, StandardUniform};
+use rand_distr::Zipf;
 
 /// Approximately equal to 1 million.
 const MEGABYTE: usize = 1 << 20;
@@ -10,10 +11,14 @@ const MEGABYTE: usize = 1 << 20;
 /// and false positive rate. When a false positive rate occurs, we want to incur an expensive
 /// operations, and in this case it is a linear search through 1 million values.
 pub fn bloom_filter_read_benchmark(c: &mut Criterion) {
-    let mut rng = rand::thread_rng();
+    let mut rng = rand::rng();
 
     // Generate 1 million random integers.
-    let list: Vec<i32> = rng.clone().sample_iter(Standard).take(MEGABYTE).collect();
+    let list: Vec<i32> = rng
+        .clone()
+        .sample_iter(StandardUniform)
+        .take(MEGABYTE)
+        .collect();
 
     // Create the bloom filter up front. We don't want to measure write speed for this benchmark.
     let mut bf = BloomFilter::new(MEGABYTE * 8, 6);
@@ -24,18 +29,18 @@ pub fn bloom_filter_read_benchmark(c: &mut Criterion) {
     // Half of our lookups will be guaranteed to exist in the list, and the indices will be
     // distributed with a zipfian distribution so that searching for them is relatively cheap.
     let coin = Bernoulli::new(0.5).expect("0.5 is in between 0 and 1");
-    let zipf = zipf::ZipfDistribution::new(MEGABYTE - 1, 1.1).unwrap();
+    let zipf = Zipf::new((MEGABYTE - 1) as f64, 1.1).unwrap();
 
     // We don't want to be measuring the speed of RNG, so figure out all the lookups beforehand.
     let lookups: Vec<i32> = (0..MEGABYTE)
         .map(|_| {
             if coin.sample(&mut rng) {
                 // Choose a random element in the list.
-                let index = zipf.sample(&mut rng);
+                let index = rand::rng().sample(zipf) as usize;
                 list[index]
             } else {
                 // Lookup a random element.
-                rng.generate()
+                rng.random()
             }
         })
         .collect();

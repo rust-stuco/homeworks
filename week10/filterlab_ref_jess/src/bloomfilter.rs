@@ -2,8 +2,8 @@ use crate::bitvector_vanilla::BitVector;
 use crate::bitvector_vanilla::IBitVector;
 
 // The pre-SIMD implementation
-//use crate::doublehasher::DoubleHasher;
-//use crate::doublehasher::IDoubleHasher;
+// use crate::doublehasher::DoubleHasher;
+// use crate::doublehasher::IDoubleHasher;
 
 // The SIMD implementation
 use crate::doublehasher_x86_avx::DoubleHasher;
