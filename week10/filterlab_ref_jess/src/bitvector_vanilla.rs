@@ -3,9 +3,6 @@
 // implementation, especially since I have multiple private implementations
 // of the same method in my BitVector struct.
 
-// HIGH-LEVEl IDEA: If I have time, I'll implement a batched operation set_bits
-//  that sets multiple bits at a time using SIMD and other optimizations
-
 #[allow(dead_code)]
 pub trait IBitVector {
     fn get(&self, idx: usize) -> bool;
