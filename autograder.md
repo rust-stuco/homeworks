@@ -49,7 +49,7 @@ Run this command to run the autograder, which will store the results in your loc
 docker run \
     -v <path-to-submission-folder>:/autograder/submission \
     -v <path-to-results-folder>:/autograder/results \
-    <container-name> \
+    <image-name> \
     /autograder/run_autograder \
     --rm
 ```
@@ -62,7 +62,7 @@ For example, if the `submission` and `results` folder are both in the current di
 ```sh
 docker run \
     -v ./submission:/autograder/submission \
-    -v ./results:/autograder/results \
+-v ./results:/autograder/results \
     connortsui/cardlab_autograder \
     /autograder/run_autograder \
     --rm
