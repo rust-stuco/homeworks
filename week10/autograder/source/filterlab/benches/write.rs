@@ -1,7 +1,7 @@
-use criterion::{black_box, criterion_group, criterion_main, Criterion};
+use criterion::{Criterion, black_box, criterion_group, criterion_main};
 use filterlab::BloomFilter;
-use rand::distr::StandardUniform;
 use rand::Rng;
+use rand::distr::StandardUniform;
 
 /// Approximately equal to 1 million.
 const MEGABYTE: usize = 1 << 20;
