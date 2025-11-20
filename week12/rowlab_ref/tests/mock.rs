@@ -1,7 +1,7 @@
 use rand::distr::{Bernoulli, Distribution};
 use rand::seq::IndexedRandom;
 use rand_distr::Normal;
-use rowlab_ref::aggregate;
+use rowlab::aggregate;
 
 /// Some sample weather stations.
 static STATIONS: [(&str, f64); 4] = [

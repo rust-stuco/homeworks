@@ -1,7 +1,9 @@
-import os, subprocess
+import os
+import subprocess
 import unittest
 from functools import wraps
-from gradescope_utils.autograder_utils.decorators import weight, number, partial_credit
+
+from gradescope_utils.autograder_utils.decorators import number, partial_credit, weight
 
 
 # Main decorator for Gradescope tests.
