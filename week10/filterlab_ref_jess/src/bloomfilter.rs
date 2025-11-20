@@ -1,12 +1,16 @@
 use crate::bitvector_vanilla::BitVector;
 use crate::bitvector_vanilla::IBitVector;
 
-// The pre-SIMD implementation
-// use crate::doublehasher::DoubleHasher;
-// use crate::doublehasher::IDoubleHasher;
+// The pre-SIMD implementation (used on non-x86_64 architectures)
+#[cfg(not(target_arch = "x86_64"))]
+use crate::doublehasher::DoubleHasher;
+#[cfg(not(target_arch = "x86_64"))]
+use crate::doublehasher::IDoubleHasher;
 
-// The SIMD implementation
+// The SIMD implementation (used on x86_64 architectures)
+#[cfg(target_arch = "x86_64")]
 use crate::doublehasher_x86_avx::DoubleHasher;
+#[cfg(target_arch = "x86_64")]
 use crate::doublehasher_x86_avx::IDoubleHasher;
 
 use std::hash::Hash;

@@ -166,7 +166,7 @@ impl<T> DoubleHasher<T> {
 impl<T: Hash> IDoubleHasher<T> for DoubleHasher<T> {
     /// Generates two independent hash values for an element
     fn get_hash_values(&self, elem: &T) -> (u64, u64) {
-        let mut hasher1 = self.hasher1;
+        let mut hasher1 = self.hasher1.clone();
 
         elem.hash(&mut hasher1);
 
