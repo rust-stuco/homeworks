@@ -1,8 +1,10 @@
 // This is the SIMD-optimized version of doublehasher.rs.
 // We use AVX instead of AVX-512, since our grader infra was on stable Rust,
 // and the latter would have required Rust's nightly build.
+// This module is only compiled on x86_64 architectures.
 
 use rand::Rng;
+#[cfg(target_arch = "x86_64")]
 use std::arch::x86_64::*;
 use std::cmp::{max, min};
 use std::hash::{Hash, Hasher};
@@ -331,7 +333,7 @@ mod tests {
         for i in 0..8 {
             let mut a = [0u32; 8];
             for j in 0..8 {
-                a[j] = rng.gen_range(0..b);
+                a[j] = rng.random_range(0..b);
             }
 
             // quotient[i] is either 1 or 2 when b is 2^31 - 1
