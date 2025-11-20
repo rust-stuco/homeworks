@@ -1,4 +1,4 @@
-use filterlab_ref::BloomFilter;
+use filterlab::BloomFilter;
 use std::hash::{DefaultHasher, Hash, Hasher};
 
 /// Taken straight from https://doc.rust-lang.org/std/hash/index.html.

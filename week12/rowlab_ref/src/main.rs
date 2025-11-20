@@ -1,4 +1,4 @@
-use rowlab_ref::{BILLION, WeatherStations, aggregate};
+use rowlab::{BILLION, WeatherStations, aggregate};
 use std::time::Instant;
 
 fn main() {
