@@ -1,5 +1,5 @@
 use criterion::{Criterion, black_box, criterion_group, criterion_main};
-use filterlab_ref::BloomFilter;
+use filterlab::BloomFilter;
 use rand::Rng;
 use rand::distr::{Bernoulli, Distribution, StandardUniform};
 use rand_distr::Zipf;

@@ -169,35 +169,37 @@ impl<T> DoubleHasher<T> {
     }
 
     unsafe fn _get_hash_batch8(&self, i: u32, hash1: u32, hash2: u32, bit_masks: u32) -> __m256i {
-        //let mut tmp:[u32;8] = [0;8];
+        unsafe {
+            //let mut tmp:[u32;8] = [0;8];
 
-        let h1 = _mm256_set1_epi32(hash1 as i32);
-        let h2 = _mm256_set1_epi32(hash2 as i32);
-        let ii = _mm256_add_epi32(
-            _mm256_set1_epi32(i as i32),
-            _mm256_set_epi32(7, 6, 5, 4, 3, 2, 1, 0),
-        );
-        let mut result = _mm256_xor_si256(h1, ii);
-        result = _mm256_mullo_epi32(result, h2);
-        result = _mm256_mullo_epi32(result, _mm256_set1_epi32(self.coprime_multiplier as i32));
+            let h1 = _mm256_set1_epi32(hash1 as i32);
+            let h2 = _mm256_set1_epi32(hash2 as i32);
+            let ii = _mm256_add_epi32(
+                _mm256_set1_epi32(i as i32),
+                _mm256_set_epi32(7, 6, 5, 4, 3, 2, 1, 0),
+            );
+            let mut result = _mm256_xor_si256(h1, ii);
+            result = _mm256_mullo_epi32(result, h2);
+            result = _mm256_mullo_epi32(result, _mm256_set1_epi32(self.coprime_multiplier as i32));
 
-        /*
-        _mm256_storeu_ps(
-            tmp.as_mut_ptr() as *mut f32,
-            _mm256_castsi256_ps(result));
-        */
-        assert!(self.prime_modulus == 0x7fffffff);
-        result = avx_mod32_0x7fffffff(result);
+            /*
+            _mm256_storeu_ps(
+                tmp.as_mut_ptr() as *mut f32,
+                _mm256_castsi256_ps(result));
+            */
+            assert!(self.prime_modulus == 0x7fffffff);
+            result = avx_mod32_0x7fffffff(result);
 
-        result = _mm256_and_si256(result, _mm256_set1_epi32(bit_masks as i32));
-        result
+            result = _mm256_and_si256(result, _mm256_set1_epi32(bit_masks as i32));
+            result
+        }
     }
 }
 
 impl<T: Hash> IDoubleHasher<T> for DoubleHasher<T> {
     /// Generates two independent hash values for an element
     fn get_hash_values(&self, elem: &T) -> (u64, u64) {
-        let mut hasher1 = self.hasher1;
+        let mut hasher1 = self.hasher1.clone();
 
         elem.hash(&mut hasher1);
 
@@ -252,43 +254,45 @@ impl<T: Hash> IDoubleHasher<T> for DoubleHasher<T> {
 #[inline]
 #[allow(dead_code)]
 unsafe fn avx_div32(a: __m256i, recip: u32, m: u32) -> __m256i {
-    // 1. Calulate a / b = (a * r) >> 32
-    //    We need to mimic "_mm256_mulhi_epu32" instruction, which multiplies
-    //    two 32-bit integers into 64-bit and then keep the high 32 bit.
-    let r = _mm256_set1_epi64x(recip as i64);
+    unsafe {
+        // 1. Calulate a / b = (a * r) >> 32
+        //    We need to mimic "_mm256_mulhi_epu32" instruction, which multiplies
+        //    two 32-bit integers into 64-bit and then keep the high 32 bit.
+        let r = _mm256_set1_epi64x(recip as i64);
 
-    // mask for masking out the high 32-bit portions
-    //     [-1, 0, -1, 0, -1, 0, -1, 0]
-    let mask = _mm256_set1_epi64x(u32::MAX as i64);
+        // mask for masking out the high 32-bit portions
+        //     [-1, 0, -1, 0, -1, 0, -1, 0]
+        let mask = _mm256_set1_epi64x(u32::MAX as i64);
 
-    // ahi: 64-bit unsigned intergers
-    //      a[1], a[3], a[5], a[7]
-    let ahi = _mm256_and_si256(_mm256_shuffle_epi32(a, 0b10_11_00_01), mask);
+        // ahi: 64-bit unsigned intergers
+        //      a[1], a[3], a[5], a[7]
+        let ahi = _mm256_and_si256(_mm256_shuffle_epi32(a, 0b10_11_00_01), mask);
 
-    // alo: 4 64-bit unsigned intergers
-    //      a[0], a[2], a[4], a[6]
-    let alo = _mm256_and_si256(a, mask);
+        // alo: 4 64-bit unsigned intergers
+        //      a[0], a[2], a[4], a[6]
+        let alo = _mm256_and_si256(a, mask);
 
-    let rem = _mm256_set1_epi64x(m as i64);
+        let rem = _mm256_set1_epi64x(m as i64);
 
-    // xlo: 4 64-bit unsigned integers
-    //      a[0] * r + m, a[2] * r + m, a[4] * r + m, a[6] * r + m
-    let xlo = _mm256_add_epi64(_mm256_mul_epu32(alo, r), rem);
+        // xlo: 4 64-bit unsigned integers
+        //      a[0] * r + m, a[2] * r + m, a[4] * r + m, a[6] * r + m
+        let xlo = _mm256_add_epi64(_mm256_mul_epu32(alo, r), rem);
 
-    // xhi: 4 64-bit unsigned integers
-    //      a[1] * r + m, a[3] * r + m, a[5] * r + m, a[7] * r + m
-    let xhi = _mm256_add_epi64(_mm256_mul_epu32(ahi, r), rem);
+        // xhi: 4 64-bit unsigned integers
+        //      a[1] * r + m, a[3] * r + m, a[5] * r + m, a[7] * r + m
+        let xhi = _mm256_add_epi64(_mm256_mul_epu32(ahi, r), rem);
 
-    // y: 8 32-bit unsigned integers extracted from the high 32-bit of the following
-    //      a[0] * r, a[2] * r, a[1] * r, a[3] * r
-    //      a[4] * r, a[6] * r, a[5] * r, a[7] * r
-    let y = _mm256_shuffle_ps(
-        _mm256_castsi256_ps(xlo),
-        _mm256_castsi256_ps(xhi),
-        0b11_01_11_01,
-    );
-    // quotient of "a[0..7] / b"
-    _mm256_shuffle_epi32(_mm256_castps_si256(y), 0b11_01_10_00)
+        // y: 8 32-bit unsigned integers extracted from the high 32-bit of the following
+        //      a[0] * r, a[2] * r, a[1] * r, a[3] * r
+        //      a[4] * r, a[6] * r, a[5] * r, a[7] * r
+        let y = _mm256_shuffle_ps(
+            _mm256_castsi256_ps(xlo),
+            _mm256_castsi256_ps(xhi),
+            0b11_01_11_01,
+        );
+        // quotient of "a[0..7] / b"
+        _mm256_shuffle_epi32(_mm256_castps_si256(y), 0b11_01_10_00)
+    }
 }
 
 // Calulate "a[0..7] / b" (32 bit version)
@@ -297,26 +301,30 @@ unsafe fn avx_div32(a: __m256i, recip: u32, m: u32) -> __m256i {
 // 3. m is "2^32 % b"
 #[allow(dead_code)]
 unsafe fn avx_mod32(a: __m256i, b: u32, recip: u32, m: u32) -> __m256i {
-    let quotient = avx_div32(a, recip, m);
+    unsafe {
+        let quotient = avx_div32(a, recip, m);
 
-    let prod = _mm256_mullo_epi32(_mm256_set1_epi32(b as i32), quotient);
+        let prod = _mm256_mullo_epi32(_mm256_set1_epi32(b as i32), quotient);
 
-    _mm256_sub_epi32(a, prod)
+        _mm256_sub_epi32(a, prod)
+    }
 }
 
 #[inline]
 unsafe fn avx_cmpge_epu32(a: __m256i, b: __m256i) -> __m256i {
-    _mm256_cmpeq_epi32(a, _mm256_max_epu32(a, b))
+    unsafe { _mm256_cmpeq_epi32(a, _mm256_max_epu32(a, b)) }
 }
 
 #[inline]
 unsafe fn avx_mod32_0x7fffffff(a: __m256i) -> __m256i {
-    // For 32-bit mod against 2^31-1, we can get the remainder after 2 substractions
-    let divisor = _mm256_set1_epi32((1u32 << 31).wrapping_sub(1) as i32);
-    let mut mask = avx_cmpge_epu32(a, divisor);
-    let first = _mm256_sub_epi32(a, _mm256_and_si256(divisor, mask));
-    mask = avx_cmpge_epu32(first, divisor);
-    _mm256_sub_epi32(first, _mm256_and_si256(divisor, mask))
+    unsafe {
+        // For 32-bit mod against 2^31-1, we can get the remainder after 2 substractions
+        let divisor = _mm256_set1_epi32((1u32 << 31).wrapping_sub(1) as i32);
+        let mut mask = avx_cmpge_epu32(a, divisor);
+        let first = _mm256_sub_epi32(a, _mm256_and_si256(divisor, mask));
+        mask = avx_cmpge_epu32(first, divisor);
+        _mm256_sub_epi32(first, _mm256_and_si256(divisor, mask))
+    }
 }
 
 #[cfg(test)]
@@ -325,7 +333,7 @@ mod tests {
 
     #[test]
     fn test_div32() {
-        let mut rng = rand::thread_rng();
+        let mut rng = rand::rng();
         let d = DoubleHasher::<u64>::new(1usize << 20);
 
         // This test verifies that avx_div32 returns the quotients in the correct order.
