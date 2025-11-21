@@ -23,7 +23,7 @@ impl BitVector {
     pub fn new(size: usize) -> Self {
         BitVector {
             // Align to 32 bytes for SIMD operations
-            bytes: vec![0; ((size + 7) / 8 + 31) & !31],
+            bytes: vec![0; (size.div_ceil(8) + 31) & !31],
         }
     }
 
